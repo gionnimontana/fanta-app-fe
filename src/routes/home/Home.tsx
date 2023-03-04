@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom"
-import { useCharacters } from "../../hooks/characters/all"
+import { useCharacters } from "../../queries/characters"
 
 const Home = () => {
-    const { isLoading, error, characters } = useCharacters()
+    const { isLoading, data, isError } = useCharacters()
     return (
         <>
-            {isLoading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
-            {characters.map(character => (
+            {isLoading ? <p>Loading...</p> : null}
+            {isError ? <p>Error</p> : null}
+            {data ? data.map(character => (
                  <Link 
                     key={character.id} 
                     to={`/profile/${character.id}`}
@@ -15,7 +15,7 @@ const Home = () => {
                         <p key={character.id}>{character.name}</p>
                 </Link>
                 
-            ))}
+            )) : null}
         </>
     )
 }

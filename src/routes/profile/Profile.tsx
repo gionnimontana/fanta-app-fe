@@ -1,20 +1,20 @@
-import { Link, useParams } from "react-router-dom";
-import { useCharacter } from "../../hooks/characters/single";
+import { Link, useParams } from "react-router-dom"
+import { useCharacter } from "../../queries/characters"
 
 const Profile = () => {
     const { id } = useParams();
-    const { isLoading, error, character } = useCharacter(id);
+    const { isLoading, isError, data } = useCharacter(id || "")
 
     return (
         <>
             {isLoading && <p>Loading...</p>}
             {!id && <p>No character selected</p>}
-            {error && <p>{error}</p>}
-            {character && (
+            {isError && <p>Error</p>}
+            {data && (
                 <>
-                    <p>{character.name}</p>
-                    <p>{character.status}</p>
-                    <p>{character.species}</p>
+                    <p>{data.name}</p>
+                    <p>{data.status}</p>
+                    <p>{data.species}</p>
                 </>
             )}
             <Link to={`/`}>

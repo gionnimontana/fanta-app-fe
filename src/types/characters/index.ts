@@ -1,6 +1,10 @@
-export interface Character {
-    id: number;
-    name: string;
+export interface CharacterMinData {
+  id: number;
+  name: string;
+  image: string;
+}
+
+export interface Character extends CharacterMinData {
     status: 'Alive' | 'Dead' | 'unknown';
     species: string;
     type: string;
@@ -13,7 +17,6 @@ export interface Character {
       name: string;
       url: string;
     };
-    image: string;
     episode: string[];
     url: string;
     created: string;
