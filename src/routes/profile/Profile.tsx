@@ -1,26 +1,33 @@
 import { Link, useParams } from "react-router-dom"
+import { CharacterProfile } from "../../components/characterProfile/CharacterProfile";
+import FullPageLoader from "../../components/fullPageLoader/FullPageLoader";
 import { useCharacter } from "../../queries/characters"
+import { EpisodeWrapper } from "./episodeWrapper/EpisodeWrapper";
+import { LocationWrapper } from "./locationWrapper/LocationWrapper";
+import s from './Profile.module.css'
 
 const Profile = () => {
     const { id } = useParams();
     const { isLoading, isError, data } = useCharacter(id || "")
 
     return (
-        <>
-            {isLoading && <p>Loading...</p>}
-            {!id && <p>No character selected</p>}
-            {isError && <p>Error</p>}
-            {data && (
-                <>
-                    <p>{data.name}</p>
-                    <p>{data.status}</p>
-                    <p>{data.species}</p>
-                </>
-            )}
-            <Link to={`/`}>
-                <button>Go back</button>
-            </Link>
-        </>
+        <div className={s.outer}>
+            <div className={s.container}>
+                {isLoading ? <FullPageLoader/>: null}
+                {isNaN(Number(id)) ? <div className={s.noSelection}>No character selected</div> : null}
+                {isError && <p>Error</p>}
+                {data ? (
+                    <CharacterProfile character={data}>
+                        <LocationWrapper locationUrl={data.location.url}/>
+                        <EpisodeWrapper urls={data.episode}/>
+                    </CharacterProfile> 
+                ): null}
+                <Link to={`/`} className={s.backbuttonLink}>
+                    <button className={s.backbutton}>View all characters</button>
+                </Link>
+            </div>
+        </div>
+
     );
 }
 

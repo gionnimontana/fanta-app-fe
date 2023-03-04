@@ -1,0 +1,26 @@
+.infoBlockTitle{
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--accent);
+    width: 100%;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+    font-family: 'Short Stack', cursive;
+}
+
+.infoTitle {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    width: 7rem;
+}
+
+.infoValue {
+    width: 13rem;
+}
+
+.infoDuple {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}

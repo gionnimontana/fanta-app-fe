@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
-import { apiEndpoints } from "../../constants/apiEndopoints";
+import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 import { Character } from "../../types/characters";
 
-export function useCharacters() {
-    return useQuery("character-all", async () => {
-        const response = await fetch(apiEndpoints.Characters)
+export function useCharacters(pageId: number) {
+    return useQuery(`character-page-${pageId}`, async () => {
+        const response = await fetch(apiEndpoints.Characters.replace(":pageId", pageId.toString()))
         const data = await response.json()
         const characters = data.results as Character[]
         return characters
