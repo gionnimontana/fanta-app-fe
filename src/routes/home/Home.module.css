@@ -1,0 +1,14 @@
+.outerContainer {
+    width: calc(100vw - 5rem);
+    text-align: center;
+    height: 100vh;
+    position: fixed;
+    margin-left: 5rem;
+    overflow: auto;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

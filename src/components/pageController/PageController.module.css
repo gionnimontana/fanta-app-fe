@@ -1,0 +1,17 @@
+.container {
+    position: fixed;
+    height: 100vh;
+    width: 4rem;
+    overflow: auto;
+    padding: 0.2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.active {
+    border-color: var(--contrast);
+}
+
+.button {
+    margin: 0.2rem 0;
+}
