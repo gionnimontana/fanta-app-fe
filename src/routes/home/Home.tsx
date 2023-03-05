@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { CharacterCard } from "../../components/characterCard/CharacterCard"
 import FullPageLoader from "../../components/fullPageLoader/FullPageLoader"
+import { PageController } from "../../components/pageController/PageController"
 import { useCharacters } from "../../queries/characters"
 import s from "./Home.module.css"
 
@@ -8,15 +9,17 @@ const Home = () => {
     const [page, setPage] = useState<number>(1)
     const { isLoading, data, isError } = useCharacters(page)
     return (
-        <div>
-            <div className={s.container}>
-                {isLoading ? <FullPageLoader/> : null}
-                {isError ? <p>Error</p> : null}
-                {data ? data.map(character => (
-                    <CharacterCard key={character.id} character={character} />
-                )) : null}
+        <div className={s.mainContainer}>
+            <PageController page={page} setPage={setPage} tot={data?.info.pages || 0}/>
+            <div className={s.outerContainer}>
+                <div className={s.container}>
+                    {isLoading ? <FullPageLoader/> : null}
+                    {isError ? <p>Error</p> : null}
+                    {data ? data.results.map(character => (
+                        <CharacterCard key={character.id} character={character} />
+                    )) : null}
+                </div>
             </div>
-            <button className={s.button} onClick={() => setPage(page + 1)}>Load more</button>
         </div>
     )
 }

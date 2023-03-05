@@ -17,8 +17,12 @@
 }
 
 .name {
+    font-size: 0.8rem;
     font-family: 'Raleway', sans-serif;
     font-family: 'Short Stack', cursive;
+    width: 11rem;
+    height: 2rem;
+    text-overflow: ellipsis;
 }
 
 .link {
@@ -26,8 +30,8 @@
 }
 
 .image {
-  width: 15rem;
-  height: 15rem;
+  width: 12rem;
+  height: 12rem;
   object-fit: cover;
   transition: all 0.3s ease-in-out;
 }

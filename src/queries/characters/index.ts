@@ -7,7 +7,7 @@ export function useCharacters(pageId: number) {
     return useQuery(`character-page-${pageId}`, async () => {
         const response = await fetch(apiEndpoints.Characters.replace(":pageId", pageId.toString()))
         const data = await response.json()
-        const characters = data.results as Character[]
+        const characters = data as { info: { pages: number }, results: Character[] }
         return characters
     }, { cacheTime: queryCacheTime });
 }
