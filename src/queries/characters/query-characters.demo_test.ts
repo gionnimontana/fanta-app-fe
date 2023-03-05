@@ -1,6 +1,6 @@
 // this is how I would test my queries, unfortunately react-hooks-testing-library don't support React 18 yet
 
-import { renderHook } from 'react-hooks-testing-library'
+import { renderHook } from '@testing-library/react-hooks' // not compatible with React 18 yet
 import { expect, test } from 'vitest'
 import { useCharacters, useCharacter } from './index'
 
