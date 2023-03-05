@@ -11,8 +11,9 @@ export const PageController = ({ page, setPage, tot }: Props) => {
 
     return (
         <div className={s.container}>
-            {pages.map(p => (
+            {pages.map((p, i) => (
                 <button
+                    key={i}
                     className={s.button + ' ' + (p === page ? s.active : '')}
                     onClick={() => setPage(p)}
                 >

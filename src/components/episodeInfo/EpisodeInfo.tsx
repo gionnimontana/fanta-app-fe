@@ -9,8 +9,8 @@ export const EpisodeInfo = ({ episodes }: Props) => {
     return (
         <div className={s.mainBlock}>
             <div className={s.infoBlockTitle}>Episodes</div>
-            {episodes.map((episode) => (
-                <div className={s.infoTitle}>{episode.name}</div>
+            {episodes.map((episode, i) => (
+                <div key={i} className={s.infoTitle}>{episode.name}</div>
             ))}
         </div>
     )

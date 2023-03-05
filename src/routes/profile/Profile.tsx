@@ -15,7 +15,7 @@ const Profile = () => {
             <div className={s.container}>
                 {isLoading ? <FullPageLoader/>: null}
                 {isNaN(Number(id)) ? <div className={s.noSelection}>No character selected</div> : null}
-                {isError && <p>Error</p>}
+                {isError && <p>An error occourred while fetching character</p>}
                 {data ? (
                     <CharacterProfile character={data}>
                         <LocationWrapper locationUrl={data.location.url}/>

@@ -7,14 +7,15 @@ import s from "./Home.module.css"
 
 const Home = () => {
     const [page, setPage] = useState<number>(1)
-    const { isLoading, data, isError } = useCharacters(page)
+    const { isLoading, data, isError, error } = useCharacters(page)
+
     return (
         <div className={s.mainContainer}>
             <PageController page={page} setPage={setPage} tot={data?.info.pages || 0}/>
             <div className={s.outerContainer}>
                 <div className={s.container}>
                     {isLoading ? <FullPageLoader/> : null}
-                    {isError ? <p>Error</p> : null}
+                    {isError ? <p>An error occourred while fetching characters</p> : null}
                     {data ? data.results.map(character => (
                         <CharacterCard key={character.id} character={character} />
                     )) : null}

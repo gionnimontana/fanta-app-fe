@@ -1,6 +1,6 @@
 # <center>:mag_right: Rick&MortyDex :alien:</center>
 
-This application is a React/Typescript project that displays all the characters that have appeared in the TV show "Rick and Morty", along with their profiles and the episodes in which they have appeared. This project uses Vite, Vitest, and React Query libraries.
+This project contains a progressive web application written in React/Typescript that displays all the characters that have appeared in the TV show "Rick and Morty", along with their profiles and the episodes in which they have appeared.
 
 ## Installation
 

@@ -8,6 +8,6 @@ interface Props {
 export const EpisodeWrapper = ({ urls }: Props) => {
     const { data, error, isLoading } = useEpisode(urls)
     if (isLoading) return <div>Loading...</div>
-    if (error || !data) return <div>Episode not found</div>
+    if (error || !data) return <div>No episode found</div>
     return <EpisodeInfo episodes={data} />
 }
