@@ -1,12 +1,12 @@
 # <center>:mag_right: Rick&MortyDex :alien:</center>
 
-This project contains a progressive web application written in React/Typescript that displays all the characters that have appeared in the TV show "Rick and Morty", along with their profiles and the episodes in which they have appeared.
+This project contains a [Progressive Web Application](https://web.dev/what-are-pwas/) written in React/Typescript that displays all the characters that have appeared in the TV show "Rick and Morty", along with their profiles and the episodes in which they have appeared.
 
 ## Installation
 
 To install and run the project, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/<your-github-username>/rick-and-morty-characters-app.git`
+1. Clone the repository: `git clone https://github.com/gionnimontana/rick-mortyDex.git`
 2. Install dependencies: `npm install`
 3. Start the development server: `npm run dev`
 4. Open your browser and go to the address displayed in the terminal
