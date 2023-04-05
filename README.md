@@ -1,4 +1,4 @@
-# <center>:mag_right: Rick&MortyDex :alien:</center>
+# <center>:mag_right: Fantabot client :alien:</center>
 
 This project contains a [Progressive Web Application](https://web.dev/what-are-pwas/) written in React/Typescript that displays all the characters that have appeared in the TV show "Rick and Morty", along with their profiles and the episodes in which they have appeared.
 
