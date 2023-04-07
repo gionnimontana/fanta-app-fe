@@ -1,0 +1,17 @@
+.player {
+    display: flex;
+}
+
+.role {
+    text-transform: uppercase;
+    width: 2rem;
+    font-weight: bold;
+}
+
+.name {
+    width: 10rem;
+}
+
+.vote {
+    width: 3rem;
+}

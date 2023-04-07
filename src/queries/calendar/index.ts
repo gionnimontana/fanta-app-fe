@@ -10,7 +10,7 @@ export function useCalendar(day: number) {
         const calendar = data
         console.log(calendar.items)
         return calendar.items as Match[]
-    }, { cacheTime: queryCacheTime });
+    }, { cacheTime: queryCacheTime, staleTime: queryCacheTime });
 }
 
 export function useMatch(id: string) {
@@ -19,6 +19,6 @@ export function useMatch(id: string) {
         const data = await response.json()
         const match = data
         return match as Match
-    }, { cacheTime: queryCacheTime });
+    }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
   

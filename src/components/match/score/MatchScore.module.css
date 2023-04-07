@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-family: 'Raleway', sans-serif;
+    font-family: 'Short Stack', cursive;
+    width: 11rem;
+    height: 2rem;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 520px) {
+    .name {
+        width: 100%;
+        order: 0;
+    }
+    .score {
+        width: 100%;
+        order: 1;
+        text-align: center;
+    }
+}

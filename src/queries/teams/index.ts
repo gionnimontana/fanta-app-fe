@@ -9,6 +9,6 @@ export function useTeams() {
         const data = await response.json()
         const teams = data.items as Team[]
         return teams
-    }, { cacheTime: queryCacheTime });
+    }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
   

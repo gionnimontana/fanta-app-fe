@@ -13,16 +13,13 @@
     left: calc(50% - 5.5rem);
 }
 
-.noSelection {
-    color: white;
-    position: absolute;
-    top: calc(50% - 2rem);
-    left: calc(50% - 6rem);
-    font-size: 1.2rem;
-}
-
 .backbutton {
     width: 100%;
+}
+
+.formationsContainer {
+    height: calc(100% - 14rem);
+    overflow: auto;
 }
 
 .container {
@@ -32,5 +29,25 @@
     transition: all 0.3s ease-in-out;
     width: 95vw;
     height: 95vh;
+}
+
+.day {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.3rem;
+
+}
+
+.scoreContainer {
+    display: flex;
+    justify-content: center;
+    font-size: large;
+    font-size: 2rem;
+}
+
+@media only screen and (max-width: 520px) {
+    .formationsContainer {
+        height: calc(100% - 22rem);
+    }
 }
   
