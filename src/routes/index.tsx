@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { routes } from "../constants/routes";
 import Home from "./home/Home";
-import Profile from "./profile/Profile";
+import Match from "./match/Match";
   
 export const router = createBrowserRouter([
   {
@@ -9,7 +9,7 @@ export const router = createBrowserRouter([
     element: <Home/>,
   },
   {
-    path: routes.Profile,
-    element: <Profile/>,
+    path: routes.Match,
+    element: <Match/>,
   },
 ]);

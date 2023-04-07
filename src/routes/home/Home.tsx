@@ -1,23 +1,28 @@
 import { useState } from "react"
-import { CharacterCard } from "../../components/characterCard/CharacterCard"
+import { useTeams } from "../../queries/teams"
+import { useCalendar } from "../../queries/calendar"
+import { MatchCard } from "../../components/matchCard/MatchCard"
+import { Match } from "types/matches"
 import FullPageLoader from "../../components/fullPageLoader/FullPageLoader"
 import { PageController } from "../../components/pageController/PageController"
-import { useCharacters } from "../../queries/characters"
 import s from "./Home.module.css"
 
 const Home = () => {
-    const [page, setPage] = useState<number>(1)
-    const { isLoading, data, isError, error } = useCharacters(page)
+    const [day, setDay] = useState<number>(28)
+    const c = useCalendar(day)
+    const t = useTeams()
+    const isLoading = c.isLoading || t.isLoading
+    const isError = c.isError || t.isError
 
     return (
         <div className={s.mainContainer}>
-            <PageController page={page} setPage={setPage} tot={data?.info.pages || 0}/>
+            <PageController page={day} setPage={setDay} tot={38}/>
             <div className={s.outerContainer}>
                 <div className={s.container}>
                     {isLoading ? <FullPageLoader/> : null}
                     {isError ? <p>An error occourred while fetching characters</p> : null}
-                    {data ? data.results.map(character => (
-                        <CharacterCard key={character.id} character={character} />
+                    {c.data ? c.data.map((match: Match, i: number) => (
+                        <MatchCard key={i} match={match} teams={t.data || []}/>
                     )) : null}
                 </div>
             </div>
