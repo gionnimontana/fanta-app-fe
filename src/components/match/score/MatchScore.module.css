@@ -2,6 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
 }
 
 .name {
@@ -16,9 +17,12 @@
     text-overflow: ellipsis;
 }
 
+.score {
+    margin: 0.5rem;
+}
+
 @media only screen and (max-width: 520px) {
     .name {
-        width: 100%;
         order: 0;
     }
     .score {

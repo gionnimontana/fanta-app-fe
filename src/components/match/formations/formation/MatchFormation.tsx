@@ -6,8 +6,12 @@ interface Props {
 }
 
 export const MatchFormation = ({ formation }: Props) => {
+    const tot = formation.reduce((acc, player) => {
+        return acc + player.vote
+    }, 0)
     return (
         <div className={s.container}>
+            <div className={s.tot}>{tot}</div>
             {formation.map((player, i) => {
                 return (
                     <div className={s.player} key={i}>

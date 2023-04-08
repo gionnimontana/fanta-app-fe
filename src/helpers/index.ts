@@ -24,16 +24,25 @@ export const getMatchTeams = (match: Match, Teams: Team[]):
     return { home, away }
 }
 
+export const getVoteSortValue = (role: string): number => {
+    if (role === 'p') return 4
+    if (role === 'd') return 3
+    if (role === 'c') return 2
+    if (role === 'a') return 1
+    return 0
+}
+
 export const getPlayerVotes = (votes: Votes, players: PlayerMap): PlayerVote[] => {
-    return Object.keys(votes).map(key => {
-        const player = players[key]
+    const v = Object.keys(votes).map(key => {
+        const player = players[key] 
         return {
-            name: player.name,
+            name: player?.name || key,
             vote: votes[key],
-            id: player.id,
-            role: player.role
+            id: player?.id || key,
+            role: player?.role || '?'
         }
     })
+    return v.sort((a, b) => getVoteSortValue(b.role) - getVoteSortValue(a.role))
 }
 
 export const getMatchPlayerVotes = (match: Match, players: PlayerMap): 

@@ -14,4 +14,14 @@
 
 .vote {
     width: 3rem;
+    text-align: center;
 }
+
+.tot {
+    display: flex;
+    width: 15rem;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+

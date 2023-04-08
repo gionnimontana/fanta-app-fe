@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom"
 import s from './Match.module.css'
 import { MatchScore } from "../../components/match/score/MatchScore";
 import { MatchFormations } from "../../components/match/formations/MatchFormations";
+import { FullPageLoader } from "../../components/generalUI/fullPageLoader/FullPageLoader";
 
 const Match = () => {
     const { id } = useParams();
@@ -13,19 +14,26 @@ const Match = () => {
     const t = useTeams()
     const teams = t.data || []
     const players = p.data || {}
+    const loading = m.isLoading || p.isLoading || t.isLoading
 
     return (
         <div className={s.outer}>
             <div className={s.container}>
-                <div className={s.day}>Day {m.data?.day || '?'}</div>
-                <div className={s.scoreContainer}>
-                    {m.data ? <MatchScore match={m.data} teams={teams}/> : null}
-                </div>
-                <div className={s.formationsContainer}>
-                    {m.data ? (
-                        <MatchFormations match={m.data} players={players} /> 
-                    ): null}
-                </div>
+                {loading ? (
+                    <div className={s.loader}><FullPageLoader/></div>
+                ): (
+                    <>
+                        <div className={s.day}>Day {m.data?.day || '?'}</div>
+                        <div className={s.scoreContainer}>
+                            {m.data ? <MatchScore match={m.data} teams={teams}/> : null}
+                        </div>
+                        <div className={s.formationsContainer}>
+                            {m.data ? (
+                                <MatchFormations match={m.data} players={players} /> 
+                            ): null}
+                        </div>
+                    </>
+                )}
                 <Link to={`/`} className={s.backbuttonLink}>
                     <button className={s.backbutton}>View all matches</button>
                 </Link>

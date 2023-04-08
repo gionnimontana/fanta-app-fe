@@ -15,7 +15,9 @@ export const MatchFormations = ({ match, players }: Props) => {
     return (
             <div className={s.container}>
                 <MatchFormation formation={home} />
-                <MatchFormation formation={away} />
+                <div className={s.away}>
+                    <MatchFormation formation={away} />
+                </div>
             </div>
 
     );

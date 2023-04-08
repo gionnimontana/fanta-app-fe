@@ -6,6 +6,10 @@
     width: 100vw;
 }
 
+.loader {
+    height: 90vh;
+}
+
 .backbuttonLink {
     position: absolute;
     bottom: 2rem;

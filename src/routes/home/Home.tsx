@@ -3,7 +3,7 @@ import { useTeams } from "../../queries/teams"
 import { useCalendar } from "../../queries/calendar"
 import { MatchCard } from "../../components/match/card/MatchCard"
 import { Match } from "types/matches"
-import FullPageLoader from "../../components/generalUI/fullPageLoader/FullPageLoader"
+import { FullPageLoader } from "../../components/generalUI/fullPageLoader/FullPageLoader"
 import { PageController } from "../../components/generalUI/pageController/PageController"
 import s from "./Home.module.css"
 

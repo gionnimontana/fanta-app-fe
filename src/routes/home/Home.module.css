@@ -28,3 +28,12 @@
         justify-content: center;
     }
 }
+
+@media only screen and (max-width: 520px) {
+    .outerContainer {
+        width: 100vw;
+        height: calc(100vh - 3rem);
+        margin-left: 0;
+    }
+    
+}
