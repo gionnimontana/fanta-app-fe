@@ -1,0 +1,46 @@
+.player {
+    display: flex;
+}
+
+.header {
+    display: flex;
+    padding: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.role {
+    text-transform: uppercase;
+    width: 2rem;
+    font-weight: bold;
+}
+
+.squad {
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.name {
+    width: 10rem;
+}
+
+.value {
+    width: 4rem;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.players {
+    height: calc(95vh - 10rem);
+    overflow: auto;
+}
+

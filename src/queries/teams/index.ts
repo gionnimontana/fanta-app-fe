@@ -11,4 +11,13 @@ export function useTeams() {
         return teams
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
+
+export function useTeam(id: string) {
+    return useQuery(`team-${id}`, async () => {
+        const response = await fetch(`${apiEndpoints.Teams}/${id}`)
+        const data = await response.json()
+        const team = data as Team
+        return team
+    }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
+}
   

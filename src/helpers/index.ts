@@ -1,6 +1,6 @@
 import { Team } from "../types/teams"
 import { DResult, Match, PlayerVote, Score, Votes } from "../types/matches"
-import { PlayerMap } from "../types/players"
+import { Player, PlayerMap } from "../types/players"
 
 export const getMatchTeamsId = (matchString: string): 
     { homeTeamId: string, awayTeamId: string } => 
@@ -53,4 +53,11 @@ export const getMatchPlayerVotes = (match: Match, players: PlayerMap):
     const home = getPlayerVotes(homeVotes, players)
     const away = getPlayerVotes(awayVotes, players)
     return { home, away }
+}
+
+export const getRoster = (team: Team | undefined, players: PlayerMap): Player[] => {
+    if (!team) return []
+    const dPlayers = team.players.split('@')
+    const roster = dPlayers.map(id => players[id] || { id, name: id, role: '?' })
+    return roster
 }

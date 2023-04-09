@@ -2,10 +2,10 @@ import { useMatch } from "../../queries/calendar";
 import { usePlayers } from "../../queries/players";
 import { useTeams } from "../../queries/teams";
 import { Link, useParams } from "react-router-dom"
-import s from './Match.module.css'
 import { MatchScore } from "../../components/match/score/MatchScore";
 import { MatchFormations } from "../../components/match/formations/MatchFormations";
-import { FullPageLoader } from "../../components/generalUI/fullPageLoader/FullPageLoader";
+import { AppScreen } from "../../components/generalUI/appScreen/AppScreen";
+import s from './Match.module.css'
 
 const Match = () => {
     const { id } = useParams();
@@ -17,29 +17,22 @@ const Match = () => {
     const loading = m.isLoading || p.isLoading || t.isLoading
 
     return (
-        <div className={s.outer}>
-            <div className={s.container}>
-                {loading ? (
-                    <div className={s.loader}><FullPageLoader/></div>
-                ): (
-                    <>
-                        <div className={s.day}>Day {m.data?.day || '?'}</div>
-                        <div className={s.scoreContainer}>
-                            {m.data ? <MatchScore match={m.data} teams={teams}/> : null}
-                        </div>
-                        <div className={s.formationsContainer}>
-                            {m.data ? (
-                                <MatchFormations match={m.data} players={players} /> 
-                            ): null}
-                        </div>
-                    </>
-                )}
-                <Link to={`/`} className={s.backbuttonLink}>
-                    <button className={s.backbutton}>View all matches</button>
-                </Link>
-            </div>
-        </div>
-
+        <AppScreen loading={loading}>
+            <>
+                <div className={s.day}>Day {m.data?.day || '?'}</div>
+                <div className={s.scoreContainer}>
+                    {m.data ? <MatchScore match={m.data} teams={teams}/> : null}
+                </div>
+                <div className={s.formationsContainer}>
+                    {m.data ? (
+                        <MatchFormations match={m.data} players={players} /> 
+                    ): null}
+                </div>
+            </>
+            <Link to={`/`} className={s.backbuttonLink}>
+                <button className={s.backbutton}>View all matches</button>
+            </Link>
+        </AppScreen>
     );
 }
 
