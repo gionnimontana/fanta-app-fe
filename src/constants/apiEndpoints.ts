@@ -1,4 +1,4 @@
-const baseUrl = "http://45.32.153.85:8084/api/collections";
+const baseUrl = import.meta.env.VITE_BASE_URL
 
 export const apiEndpoints = {
     Players: `${baseUrl}/players_stats/records`,
