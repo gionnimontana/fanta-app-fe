@@ -10,7 +10,7 @@ export const AppScreen = ({ children, loading }: Props) => {
     return (
         <div className={s.outer}>
             <div className={s.container}>
-                {!loading ? (
+                {loading ? (
                     <div className={s.loader}><FullPageLoader/></div>
                 ): (
                     children
