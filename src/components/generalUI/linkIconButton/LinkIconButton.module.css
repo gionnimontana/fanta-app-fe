@@ -1,0 +1,23 @@
+.backbuttonLink {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 15;
+}
+
+.backbutton {
+    background: var(--contrast);
+    border-radius: 5rem;
+    font-size: 1rem;
+}
+
+.backbutton:hover {
+    border: solid 1px var(--accent);
+}
+
+@media screen and (max-width: 520px) {
+    .backbuttonLink {
+        bottom: 4.5rem;
+        right: 0.5rem;
+    }
+}

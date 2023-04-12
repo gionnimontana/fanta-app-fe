@@ -1,9 +1,8 @@
 .outerContainer {
-    width: calc(100vw - 5rem);
+    width: 100vw;
     text-align: center;
     height: 100vh;
     position: fixed;
-    margin-left: 5rem;
     overflow: auto;
 }
 
@@ -21,19 +20,8 @@
     justify-content: center;
 }
 
-@media screen and (min-width: 768px) {
-    .outerContainer {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+@media screen and (max-width: 520px) {
+    .container {
+        justify-content: flex-start;
     }
-}
-
-@media only screen and (max-width: 520px) {
-    .outerContainer {
-        width: 100vw;
-        height: calc(100vh - 4rem);
-        margin-left: 0;
-    }
-    
 }

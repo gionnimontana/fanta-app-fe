@@ -5,7 +5,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    background-color: var(--background);
+    background-color: var(--accent);
     border-radius: 2rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
@@ -14,11 +14,32 @@
     cursor: pointer;
     border: 1px solid black;
     transition: border-color 0.25s;
-    font-size: 1.6rem;
+    color: var(--background);
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+  }
+
+  .rank {
+    font-weight: bold;
+    width: 3rem;
   }
   
   .link {
     margin: 0.5rem;
+  }
+
+  .value {
+    width: 3rem;
+  }
+
+  .name {
+    width: 10rem;
+  }
+  
+  .card {
+    display: flex;
   }
   
   .container:hover {

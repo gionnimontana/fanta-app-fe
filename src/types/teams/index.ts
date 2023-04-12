@@ -3,4 +3,15 @@ export interface Team {
     name: string
     players: string
     credits: number
+    score?: TeamScore
 }
+
+export interface TeamScore {
+    "d": number
+    "ga": number
+    "gf": number
+    "l": number
+    "mp": number
+    "pts": number
+    "w": number
+  }

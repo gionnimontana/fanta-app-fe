@@ -5,10 +5,11 @@ import { MatchCard } from "../../components/match/card/MatchCard"
 import { Match } from "types/matches"
 import { FullPageLoader } from "../../components/generalUI/fullPageLoader/FullPageLoader"
 import { PageController } from "../../components/generalUI/pageController/PageController"
+import { LinkIconButton } from "../../components/generalUI/linkIconButton/LinkIconButton"
 import s from "./Home.module.css"
 
 const Home = () => {
-    const [day, setDay] = useState<number>(28)
+    const [day, setDay] = useState<number>(29)
     const c = useCalendar(day)
     const t = useTeams()
     const isLoading = c.isLoading || t.isLoading
@@ -28,6 +29,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+            <LinkIconButton link="teams"/>
         </div>
     )
 }

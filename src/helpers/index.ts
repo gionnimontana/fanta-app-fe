@@ -61,3 +61,5 @@ export const getRoster = (team: Team | undefined, players: PlayerMap): Player[] 
     const roster = dPlayers.map(id => players[id] || { id, name: id, role: '?' })
     return roster
 }
+
+export const sortTeamByScore = (teams: Team[]) => teams.sort((a, b) => (b.score?.pts || 0) - (a.score?.pts || 0))

@@ -7,6 +7,7 @@
     padding: 1rem;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
 }
 
 .role {
@@ -16,8 +17,9 @@
 }
 
 .squad {
-    font-size: 2rem;
-    margin-right: 1rem;
+    font-size: 1.5rem;
+    width: 14rem;
+    text-align: center;
 }
 
 .bold {
@@ -33,14 +35,7 @@
     text-align: center;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .players {
-    height: calc(95vh - 10rem);
+    height: calc(95vh - 13rem);
     overflow: auto;
 }
-

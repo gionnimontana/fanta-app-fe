@@ -14,11 +14,27 @@
     cursor: pointer;
     border: 1px solid black;
     transition: border-color 0.25s;
-    font-size: 1.6rem;
+  }
+
+  .rank {
+    font-weight: bold;
+    width: 3rem;
   }
   
   .link {
     margin: 0.5rem;
+  }
+
+  .value {
+    width: 3rem;
+  }
+
+  .name {
+    width: 10rem;
+  }
+  
+  .card {
+    display: flex;
   }
   
   .container:hover {

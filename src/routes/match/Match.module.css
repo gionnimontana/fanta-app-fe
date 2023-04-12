@@ -2,17 +2,6 @@
     height: 90vh;
 }
 
-.backbuttonLink {
-    position: absolute;
-    bottom: 2rem;
-    width: 12rem;
-    left: calc(50% - 5.5rem);
-}
-
-.backbutton {
-    width: 100%;
-}
-
 .formationsContainer {
     height: calc(100% - 14rem);
     overflow: auto;

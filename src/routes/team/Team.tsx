@@ -2,8 +2,11 @@ import { getRoster } from '../../helpers';
 import { usePlayers } from '../../queries/players';
 import { useTeam } from '../../queries/teams';
 import { useParams } from 'react-router-dom';
-import s from './Team.module.css'
 import { AppScreen } from '../../components/generalUI/appScreen/AppScreen';
+import { Table } from '../../components/generalUI/table/Table';
+import { BottomButton } from '../../components/generalUI/bottomButton/BottonButton';
+import { routes } from '../../constants/routes';
+import s from './Team.module.css'
 
 export const Team = () => {
     const { id } = useParams();
@@ -14,11 +17,15 @@ export const Team = () => {
 
     return (
         <AppScreen loading={loading}>
-            <div className={s.container}>
-                <div className={s.header}>
-                    <div className={s.squad}>{t.data?.name || id}</div>
-                    <div className={s.credits}>({t.data?.credits} credits)</div>
-                </div>
+            <Table 
+                minWidth={25}
+                header={
+                    <div className={s.header}>
+                        <div className={s.squad}>{t.data?.name || id}</div>
+                        <div className={s.credits}>({t.data?.credits} credits)</div>
+                    </div>
+                }
+            >
                 <div className={s.player}>
                     <p className={s.role}></p>
                     <p className={`${s.name} ${s.bold}`}>NAME</p>
@@ -41,7 +48,8 @@ export const Team = () => {
                         )
                     })}
                 </div>
-            </div>
+            </Table>
+            <BottomButton to={routes.Teams} label={'View all teams'}/>
         </AppScreen>
     )
 }

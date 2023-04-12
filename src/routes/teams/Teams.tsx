@@ -1,9 +1,14 @@
+import { sortTeamByScore } from "../../helpers"
 import { FullPageLoader } from "../../components/generalUI/fullPageLoader/FullPageLoader"
 import { useTeams } from "../../queries/teams"
 import s from "./Teams.module.css"
+import { TeamCard } from "../../components/teams/card/TeamCard"
+import { TeamHeaderCard } from "../../components/teams/headerCard/TeamHeaderCard"
+import { LinkIconButton } from "../../components/generalUI/linkIconButton/LinkIconButton"
 
 export const Teams = () => {
     const t = useTeams()
+    const teamsByRank = sortTeamByScore(t.data || [])
     const loading = t.isLoading
 
     return (
@@ -12,17 +17,16 @@ export const Teams = () => {
                 <div className={s.container}>
                     {loading ? <FullPageLoader/> : null}
                     <div className={s.cardContainer}>
-                        {t.data? t.data.map((team, i) => {
+                        <TeamHeaderCard/>
+                        {teamsByRank.map((team, i) => {
                         return (
-                            <div className={s.card} key={i}>
-                                <p className={s.role}>{team.name}</p>
-                                <p className={s.name}>{team.credits}</p>
-                            </div>
+                            <TeamCard team={team} rank={i} key={i}/>
                         )
-                        }) : null}
+                        })}
                     </div>
                 </div>
             </div>
+            <LinkIconButton link="calendar"/>
         </div>
     )
 }
