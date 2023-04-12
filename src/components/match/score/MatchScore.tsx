@@ -19,7 +19,7 @@ export const MatchScore = ({ match, teams, linked }: Props) => {
             {linked ? <Link to={routes.Team.replace(':id', home?.id || '')}>
                 <p className={s.name}>{home?.name}</p>
             </Link> : <p className={s.name}>{home?.name}</p>}
-            <p className={s.score}>{score.home} - {score.away}</p>
+            <p className={s.score}>{home?.emoji} {score.home} - {score.away} {away?.emoji}</p>
             {linked ? <Link to={routes.Team.replace(':id', away?.id || '')}>
                 <p className={s.name}>{away?.name}</p>
             </Link>: <p className={s.name}>{away?.name}</p>}

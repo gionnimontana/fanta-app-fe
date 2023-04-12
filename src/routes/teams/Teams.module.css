@@ -20,7 +20,7 @@
     justify-content: center;
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 550px) {
     .container {
         justify-content: flex-start;
     }

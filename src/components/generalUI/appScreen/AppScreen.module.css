@@ -14,3 +14,7 @@
     width: 95vw;
     height: 95vh;
 }
+
+.loader {
+    height: 100%;
+}
