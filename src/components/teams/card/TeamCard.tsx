@@ -13,7 +13,9 @@ export const TeamCard = ({ team, rank }: Props) => {
         <Link key={team.id} to={routes.Team.replace(':id', team.id)} className={s.link}>
             <div className={s.container}>
                 <div className={s.card}>
-                    {rank !== undefined ? <p className={s.rank}>#{rank + 1}</p> : null}
+                    {rank !== undefined ? 
+                        <p className={s.rank}>#{rank + 1} {team.emoji}</p> 
+                    : null}
                     <p className={s.name}>{team.name}</p>
                     <p className={s.value}>{team.credits}</p>
                     <p className={s.value}>{team.score?.mp}</p>

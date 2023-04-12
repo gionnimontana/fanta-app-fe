@@ -10,6 +10,10 @@
     justify-content: center;
 }
 
+.emoji {
+    font-size: 1.5rem;
+}
+
 .role {
     text-transform: uppercase;
     width: 2rem;

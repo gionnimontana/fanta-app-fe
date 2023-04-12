@@ -63,3 +63,17 @@ export const getRoster = (team: Team | undefined, players: PlayerMap): Player[] 
 }
 
 export const sortTeamByScore = (teams: Team[]) => teams.sort((a, b) => (b.score?.pts || 0) - (a.score?.pts || 0))
+
+export const getTeamEmoji = (teamId: string): string => {
+    if (teamId === '2i78s1fyv5d6fo6') return "🦁"
+    if (teamId === 'lglfoeo3fexn9zu') return "🐨"
+    if (teamId === '1uusht0d6gxsd3v') return "🐻"
+    if (teamId === 'gyyt4tcc6y75svy') return "🐯"
+    if (teamId === 'y2ws9gqj1ihhq3w') return "🐼"
+    if (teamId === 'e3rezqjrehi9f7c') return "🐭"
+    if (teamId === '1vwghf9milzueau') return "🐵"
+    if (teamId === 'zm8qz94b8bbe3of') return "🐶"
+    if (teamId === 'mwwynginrfohyuc') return "🐓"
+    if (teamId === 'fmfnbk3o5cmq5e2') return "🐸"
+    return "👀"
+}

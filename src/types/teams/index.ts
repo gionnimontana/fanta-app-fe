@@ -4,6 +4,7 @@ export interface Team {
     players: string
     credits: number
     score?: TeamScore
+    emoji?: string
 }
 
 export interface TeamScore {

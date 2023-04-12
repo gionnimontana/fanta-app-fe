@@ -21,6 +21,7 @@ export const Team = () => {
                 minWidth={25}
                 header={
                     <div className={s.header}>
+                        <p className={s.emoji}>{t.data?.emoji}</p>
                         <div className={s.squad}>{t.data?.name || id}</div>
                         <div className={s.credits}>({t.data?.credits} credits)</div>
                     </div>
