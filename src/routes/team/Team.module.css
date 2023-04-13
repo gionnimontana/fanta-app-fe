@@ -10,8 +10,14 @@
     justify-content: center;
 }
 
+.credits {
+    width: 100%;
+    text-align: center;
+}
+
 .emoji {
-    font-size: 1.5rem;
+    font-size: 3.5rem;
+    margin: 0 1rem;
 }
 
 .role {

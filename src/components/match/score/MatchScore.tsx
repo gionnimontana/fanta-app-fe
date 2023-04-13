@@ -14,15 +14,16 @@ interface Props {
 export const MatchScore = ({ match, teams, linked }: Props) => {
     const { home, away } = getMatchTeams(match, teams)
     const score = getMatchScore(match)
+    const cN = `${s.name} creativeFont`
     return (
         <div className={s.container}>
             {linked ? <Link to={routes.Team.replace(':id', home?.id || '')}>
-                <p className={s.name}>{home?.name}</p>
-            </Link> : <p className={s.name}>{home?.name}</p>}
+                <p className={cN}>{home?.name}</p>
+            </Link> : <p className={cN}>{home?.name}</p>}
             <p className={s.score}>{home?.emoji} {score.home} - {score.away} {away?.emoji}</p>
             {linked ? <Link to={routes.Team.replace(':id', away?.id || '')}>
-                <p className={s.name}>{away?.name}</p>
-            </Link>: <p className={s.name}>{away?.name}</p>}
+                <p className={cN}>{away?.name}</p>
+            </Link>: <p className={cN}>{away?.name}</p>}
         </div>
 
     )

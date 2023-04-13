@@ -66,3 +66,8 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+.creativeFont {
+  font-family: 'Raleway', sans-serif;
+  font-family: 'Short Stack', cursive;
+}

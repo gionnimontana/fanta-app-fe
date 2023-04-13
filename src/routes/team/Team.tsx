@@ -14,6 +14,7 @@ export const Team = () => {
     const p = usePlayers()
     const roster = getRoster(t.data, p.data || {})
     const loading = t.isLoading || p.isLoading
+    const cN = `${s.squad} creativeFont`
 
     return (
         <AppScreen loading={loading}>
@@ -22,8 +23,10 @@ export const Team = () => {
                 header={
                     <div className={s.header}>
                         <p className={s.emoji}>{t.data?.emoji}</p>
-                        <div className={s.squad}>{t.data?.name || id}</div>
-                        <div className={s.credits}>({t.data?.credits} credits)</div>
+                        <div className={s.headerText}>
+                            <div className={cN}>{t.data?.name || id}</div>
+                            <div className={s.credits}>{t.data?.credits} 💰</div>
+                        </div>
                     </div>
                 }
             >

@@ -16,6 +16,10 @@
     transition: border-color 0.25s;
     color: var(--background);
     font-weight: bold;
+  }
+
+  .outer{
+    margin: 0.5rem;
     position: sticky;
     top: 0;
     align-self: flex-start;

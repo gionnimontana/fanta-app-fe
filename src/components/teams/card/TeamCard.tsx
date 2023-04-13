@@ -9,6 +9,7 @@ interface Props {
 }
 
 export const TeamCard = ({ team, rank }: Props) => {
+    const cN = `${s.name} creativeFont`
     return (
         <Link key={team.id} to={routes.Team.replace(':id', team.id)} className={s.link}>
             <div className={s.container}>
@@ -16,7 +17,7 @@ export const TeamCard = ({ team, rank }: Props) => {
                     {rank !== undefined ? 
                         <p className={s.rank}>#{rank + 1} {team.emoji}</p> 
                     : null}
-                    <p className={s.name}>{team.name}</p>
+                    <p className={cN}>{team.name}</p>
                     <p className={s.value}>{team.credits}</p>
                     <p className={s.value}>{team.score?.mp}</p>
                     <p className={s.value}>{team.score?.w}</p>
