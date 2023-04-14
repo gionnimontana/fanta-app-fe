@@ -49,3 +49,9 @@
     height: calc(95vh - 16rem);
     overflow: auto;
 }
+
+@media only screen and (max-width: 385px) {
+    .players {
+        height: calc(95vh - 16rem);
+    }
+}
