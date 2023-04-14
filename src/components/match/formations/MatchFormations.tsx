@@ -1,6 +1,6 @@
 import { Match } from "../../../types/matches";
 import { PlayerMap } from "../../../types/players";
-import { getMatchPlayerVotes } from "../../../helpers";
+import { getMatchFormations } from "../../../helpers";
 import s from './MatchFormations.module.css'
 import { MatchFormation } from "./formation/MatchFormation";
 
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const MatchFormations = ({ match, players }: Props) => {
-    const { home, away } = getMatchPlayerVotes(match, players)
+    const { home, away } = getMatchFormations(match, players)
 
     return (
             <div className={s.container}>

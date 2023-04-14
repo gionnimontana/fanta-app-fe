@@ -1,3 +1,4 @@
+import { getFormationScore } from "helpers";
 import { PlayerVote } from "../../../../types/matches";
 import s from './MatchFormation.module.css'
 
@@ -6,9 +7,7 @@ interface Props {
 }
 
 export const MatchFormation = ({ formation }: Props) => {
-    const tot = formation.reduce((acc, player) => {
-        return acc + player.vote
-    }, 0)
+    const tot = getFormationScore(formation)
     return (
         <div className={s.container}>
             <div className={s.tot}>{tot}</div>

@@ -24,6 +24,12 @@ export const getMatchTeams = (match: Match, Teams: Team[]):
     return { home, away }
 }
 
+export const getFormationScore = (f: PlayerVote[]): number => {
+    return f.reduce((acc: number, player) => {
+        return acc + player.vote
+    }, 0)
+}
+
 export const getVoteSortValue = (role: string): number => {
     if (role === 'p') return 4
     if (role === 'd') return 3
@@ -53,6 +59,11 @@ export const getMatchPlayerVotes = (match: Match, players: PlayerMap):
     const home = getPlayerVotes(homeVotes, players)
     const away = getPlayerVotes(awayVotes, players)
     return { home, away }
+}
+
+export const getMatchFormations = (match: Match, players: PlayerMap):
+    { home: PlayerVote[], away: PlayerVote[] } => {
+    return getMatchPlayerVotes(match, players)
 }
 
 export const getRoster = (team: Team | undefined, players: PlayerMap): Player[] => {
