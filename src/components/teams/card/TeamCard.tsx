@@ -18,12 +18,12 @@ export const TeamCard = ({ team, rank }: Props) => {
                         <p className={s.rank}>#{rank + 1} {team.emoji}</p> 
                     : null}
                     <p className={cN}>{team.name}</p>
-                    <p className={s.value}>{team.credits}</p>
+                    <p className={s.points}>{team.score?.pts}</p>
                     <p className={s.value}>{team.score?.mp}</p>
                     <p className={s.value}>{team.score?.w}</p>
                     <p className={s.value}>{team.score?.d}</p>
                     <p className={s.value}>{team.score?.l}</p>
-                    <p className={s.value}>{team.score?.pts}</p>
+                    <p className={s.value}>{team.credits}</p>
                 </div>
             </div>
         </Link>

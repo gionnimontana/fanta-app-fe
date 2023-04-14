@@ -14,12 +14,12 @@
     cursor: pointer;
     border: 1px solid black;
     transition: border-color 0.25s;
-    color: var(--background);
+    color: var(--backgroundLight);
     font-weight: bold;
   }
 
   .outer{
-    margin: 0.5rem;
+    margin: 0.2rem 0.5rem;
     position: sticky;
     top: 0;
     align-self: flex-start;

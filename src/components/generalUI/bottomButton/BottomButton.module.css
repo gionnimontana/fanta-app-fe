@@ -1,6 +1,6 @@
 .backbuttonLink {
     position: absolute;
-    bottom: 2rem;
+    bottom: 1rem;
     width: 12rem;
     left: calc(50% - 5.5rem);
 }

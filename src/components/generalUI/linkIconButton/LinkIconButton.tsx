@@ -11,8 +11,8 @@ export const LinkIconButton = ({link}: Props) => {
     return (
         <Link to={to} className={s.backbuttonLink}>
             <button className={s.backbutton}>
-                {link === 'calendar' ? (<>&#128197;</>) : null}
-                {link === 'teams' ? (<>&#127942;</>) : null}
+                {link === 'calendar' ? (<>📆</>) : null}
+                {link === 'teams' ? (<>🏆</>) : null}
             </button>
         </Link>
     );
