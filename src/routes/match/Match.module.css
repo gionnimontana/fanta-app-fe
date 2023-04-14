@@ -26,4 +26,10 @@
         height: calc(100% - 16rem);
     }
 }
+
+@media only screen and (max-width: 370px) {
+    .formationsContainer {
+        height: calc(100% - 19rem);
+    }
+}
   
