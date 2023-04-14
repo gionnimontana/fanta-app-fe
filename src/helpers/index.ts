@@ -59,9 +59,10 @@ export const getRoster = (team: Team | undefined, players: PlayerMap): Player[] 
     if (!team) return []
     const dPlayers = team.players.split('@')
     const roster = dPlayers.map(id => players[id] || { id, name: id, role: '?' })
-    return roster
+    return sortPlayerByRole(roster)
 }
 
+export const sortPlayerByRole = (players: Player[]) => players.sort((a, b) => getVoteSortValue(b.role) - getVoteSortValue(a.role))
 export const sortTeamByScore = (teams: Team[]) => teams.sort((a, b) => (b.score?.pts || 0) - (a.score?.pts || 0))
 
 export const getTeamEmoji = (teamId: string): string => {
