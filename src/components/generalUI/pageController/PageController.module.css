@@ -22,7 +22,9 @@
         height: 3rem;
         width: 100vw;
         flex-direction: row;
-        bottom: 0.5rem;
+        bottom: 0rem;
+        padding: 0.5rem;
+        background: var(--background);
     }
     .button {
         margin: 0 0.2rem;
