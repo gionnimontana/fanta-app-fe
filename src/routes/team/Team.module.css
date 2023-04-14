@@ -46,6 +46,6 @@
 }
 
 .players {
-    height: calc(95vh - 13rem);
+    height: calc(95vh - 16rem);
     overflow: auto;
 }
