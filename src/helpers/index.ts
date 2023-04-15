@@ -40,7 +40,7 @@ export const sortPlayersByRole = (role: string): number => {
 
 export const getPreMatchVotes = (form: DPreMatchFormation | null, players: PlayerMap): 
     PreMatchFormation => {
-    let result: PreMatchFormation  = { s: [], b: [] }
+    let result: PreMatchFormation  = { s: [], b: [], m: '?' }
     if (form) {
         const homeVotes = form.s.reduce((acc: Votes, id: string) => {
             acc[id] = 0
@@ -50,7 +50,11 @@ export const getPreMatchVotes = (form: DPreMatchFormation | null, players: Playe
             acc[id] = 0
             return acc
         }, {})
-        result = { s: getPlayerVotes(homeVotes, players), b: getPlayerVotes(awayVotes, players) }
+        result = { 
+            s: getPlayerVotes(homeVotes, players), 
+            b: getPlayerVotes(awayVotes, players) ,
+            m: form.m.split('').join('-')
+        }
     }
     return result
 }
@@ -100,6 +104,14 @@ export const getRoster = (team: Team | undefined, players: PlayerMap): Player[] 
 
 export const sortPlayerByRole = (players: Player[]) => players.sort((a, b) => sortPlayersByRole(b.role) - sortPlayersByRole(a.role))
 export const sortTeamByScore = (teams: Team[]) => teams.sort((a, b) => (b.score?.pts || 0) - (a.score?.pts || 0))
+ 
+export const getMatchIcons = (match: Match): { home: string, away: string } => {
+    const { homeTeamId, awayTeamId } = getMatchTeamsId(match.match)
+    return {
+        home: getTeamEmoji(homeTeamId),
+        away: getTeamEmoji(awayTeamId)
+    }
+}
 
 export const getTeamEmoji = (teamId: string): string => {
     if (teamId === '2i78s1fyv5d6fo6') return "🦁"

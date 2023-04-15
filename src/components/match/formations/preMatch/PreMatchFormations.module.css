@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.marginTop {
+    margin-top: 1rem;
+}
+
+.form {
+    margin-top: 1rem;
+}

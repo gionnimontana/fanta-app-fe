@@ -29,9 +29,11 @@ export interface PlayerVote {
 export interface DPreMatchFormation {
     s: string[]
     b: string[]
+    m: string
 }
 
 export interface PreMatchFormation {
     s: PlayerVote[]
     b: PlayerVote[]
+    m: string
 }
