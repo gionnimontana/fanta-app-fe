@@ -33,6 +33,7 @@ export const Team = () => {
                 <div className={s.player}>
                     <p className={s.role}></p>
                     <p className={`${s.name} ${s.bold}`}>NAME</p>
+                    <p className={`${s.name} ${s.bold}`}>FROM</p>
                     <p className={`${s.value} ${s.bold}`}>PRICE</p>
                     <p className={`${s.value} ${s.bold}`}>FVM</p>
                     <p className={`${s.value} ${s.bold}`}>SI</p>
@@ -44,6 +45,7 @@ export const Team = () => {
                             <div className={s.player} key={i}>
                                 <p className={s.role}>{player.role}</p>
                                 <p className={s.name}>{player.name}</p>
+                                <p className={s.name}>{player.team}</p>
                                 <p className={s.value}>{player.price}</p>
                                 <p className={s.value}>{player.fvm}</p>
                                 <p className={s.value}>{player.starter_index}</p>
