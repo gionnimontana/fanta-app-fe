@@ -61,11 +61,6 @@ export const getMatchPlayerVotes = (match: Match, players: PlayerMap):
     return { home, away }
 }
 
-export const getMatchFormations = (match: Match, players: PlayerMap):
-    { home: PlayerVote[], away: PlayerVote[] } => {
-    return getMatchPlayerVotes(match, players)
-}
-
 export const getRoster = (team: Team | undefined, players: PlayerMap): Player[] => {
     if (!team) return []
     const dPlayers = team.players.split('@')

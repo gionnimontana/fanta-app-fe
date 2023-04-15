@@ -1,4 +1,4 @@
-import { getFormationScore } from "helpers";
+import { getFormationScore } from "../../../../helpers";
 import { PlayerVote } from "../../../../types/matches";
 import s from './MatchFormation.module.css'
 
