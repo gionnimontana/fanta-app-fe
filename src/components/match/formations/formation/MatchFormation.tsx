@@ -10,7 +10,7 @@ export const MatchFormation = ({ formation }: Props) => {
     const tot = getFormationScore(formation)
     return (
         <div className={s.container}>
-            <div className={s.tot}>{tot}</div>
+            {tot ? <div className={s.tot}>{tot}</div> : null}
             {formation.map((player, i) => {
                 return (
                     <div className={s.player} key={i}>

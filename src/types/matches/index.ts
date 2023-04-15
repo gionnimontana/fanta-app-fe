@@ -25,3 +25,13 @@ export interface PlayerVote {
     id: string
     role: string
 }
+
+export interface DPreMatchFormation {
+    s: string[]
+    b: string[]
+}
+
+export interface PreMatchFormation {
+    s: PlayerVote[]
+    b: PlayerVote[]
+}

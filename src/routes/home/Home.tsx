@@ -9,7 +9,7 @@ import { LinkIconButton } from "../../components/generalUI/linkIconButton/LinkIc
 import s from "./Home.module.css"
 
 const Home = () => {
-    const [day, setDay] = useState<number>(29)
+    const [day, setDay] = useState<number>(30)
     const c = useCalendar(day)
     const t = useTeams()
     const isLoading = c.isLoading || t.isLoading

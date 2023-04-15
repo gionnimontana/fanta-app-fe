@@ -1,5 +1,5 @@
 import { Team } from "../types/teams"
-import { DResult, Match, PlayerVote, Score, Votes } from "../types/matches"
+import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
 import { Player, PlayerMap } from "../types/players"
 
 export const getMatchTeamsId = (matchString: string): 
@@ -30,7 +30,7 @@ export const getFormationScore = (f: PlayerVote[]): number => {
     }, 0)
 }
 
-export const getVoteSortValue = (role: string): number => {
+export const sortPlayersByRole = (role: string): number => {
     if (role === 'p') return 4
     if (role === 'd') return 3
     if (role === 'c') return 2
@@ -38,24 +38,54 @@ export const getVoteSortValue = (role: string): number => {
     return 0
 }
 
+export const getPreMatchVotes = (form: DPreMatchFormation | null, players: PlayerMap): 
+    PreMatchFormation => {
+    let result: PreMatchFormation  = { s: [], b: [] }
+    if (form) {
+        const homeVotes = form.s.reduce((acc: Votes, id: string) => {
+            acc[id] = 0
+            return acc
+        }, {})
+        const awayVotes = form.b.reduce((acc: Votes, id: string) => {
+            acc[id] = 0
+            return acc
+        }, {})
+        result = { s: getPlayerVotes(homeVotes, players), b: getPlayerVotes(awayVotes, players) }
+    }
+    return result
+}
+
 export const getPlayerVotes = (votes: Votes, players: PlayerMap): PlayerVote[] => {
     const v = Object.keys(votes).map(key => {
         const player = players[key] 
         return {
             name: player?.name || key,
-            vote: votes[key],
+            vote: votes[key] || 0,
             id: player?.id || key,
             role: player?.role || '?'
         }
     })
-    return v.sort((a, b) => getVoteSortValue(b.role) - getVoteSortValue(a.role))
+    return v.sort((a, b) => sortPlayersByRole(b.role) - sortPlayersByRole(a.role))
+}
+
+export const getMatchResult = (match: Match): DResult | null => {
+    return match?.result ? JSON.parse(match.result) as DResult : null
+}
+
+export const getPreMatchFormations = (match: Match, players: PlayerMap):
+    { home: PreMatchFormation, away: PreMatchFormation } => {
+    const home = match.home_form ? JSON.parse(match.home_form) as DPreMatchFormation : null
+    const away = match.away_form ? JSON.parse(match.away_form) as DPreMatchFormation : null
+    const homeVotes = getPreMatchVotes(home, players)
+    const awayVotes = getPreMatchVotes(away, players)
+    return { home: homeVotes, away: awayVotes }
 }
 
 export const getMatchPlayerVotes = (match: Match, players: PlayerMap): 
     { home: PlayerVote[], away: PlayerVote[] } => {
-    const dMatch = match?.result ? JSON.parse(match.result) as DResult : null
-    const homeVotes = dMatch?.home || {}
-    const awayVotes = dMatch?.away || {}
+    const dResult = getMatchResult(match)
+    const homeVotes = dResult?.home || {}
+    const awayVotes = dResult?.away || {}
     const home = getPlayerVotes(homeVotes, players)
     const away = getPlayerVotes(awayVotes, players)
     return { home, away }
@@ -68,7 +98,7 @@ export const getRoster = (team: Team | undefined, players: PlayerMap): Player[] 
     return sortPlayerByRole(roster)
 }
 
-export const sortPlayerByRole = (players: Player[]) => players.sort((a, b) => getVoteSortValue(b.role) - getVoteSortValue(a.role))
+export const sortPlayerByRole = (players: Player[]) => players.sort((a, b) => sortPlayersByRole(b.role) - sortPlayersByRole(a.role))
 export const sortTeamByScore = (teams: Team[]) => teams.sort((a, b) => (b.score?.pts || 0) - (a.score?.pts || 0))
 
 export const getTeamEmoji = (teamId: string): string => {
