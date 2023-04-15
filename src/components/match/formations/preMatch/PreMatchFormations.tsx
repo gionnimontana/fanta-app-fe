@@ -22,7 +22,7 @@ export const PreMatchFormations = ({ match, players }: Props) => {
                     <MatchFormation formation={home.b} />
                 </div>
                 <div className={s.form}>
-                    <div>{icon.home} {away.m} 🏁</div>
+                    <div>{icon.away} {away.m} 🏁</div>
                     <MatchFormation formation={away.s} />
                     <div className={s.marginTop}>{icon.away} 🍺</div>
                     <MatchFormation formation={away.b} />
