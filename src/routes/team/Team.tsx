@@ -34,7 +34,7 @@ export const Team = () => {
                     <p className={s.role}></p>
                     <p className={`${s.name} ${s.bold}`}>NAME</p>
                     <p className={`${s.name} ${s.bold}`}>FROM</p>
-                    <p className={`${s.value} ${s.bold}`}>PRICE</p>
+                    <p className={`${s.value} ${s.bold}`}>💰</p>
                     <p className={`${s.value} ${s.bold}`}>FVM</p>
                     <p className={`${s.value} ${s.bold}`}>SI</p>
                     <p className={`${s.value} ${s.bold}`}>PNM</p>

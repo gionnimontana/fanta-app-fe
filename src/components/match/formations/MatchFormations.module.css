@@ -3,6 +3,7 @@
     justify-content: space-around;
     padding: 1rem;
     flex-wrap: wrap;
+    padding: 0 1rem;
 }
 
 @media screen and (max-width: 550px) {

@@ -16,7 +16,7 @@ export const MatchFormation = ({ formation }: Props) => {
                     <div className={s.player} key={i}>
                         <p className={s.role}>{player.role}</p>
                         <p className={s.name}>{player.name}</p>
-                        <p className={s.vote}>{player.vote}</p>
+                        <p className={s.vote}>{player.vote || '-'}</p>
                     </div>
                 )
             })
