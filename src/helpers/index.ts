@@ -2,6 +2,18 @@ import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
 import { Player, PlayerMap } from "../types/players"
 
+export const getCurrentMatchDay = () => {
+    const nowTS = new Date().getTime()
+    if (nowTS < 1682542800000) return 31
+    if (nowTS < 1682935200000) return 32
+    if (nowTS < 1683154800000) return 33
+    if (nowTS < 1683154800000) return 34
+    if (nowTS < 1683154800000) return 35
+    if (nowTS < 1685037600000) return 36
+    if (nowTS < 1685642400000) return 37
+    return 38
+}
+
 export const getMatchTeamsId = (matchString: string): 
     { homeTeamId: string, awayTeamId: string } => 
 {

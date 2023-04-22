@@ -7,9 +7,10 @@ import { FullPageLoader } from "../../components/generalUI/fullPageLoader/FullPa
 import { PageController } from "../../components/generalUI/pageController/PageController"
 import { LinkIconButton } from "../../components/generalUI/linkIconButton/LinkIconButton"
 import s from "./Home.module.css"
+import { getCurrentMatchDay } from "../../helpers"
 
 const Home = () => {
-    const [day, setDay] = useState<number>(30)
+    const [day, setDay] = useState<number>(getCurrentMatchDay())
     const c = useCalendar(day)
     const t = useTeams()
     const isLoading = c.isLoading || t.isLoading
