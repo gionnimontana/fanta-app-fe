@@ -50,16 +50,16 @@ export const sortPlayersByRole = (role: string): number => {
     return 0
 }
 
-export const getPreMatchVotes = (form: DPreMatchFormation | null, players: PlayerMap): 
+export const getPreMatchVotes = (form: DPreMatchFormation | null, players: PlayerMap, votes: PlayerVote[]): 
     PreMatchFormation => {
     let result: PreMatchFormation  = { s: [], b: [], m: '?' }
     if (form) {
         const homeVotes = form.s.reduce((acc: Votes, id: string) => {
-            acc[id] = 0
+            acc[id] = votes.find(v => v.id === id)?.vote || 0
             return acc
         }, {})
         const awayVotes = form.b.reduce((acc: Votes, id: string) => {
-            acc[id] = 0
+            acc[id] = votes.find(v => v.id === id)?.vote || 0
             return acc
         }, {})
         result = { 
@@ -88,14 +88,24 @@ export const getMatchResult = (match: Match): DResult | null => {
     return match?.result ? JSON.parse(match.result) as DResult : null
 }
 
-export const getPreMatchFormations = (match: Match, players: PlayerMap):
+export const getMatchFormations = (match: Match, players: PlayerMap):
     { home: PreMatchFormation, away: PreMatchFormation } => {
     const home = match.home_form ? JSON.parse(match.home_form) as DPreMatchFormation : null
     const away = match.away_form ? JSON.parse(match.away_form) as DPreMatchFormation : null
-    const homeVotes = getPreMatchVotes(home, players)
-    const awayVotes = getPreMatchVotes(away, players)
+    const v = getMatchPlayerVotes(match, players)
+    const homeVotes = getPreMatchVotes(home, players, v.home)
+    const awayVotes = getPreMatchVotes(away, players, v.away)
     return { home: homeVotes, away: awayVotes }
 }
+
+export const getMatchPoints = (match: Match, players: PlayerMap): 
+    { home: number, away: number } => {
+    const v = getMatchPlayerVotes(match, players)
+    const totH = getFormationScore(v.home)
+    const totA = getFormationScore(v.away)
+    return { home: totH, away: totA }
+}
+
 
 export const getMatchPlayerVotes = (match: Match, players: PlayerMap): 
     { home: PlayerVote[], away: PlayerVote[] } => {

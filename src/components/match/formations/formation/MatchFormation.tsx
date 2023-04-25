@@ -1,4 +1,3 @@
-import { getFormationScore } from "../../../../helpers";
 import { PlayerVote } from "../../../../types/matches";
 import s from './MatchFormation.module.css'
 
@@ -7,10 +6,8 @@ interface Props {
 }
 
 export const MatchFormation = ({ formation }: Props) => {
-    const tot = getFormationScore(formation)
     return (
         <div className={s.container}>
-            {tot ? <div className={s.tot}>{tot}</div> : null}
             {formation.map((player, i) => {
                 return (
                     <div className={s.player} key={i}>

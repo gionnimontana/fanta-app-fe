@@ -1,9 +1,8 @@
 import { Match } from "../../../types/matches";
 import { PlayerMap } from "../../../types/players";
-import s from './MatchFormations.module.css'
 import { MatchFormation } from "./formation/MatchFormation";
-import { getMatchPlayerVotes } from "../../../helpers";
-import { PreMatchFormations } from "./preMatch/PreMatchFormations";
+import { getMatchFormations, getMatchIcons, getMatchPoints } from "../../../helpers";
+import s from './MatchFormations.module.css'
 
 interface Props {
     match: Match
@@ -11,20 +10,26 @@ interface Props {
 }
 
 export const MatchFormations = ({ match, players }: Props) => {
-    const { home, away } = getMatchPlayerVotes(match, players)
-    const scoreExists = Boolean(match.result)
+    const { home, away } = getMatchFormations(match, players)
+    const p = getMatchPoints(match, players)
+    const icon = getMatchIcons(match)
 
     return (
             <div className={s.container}>
-                {scoreExists ? (<>
-                    <MatchFormation formation={home} />
-                    <div className={s.away}>
-                        <MatchFormation formation={away} />
-                    </div>
-                </>): (
-                    <PreMatchFormations match={match} players={players}/>
-                )}
+                <div className={s.form}>
+                    {p.home ? <div className={s.tot}>{p.home}</div> : null}
+                    <div className={s.center}>{icon.home} {home.m} 🏁</div>
+                    <MatchFormation formation={home.s} />
+                    <div className={s.marginTop}>{icon.home} 🍺</div>
+                    <MatchFormation formation={home.b} />
+                </div>
+                <div className={s.form}>
+                    {p.away ? <div className={s.tot}>{p.away}</div> : null}
+                    <div className={s.center}>{icon.away} {away.m} 🏁</div>
+                    <MatchFormation formation={away.s} />
+                    <div className={s.marginTop}>{icon.away} 🍺</div>
+                    <MatchFormation formation={away.b} />
+                </div>
             </div>
-
     );
 }
