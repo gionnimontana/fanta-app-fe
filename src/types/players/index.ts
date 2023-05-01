@@ -2,7 +2,6 @@ export interface Player {
     id: string
     name: string
     team: string
-    price: number
     fvm: number
     starter_index: number
     role: string

@@ -2,7 +2,7 @@ import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
 import { Player, PlayerMap } from "../types/players"
 
-export const getCurrentMatchDay = () => {
+export const getCurrentMatchDay = (): number => {
     const nowTS = new Date().getTime()
     if (nowTS < 1682542800000) return 31
     if (nowTS < 1682935200000) return 32

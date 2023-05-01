@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useTeams } from "../../queries/teams"
 import { useCalendar } from "../../queries/calendar"
 import { MatchCard } from "../../components/match/card/MatchCard"
@@ -15,6 +15,31 @@ const Home = () => {
     const t = useTeams()
     const isLoading = c.isLoading || t.isLoading
     const isError = c.isError || t.isError
+
+    useEffect(() => {
+        let touchstartX = 0
+        let touchendX = 0
+            
+        function checkDirection() {
+        if (touchendX < touchstartX) alert('swiped left!')
+        if (touchendX > touchstartX) alert('swiped right!')
+        }
+
+        document.addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX
+        })
+
+        document.addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX
+        checkDirection()
+        })
+
+        return () => {
+            document.removeEventListener('touchstart', () => {})
+            document.removeEventListener('touchend', () => {})
+        }
+
+    }, [])
 
     return (
         <div className={s.mainContainer}>
