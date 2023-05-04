@@ -9,7 +9,7 @@ import { routes } from "../../constants/routes";
 import { BottomButton } from "../../components/generalUI/bottomButton/BottonButton";
 import s from './Match.module.css'
 
-const Match = () => {
+export const Match = () => {
     const { id } = useParams();
     const m = useMatch(id || "")
     const p = usePlayers()
@@ -20,18 +20,14 @@ const Match = () => {
 
     return (
         <AppScreen loading={loading}>
-            <>
-                <div className={s.day}>Day {m.data?.day || '?'}</div>
-                <div className={s.scoreContainer}>
-                    {m.data ? <MatchScore match={m.data} teams={teams} linked={true}/> : null}
-                </div>
-                <div className={s.formationsContainer}>
-                    {m.data ? <MatchFormations match={m.data} players={players} /> : null}
-                </div>
-            </>
+            <div className={s.day}>Day {m.data?.day || '?'}</div>
+            <div className={s.scoreContainer}>
+                {m.data ? <MatchScore match={m.data} teams={teams} linked={true}/> : null}
+            </div>
+            <div className={s.formationsContainer}>
+                {m.data ? <MatchFormations match={m.data} players={players} /> : null}
+            </div>
             <BottomButton label="View all matches" to={routes.Home}/>
         </AppScreen>
     );
 }
-
-export default Match
