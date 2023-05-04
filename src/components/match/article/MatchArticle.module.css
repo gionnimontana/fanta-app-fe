@@ -1,0 +1,23 @@
+.articlecontainer {
+    background-color: var(--backgroundLight);
+    border-radius: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: 1px solid black;
+    transition: border-color 0.25s;
+    font-size: 1rem;
+}
+
+.articleText {
+    text-align: initial;
+    padding: 1rem;
+    max-width: 28rem;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding-top: 1rem;
+    color: var(--contrast);
+}
