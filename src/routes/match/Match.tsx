@@ -25,7 +25,7 @@ export const Match = () => {
                 {m.data ? <MatchScore match={m.data} teams={teams} linked={true}/> : null}
             </div>
             <div className={s.formationsContainer}>
-                {m.data ? <MatchFormations match={m.data} players={players} /> : null}
+                {m.data ? <MatchFormations match={m.data} players={players} teams={teams}/> : null}
             </div>
             <BottomButton label="View all matches" to={routes.Home}/>
         </AppScreen>

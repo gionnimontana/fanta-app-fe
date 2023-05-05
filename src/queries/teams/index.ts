@@ -9,11 +9,7 @@ export function useTeams() {
         const response = await fetch(apiEndpoints.Teams)
         const data = await response.json()
         const teams = data.items as Team[]
-        const EmojiTeams: Team[] = teams.map(team => ({
-            ...team,
-            emoji: getTeamEmoji(team.id)
-        }))
-        return EmojiTeams
+        return teams
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 
@@ -22,11 +18,7 @@ export function useTeam(id: string) {
         const response = await fetch(`${apiEndpoints.Teams}/${id}`)
         const data = await response.json()
         const team = data as Team
-        const emojiTeam: Team = {
-            ...team,
-            emoji: getTeamEmoji(team.id)
-        }
-        return emojiTeam
+        return team
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
   

@@ -127,24 +127,16 @@ export const getRoster = (team: Team | undefined, players: PlayerMap): Player[] 
 export const sortPlayerByRole = (players: Player[]) => players.sort((a, b) => sortPlayersByRole(b.role) - sortPlayersByRole(a.role))
 export const sortTeamByScore = (teams: Team[]) => teams.sort((a, b) => (b.score?.pts || 0) - (a.score?.pts || 0))
  
-export const getMatchIcons = (match: Match): { home: string, away: string } => {
+export const getMatchIcons = (match: Match, teams: Team[]): { home: string, away: string } => {
     const { homeTeamId, awayTeamId } = getMatchTeamsId(match.match)
     return {
-        home: getTeamEmoji(homeTeamId),
-        away: getTeamEmoji(awayTeamId)
+        home: getTeamEmoji(homeTeamId, teams),
+        away: getTeamEmoji(awayTeamId, teams)
     }
 }
 
-export const getTeamEmoji = (teamId: string): string => {
-    if (teamId === '2i78s1fyv5d6fo6') return "🦁"
-    if (teamId === 'lglfoeo3fexn9zu') return "🐨"
-    if (teamId === '1uusht0d6gxsd3v') return "🐻"
-    if (teamId === 'gyyt4tcc6y75svy') return "🐯"
-    if (teamId === 'y2ws9gqj1ihhq3w') return "🐼"
-    if (teamId === 'e3rezqjrehi9f7c') return "🐭"
-    if (teamId === '1vwghf9milzueau') return "🐵"
-    if (teamId === 'zm8qz94b8bbe3of') return "🐶"
-    if (teamId === 'mwwynginrfohyuc') return "🐓"
-    if (teamId === 'fmfnbk3o5cmq5e2') return "🐸"
+export const getTeamEmoji = (teamId: string, teams: Team[]): string => {
+    const icon = teams.find(t => t.id === teamId)?.emoji
+    if (icon) return icon
     return "👀"
 }
