@@ -13,8 +13,7 @@ import { SwipeListener } from "../../components/generalUI/swipeListener/SwipeLis
 import { MatchArticle } from "../../components/match/article/MatchArticle"
 
 export const Home = () => {
-    // const [day, setDay] = useState<number>(getCurrentMatchDay())
-    const [day, setDay] = useState<number>(32)
+    const [day, setDay] = useState<number>(getCurrentMatchDay())
     const c = useCalendar(day)
     const a = useArticle('results', day)
     const t = useTeams()

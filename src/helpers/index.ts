@@ -6,9 +6,9 @@ export const getCurrentMatchDay = (): number => {
     const nowTS = new Date().getTime()
     if (nowTS < 1682542800000) return 31
     if (nowTS < 1682935200000) return 32
-    if (nowTS < 1683154800000) return 33
-    if (nowTS < 1683154800000) return 34
-    if (nowTS < 1683154800000) return 35
+    if (nowTS < 1683377012000) return 33
+    if (nowTS < 1683722612000) return 34
+    if (nowTS < 1684349012000) return 35
     if (nowTS < 1685037600000) return 36
     if (nowTS < 1685642400000) return 37
     return 38
