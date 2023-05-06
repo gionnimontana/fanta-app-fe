@@ -1,7 +1,6 @@
 export interface Team {
     id: string
     name: string
-    players: string
     credits: number
     score?: TeamScore
     emoji: string

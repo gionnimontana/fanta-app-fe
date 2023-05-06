@@ -5,4 +5,5 @@ export const apiEndpoints = {
     Calendar: `${baseUrl}/calendar/records`,
     Teams: `${baseUrl}/teams/records`,
     Articles: `${baseUrl}/articles/records`,
+    Purchases: `${baseUrl}/purchases/records`,
 };

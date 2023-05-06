@@ -1,5 +1,5 @@
 import { getRoster } from '../../helpers';
-import { usePlayers } from '../../queries/players';
+import { usePlayers, useTeamPlayers } from '../../queries/players';
 import { useTeam } from '../../queries/teams';
 import { useParams } from 'react-router-dom';
 import { AppScreen } from '../../components/generalUI/appScreen/AppScreen';
@@ -11,7 +11,7 @@ import s from './Team.module.css'
 export const Team = () => {
     const { id } = useParams();
     const t = useTeam(id || '');
-    const p = usePlayers()
+    const p = useTeamPlayers(id)
     const roster = getRoster(t.data, p.data || {})
     const loading = t.isLoading || p.isLoading
     const cN = `${s.squad} creativeFont`
