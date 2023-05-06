@@ -1,5 +1,5 @@
 import { getRoster } from '../../helpers';
-import { usePlayers, useTeamPlayers } from '../../queries/players';
+import { useTeamPlayers } from '../../queries/players';
 import { useTeam } from '../../queries/teams';
 import { useParams } from 'react-router-dom';
 import { AppScreen } from '../../components/generalUI/appScreen/AppScreen';

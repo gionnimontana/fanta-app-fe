@@ -119,8 +119,7 @@ export const getMatchPlayerVotes = (match: Match, players: PlayerMap):
 
 export const getRoster = (team: Team | undefined, players: PlayerMap): Player[] => {
     if (!team) return []
-    const dPlayers = team.players.split('@')
-    const roster = dPlayers.map(id => players[id] || { id, name: id, role: '?' })
+    const roster = Object.keys(players).map(el => players[el])
     return sortPlayerByRole(roster)
 }
 
