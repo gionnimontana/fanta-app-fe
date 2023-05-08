@@ -14,7 +14,7 @@ export const PageController = ({ page, setPage, tot }: Props) => {
         setTimeout(() => {
             document.getElementById('scrollIntoView')?.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
         }, 100)
-    }, [page])
+    }, [page, tot])
 
     return (
         <div className={s.container}>
