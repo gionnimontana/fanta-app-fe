@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import s from './LinkIconButton.module.css'
 
 interface Props {
-    link: 'calendar' | 'teams'
+    link: 'calendar' | 'teams' | 'auth' | 'edit'
 }
 
 export const LinkIconButton = ({link}: Props) => {
@@ -13,6 +13,8 @@ export const LinkIconButton = ({link}: Props) => {
             <button className={s.backbutton}>
                 {link === 'calendar' ? (<>📆</>) : null}
                 {link === 'teams' ? (<>🏆</>) : null}
+                {link === 'auth' ? (<>🔑</>) : null}
+                {link === 'edit' ? (<>🖊</>) : null}
             </button>
         </Link>
     );
