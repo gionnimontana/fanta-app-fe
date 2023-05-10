@@ -13,5 +13,4 @@ To install and run the project, follow these steps:
 
 ## Tech Stack
 
-The tech stack used for this application includes various React and Typescript libraries, such as Vite, Vitest, and React Query. Vite is a development tool that can run the development server, hot module replacement, and production build for React, Vue, and other JavaScript frameworks. Vitest, on the other hand, is a lightweight testing framework that integrates seamlessly with Vite, capable of testing Typescript and React code. Finally, React Query is a powerful data fetching and caching library that simplifies working with APIs in React applications. Together, these libraries provide a solid foundation for building efficient and scalable React applications.
-
+React ,Vite and React Query. 
