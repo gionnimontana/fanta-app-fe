@@ -26,7 +26,7 @@ export const Match = () => {
                 {m.data ? <MatchFormWrapper match={m.data} teams={teams}/> : null}
             </div>
             <BottomButton label="View all matches" to={routes.Home}/>
-            {m.data ? <EditFormButton /> : null}
+            {m.data ? <EditFormButton match={m.data} /> : null}
         </AppScreen>
     );
 }

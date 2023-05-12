@@ -34,7 +34,6 @@ export const useTeamPlayers = (teamId?: string) => {
     const response = await fetch(apiEndpoints.Purchases + urlParams)
     const data = await response.json()
     const matchPlayers = data.items.map((el: any) => el.expand.player) as Player[]
-    console.log(matchPlayers)
     const playerMap = matchPlayers.reduce((acc: PlayerMap, player) => {
         acc[player.id] = player
         return acc
@@ -51,7 +50,6 @@ export function useMatchPlayers(match: Match) {
         const response = await fetch(apiEndpoints.Purchases + urlParams)
         const data = await response.json()
         const matchPlayers = data.items.map((el: any) => el.expand.player) as Player[]
-        console.log(matchPlayers)
         const playerMap = matchPlayers.reduce((acc: PlayerMap, player) => {
             acc[player.id] = player
             return acc
