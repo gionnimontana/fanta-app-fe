@@ -88,6 +88,13 @@ export const getMatchResult = (match: Match): DResult | null => {
     return match?.result ? JSON.parse(match.result) as DResult : null
 }
 
+export const getTeamFormation = (match: Match, players: PlayerMap, teamId: string):
+    PreMatchFormation => {
+        const { home, away } = getMatchFormations(match, players)
+        const isHome = match.match.split('-')[0] === teamId
+        return isHome ? home : away
+}
+
 export const getMatchFormations = (match: Match, players: PlayerMap):
     { home: PreMatchFormation, away: PreMatchFormation } => {
     const home = match.home_form ? JSON.parse(match.home_form) as DPreMatchFormation : null
