@@ -8,7 +8,6 @@ export function useCalendar(day: number) {
         const response = await fetch(apiEndpoints.Calendar + `?filter=(day=${day})`)
         const data = await response.json()
         const calendar = data
-        console.log(calendar.items)
         return calendar.items as Match[]
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime });
 }

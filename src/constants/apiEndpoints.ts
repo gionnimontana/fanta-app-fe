@@ -1,4 +1,4 @@
-const baseUrl = import.meta.env.VITE_BASE_URL
+const baseUrl = import.meta.env.VITE_BASE_URL + '/api/collections'
 
 export const apiEndpoints = {
     Players: `${baseUrl}/players_stats/records`,

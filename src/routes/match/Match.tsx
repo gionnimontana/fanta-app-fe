@@ -7,6 +7,7 @@ import { routes } from "../../constants/routes";
 import { BottomButton } from "../../components/generalUI/bottomButton/BottonButton";
 import s from './Match.module.css'
 import { MatchFormWrapper } from "./components/MatchFormWrapper";
+import { EditFormButton } from "./components/EditFormButton";
 
 export const Match = () => {
     const { id } = useParams();
@@ -25,6 +26,7 @@ export const Match = () => {
                 {m.data ? <MatchFormWrapper match={m.data} teams={teams}/> : null}
             </div>
             <BottomButton label="View all matches" to={routes.Home}/>
+            {m.data ? <EditFormButton match={m.data} /> : null}
         </AppScreen>
     );
 }
