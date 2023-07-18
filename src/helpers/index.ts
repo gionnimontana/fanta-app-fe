@@ -146,3 +146,50 @@ export const getTeamEmoji = (teamId: string, teams: Team[]): string => {
     if (icon) return icon
     return "👀"
 }
+
+export const getPlayerFormationIcon = (playerId: string, formation: PreMatchFormation): string => {
+    const starter = formation.s.find(p => p.id === playerId)
+    if (starter) return "🏁"
+    const bencher = formation.b.find(p => p.id === playerId)
+    if (bencher) return "🍺"
+    return "👀"
+}
+
+export const getNewFormationPlayerChange = (player: Player, formation: PreMatchFormation): PreMatchFormation => {
+    const playerId = player.id
+    const starter = formation.s.find(p => p.id === playerId)
+    if (starter) {
+        const newFormation = {
+            ...formation,
+            s: formation.s.filter(p => p.id !== playerId),
+            b: [...formation.b, starter]
+        }
+        return newFormation
+    }
+    const bencher = formation.b.find(p => p.id === playerId)
+    if (bencher) {
+        const newFormation = {
+            ...formation,
+            b: formation.b.filter(p => p.id !== playerId)
+        }
+        return newFormation
+    }
+    const newPlayerVote: PlayerVote = {
+        id: playerId,
+        name: player.name,
+        vote: 0,
+        role: player.role
+    }
+    const newFormation = {
+        ...formation,
+        s: [...formation.s, newPlayerVote],
+    }
+    return newFormation
+}
+
+export const getNewModuleOnChange = (formation: PreMatchFormation): string => {
+    const defenders = formation.s.filter(p => p.role === 'd').length
+    const midfielders = formation.s.filter(p => p.role === 'c').length
+    const attackers = formation.s.filter(p => p.role === 'a').length
+    return `${defenders}-${midfielders}-${attackers}`
+}

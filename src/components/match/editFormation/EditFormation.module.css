@@ -1,11 +1,23 @@
 .player {
     display: flex;
-    height: 2.5rem;
+    height: 3.5rem;
     align-items: center;
 }
 
+.position {
+    font-size: 1.3rem;
+    background: var(--contrast);
+    border-radius: 3rem;
+    padding: 0.2rem;
+    margin: 0.5rem;
+}
+
+.positionH {
+    width: 5rem;
+}
+
 .headerText {
-    font-size: 2rem;
+    font-size: 1.2rem;
 }
 
 .header {
@@ -18,7 +30,7 @@
 
 .emoji {
     font-size: 2rem;
-    margin: 0 1rem;
+    margin: 0 0.5rem;
 }
 
 .role {
@@ -49,6 +61,15 @@
 .players {
     height: calc(95vh - 16rem);
     overflow: auto;
+}
+
+.savebuttoncontainer {
+    width: 100%;
+    text-align: center;
+}
+
+.savebutton {
+    margin-top: 2rem
 }
 
 @media only screen and (max-width: 385px) {
