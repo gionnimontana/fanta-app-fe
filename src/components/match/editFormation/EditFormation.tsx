@@ -1,10 +1,11 @@
 import { Team } from "../../../types/teams"
 import { Table } from "../../../components/generalUI/table/Table"
 import { Player, PlayerMap } from "../../../types/players"
-import { getNewFormationPlayerChange, getNewModuleOnChange, getPlayerFormationIcon, getRoster, getTeamFormation } from "../../../helpers"
+import { getNewFormationPlayerChange, getNewModuleOnChange, getPlayerFormationIcon, getRoster, getTeamFormation, isValidFormation } from "../../../helpers"
 import { Match, PreMatchFormation } from "../../../types/matches"
 import s from './EditFormation.module.css'
 import { useState } from "react"
+import { validModules } from "../../../constants/settings"
 
 interface Props {
     team: Team
@@ -24,6 +25,12 @@ export const EditFormation = ({team, players, match}: Props) => {
         const newModule = getNewModuleOnChange(newFormation)
         setFormation(newFormation)
         setModule(newModule)
+    }
+
+    const handleSaveformation = () => {
+        const isValid = isValidFormation(formation, module)
+        if (!isValid) return
+        else alert('Formation saved')  
     }
     
     return (
@@ -62,8 +69,9 @@ export const EditFormation = ({team, players, match}: Props) => {
                         const icon = botMode 
                             ? '🤖'
                             : getPlayerFormationIcon(player.id, formation)
+                        const isStarter = icon === '🏁'
                         return (
-                            <div className={s.player} key={i}>
+                            <div className={`${isStarter ? s.starter : ''} ${s.player}`} key={i}>
                                 <div 
                                     className={s.position}
                                     onClick={handlePlayerClick(player)}
@@ -81,7 +89,7 @@ export const EditFormation = ({team, players, match}: Props) => {
                 </div>
             </Table>
             <div className={s.savebuttoncontainer}>
-                <button className={s.savebutton}>Save</button>
+                <button className={s.savebutton} onClick={handleSaveformation}>Save</button>
             </div>
         </div>
     )

@@ -1,6 +1,7 @@
 import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
 import { Player, PlayerMap } from "../types/players"
+import { validModules } from "../constants/settings"
 
 export const getCurrentMatchDay = (): number => {
     const nowTS = new Date().getTime()
@@ -192,4 +193,26 @@ export const getNewModuleOnChange = (formation: PreMatchFormation): string => {
     const midfielders = formation.s.filter(p => p.role === 'c').length
     const attackers = formation.s.filter(p => p.role === 'a').length
     return `${defenders}-${midfielders}-${attackers}`
+}
+
+export const isValidFormation = (formation: PreMatchFormation, module: string): boolean => {
+    const validModule = isValidModule(module)
+    if (!validModule) {
+        alert('Invalid formation, you must use one of the following modules: ' + validModules.join(', ')) 
+        return false
+    }
+    const haveOneGoalkeeper = formation.s.filter(p => p.role === 'p').length === 1
+    if (!haveOneGoalkeeper) {
+        alert('Invalid formation, there must be only one goalkeeper (P)') 
+        return false
+    }
+    if (formation.b.length !== 12) {
+        alert('Invalid formation, there must be 11 players on bench (🍺)')
+        return false
+    }
+    return true
+}
+
+export const isValidModule = (module: string): boolean => {
+    return validModules.includes(module)
 }

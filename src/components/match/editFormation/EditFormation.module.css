@@ -4,6 +4,11 @@
     align-items: center;
 }
 
+.starter {
+    background: var(--backgroundLighter);
+    border-radius: 1rem;
+}
+
 .position {
     font-size: 1.3rem;
     background: var(--contrast);
