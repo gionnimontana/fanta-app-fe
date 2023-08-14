@@ -1,18 +1,19 @@
 import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
 import { Player, PlayerMap } from "../types/players"
-import { validModules } from "../constants/settings"
+import { matchDayTimestamps, validModules } from "../constants/settings"
 
 export const getCurrentMatchDay = (): number => {
     const nowTS = new Date().getTime()
-    if (nowTS < 1682542800000) return 31
-    if (nowTS < 1682935200000) return 32
-    if (nowTS < 1683377012000) return 33
-    if (nowTS < 1683722612000) return 34
-    if (nowTS < 1684349012000) return 35
-    if (nowTS < 1685037600000) return 36
-    if (nowTS < 1685642400000) return 37
-    return 38
+    let matchDay = 1
+    for (let i: number = 1; i <= 38; i++) {
+        const dayString = i as keyof typeof matchDayTimestamps 
+        if (nowTS < matchDayTimestamps[dayString]) {
+            matchDay = i
+            break
+        }
+    }
+    return matchDay
 }
 
 export const getMatchTeamsId = (matchString: string): 
