@@ -8,7 +8,7 @@ export const validModules = [
     '4-3-3',
     '3-5-2',
     '3-4-3'
-] as const
+]
 
 export const matchDayTimestamps = {
     1: new Date('2023-08-22T00:00:00').getTime(),
