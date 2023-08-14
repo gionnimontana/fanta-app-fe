@@ -44,7 +44,7 @@ export const Login = ({onClose}: Props) => {
                     text={password}
                     setText={setPassword}
                     label="Password:"
-                    isPassword={true}
+                    isPassword={false}
                 />
                 <LoadingButton 
                     className={s.button}
