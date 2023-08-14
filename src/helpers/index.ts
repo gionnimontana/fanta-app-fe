@@ -2,6 +2,8 @@ import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
 import { Player, PlayerMap } from "../types/players"
 import { matchDayTimestamps, validModules } from "../constants/settings"
+import { editTeamBotMode } from "../queries/teams"
+import { updateMatchFormation } from "../queries/calendar"
 
 export const getCurrentMatchDay = (): number => {
     const nowTS = new Date().getTime()
@@ -99,8 +101,8 @@ export const getTeamFormation = (match: Match, players: PlayerMap, teamId: strin
 
 export const getMatchFormations = (match: Match, players: PlayerMap):
     { home: PreMatchFormation, away: PreMatchFormation } => {
-    const home = match.home_form ? JSON.parse(match.home_form) as DPreMatchFormation : null
-    const away = match.away_form ? JSON.parse(match.away_form) as DPreMatchFormation : null
+    const home = match.home_form ? match.home_form : null
+    const away = match.away_form ? match.away_form : null
     const v = getMatchPlayerVotes(match, players)
     const homeVotes = getPreMatchVotes(home, players, v.home)
     const awayVotes = getPreMatchVotes(away, players, v.away)
@@ -208,7 +210,7 @@ export const isValidFormation = (formation: PreMatchFormation, module: string): 
         return false
     }
     if (formation.b.length !== 12) {
-        alert('Invalid formation, there must be 11 players on bench (🍺)')
+        alert('Invalid formation, there must be exactly 2 players not convocated 👀 (not on field 🏁 neither on bench 🍺)')
         return false
     }
     return true
@@ -216,4 +218,43 @@ export const isValidFormation = (formation: PreMatchFormation, module: string): 
 
 export const isValidModule = (module: string): boolean => {
     return validModules.includes(module)
+}
+
+export const updateModeMatchTeamFormation = async (match: Match, team: Team, formation: PreMatchFormation, module: string, botMode: boolean): Promise<boolean> => {
+    const botModeChanged = team.auto_formation !== botMode
+    if (botModeChanged) {
+        const success = await editTeamBotMode(team.id, botMode)
+        if (success) {
+            if (botMode) { 
+                alert('🤖 Bot mode enabled, the formation will be managed by the bot each day at 12:00 and at the beginning of the first match 🤖')
+                return true
+            }
+            else alert('Bot mode disabled, the formation in use will be the one you set on this screen')
+        } else {
+            alert('Error while updating bot mode')
+        }
+    }
+    if (botMode) {
+        alert('Bot mode is on, the formation will be managed by the bot each day at 12:00 and at the beginning of the first match')
+        return true
+    }
+    if (!isValidFormation(formation, module)) return false
+    const success = await updateMatchTeamFormation(match, formation, module)
+    if (success) {
+        return true
+    } 
+    return false
+}
+
+export const updateMatchTeamFormation = async (match: Match, formation: PreMatchFormation, module: string): Promise<boolean> => {  
+    const isHome = match.match.split('-')[0] === formation.s[0].id
+    const newFormation: DPreMatchFormation = {
+        b: formation.b.map(p => p.id),
+        s: formation.s.map(p => p.id),
+        m: module.replaceAll('-', '')
+    }
+    const success = await updateMatchFormation(match.id, isHome, newFormation)
+    if (success) alert('Formations saved successfully')
+    else alert('Error while saving formations')
+    return success
 }

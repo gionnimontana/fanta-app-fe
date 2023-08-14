@@ -3,8 +3,8 @@ export interface Match {
     day: number
     match: string
     result: string
-    home_form: string
-    away_form: string
+    home_form: DPreMatchFormation
+    away_form: DPreMatchFormation
 }
 export interface DResult {
     home: Votes,

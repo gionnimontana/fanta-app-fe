@@ -1,8 +1,7 @@
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { Team } from "../../types/teams";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
-import { getTeamEmoji } from "../../helpers";
 
 export function useTeams() {
     return useQuery(`teams`, async () => {
@@ -21,4 +20,16 @@ export function useTeam(id: string) {
         return team
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
+
+export const editTeamBotMode = async (id: string, botMode: boolean): Promise<boolean> => {
+    const results = await fetch(`${apiEndpoints.Teams}/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ auto_formation: botMode })
+    })
+    return results.ok
+}
+
   

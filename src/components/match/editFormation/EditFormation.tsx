@@ -1,11 +1,12 @@
 import { Team } from "../../../types/teams"
 import { Table } from "../../../components/generalUI/table/Table"
 import { Player, PlayerMap } from "../../../types/players"
-import { getNewFormationPlayerChange, getNewModuleOnChange, getPlayerFormationIcon, getRoster, getTeamFormation, isValidFormation } from "../../../helpers"
+import { getNewFormationPlayerChange, getNewModuleOnChange, getPlayerFormationIcon, getRoster, getTeamFormation, updateModeMatchTeamFormation } from "../../../helpers"
 import { Match, PreMatchFormation } from "../../../types/matches"
 import s from './EditFormation.module.css'
 import { useState } from "react"
 import { validModules } from "../../../constants/settings"
+import { useQueryClient } from "react-query"
 
 interface Props {
     team: Team
@@ -14,11 +15,12 @@ interface Props {
 }
 
 export const EditFormation = ({team, players, match}: Props) => {
+    const queryClient = useQueryClient()
     const initFormation = getTeamFormation(match, players, team.id)
     const roster = getRoster(team, players)
     const [formation, setFormation] = useState<PreMatchFormation>(initFormation)
     const [module, setModule] = useState<string>(formation.m || '0-0-0')
-    const [botMode, setBotMode] = useState<boolean>(false)
+    const [botMode, setBotMode] = useState<boolean>(team.auto_formation)
 
     const handlePlayerClick = (player: Player) => () => {
         const newFormation = getNewFormationPlayerChange(player, formation)
@@ -27,10 +29,12 @@ export const EditFormation = ({team, players, match}: Props) => {
         setModule(newModule)
     }
 
-    const handleSaveformation = () => {
-        const isValid = isValidFormation(formation, module)
-        if (!isValid) return
-        else alert('Formation saved')  
+    const handleSaveformation = async() => {
+        const success = await updateModeMatchTeamFormation(match, team, formation, module, botMode)
+        if (success) {
+            queryClient.invalidateQueries(`team-${team.id}`)
+            queryClient.invalidateQueries(`match-${match.id}`)
+        }
     }
     
     return (

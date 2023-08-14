@@ -4,6 +4,7 @@ export interface Team {
     credits: number
     score?: TeamScore
     emoji: string
+    auto_formation: boolean
 }
 
 export interface TeamScore {
