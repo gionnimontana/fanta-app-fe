@@ -36,7 +36,7 @@ export const Home = () => {
                             <MatchCard key={i} match={match} teams={t.data || []}/>
                         )) : null}
                     </div>
-                    <MatchArticle day={day} article={a.data?.article}/>
+                    <MatchArticle day={day} article={a.data}/>
                 </div>
             </SwipeListener>
             <LinkIconButton link="teams"/>

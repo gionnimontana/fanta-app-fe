@@ -1,8 +1,9 @@
+import { Article } from "types/articles"
 import s from "./MatchArticle.module.css"
 
 interface Props {
     day?: number
-    article?: string
+    article?: Article
 }
 
 export const MatchArticle = ({ day, article }: Props) => {
@@ -11,9 +12,9 @@ export const MatchArticle = ({ day, article }: Props) => {
 
     return (
         <div className={s.articlecontainer}>
-            <div className={s.title}>Commento tecnico giornata {day}</div>
+            <div className={s.title}>{article.title}</div>
             <div className={s.articleText}>
-                {article}
+                {article.content}
             </div>
         </div>
     )
