@@ -6,6 +6,7 @@ export interface Player {
     starter_index: number
     role: string
     play_next_match: number
+    price?: number
 }
 
 export interface PlayerMap {

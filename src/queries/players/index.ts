@@ -33,7 +33,10 @@ export const useTeamPlayers = (teamId?: string) => {
     const urlParams = `?&perPage=60&filter=(team='${teamId}')&expand=player`
     const response = await fetch(apiEndpoints.Purchases + urlParams)
     const data = await response.json()
-    const matchPlayers = data.items.map((el: any) => el.expand.player) as Player[]
+    const matchPlayers = data.items.map((el: any) => ({
+        ...el.expand.player,
+        price: el.price
+    })) as Player[]
     const playerMap = matchPlayers.reduce((acc: PlayerMap, player) => {
         acc[player.id] = player
         return acc
