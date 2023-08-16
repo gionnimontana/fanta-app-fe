@@ -4,6 +4,7 @@ import { LinkIconButton } from "../../../components/generalUI/linkIconButton/Lin
 import { useState } from "react"
 import { Login } from "../../../components/login/Login"
 import { EditFormationWrapper } from "./EditFormationWrapper"
+import { userCanEditMatch } from "../../../helpers"
 
 interface Props {
   match: Match
@@ -14,7 +15,7 @@ export const EditFormButton = ({ match }: Props) => {
   const [edit, setEdit] = useState<boolean>(false)
   const isAuthenticated = pb.authStore.isValid
   const userTeam = pb.authStore.model?.team
-  const canEdit = match.match.includes(userTeam)
+  const canEdit = userCanEditMatch(match, userTeam)
 
   return (
     <>

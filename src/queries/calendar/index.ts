@@ -1,7 +1,17 @@
 import { useQuery } from "react-query";
-import { DPreMatchFormation, Match, PreMatchFormation } from "../../types/matches";
+import { DPreMatchFormation, Match } from "../../types/matches";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
+import { MatchDayTS } from "types/utils";
+
+export function useMatchDayTS() {
+    return useQuery(`schedules`, async () => {
+        const response = await fetch(apiEndpoints.Schedules + `?perPage=38`)
+        const data = await response.json()
+        const calendar = data
+        return calendar.items as MatchDayTS[]
+    }, { cacheTime: queryCacheTime, staleTime: queryCacheTime });
+}
 
 export function useCalendar(day: number) {
     return useQuery(`calendar-${day}`, async () => {

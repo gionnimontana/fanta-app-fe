@@ -10,7 +10,8 @@ export const getCurrentMatchDay = (): number => {
     let matchDay = 1
     for (let i: number = 1; i <= 38; i++) {
         const dayString = i as keyof typeof matchDayTimestamps 
-        if (nowTS < matchDayTimestamps[dayString]) {
+        const endTS = new Date(matchDayTimestamps[dayString].end).getTime()
+        if (nowTS < endTS) {
             matchDay = i
             break
         }
@@ -246,7 +247,11 @@ export const updateModeMatchTeamFormation = async (match: Match, team: Team, for
     return false
 }
 
-export const updateMatchTeamFormation = async (match: Match, formation: PreMatchFormation, module: string): Promise<boolean> => {  
+export const updateMatchTeamFormation = async (match: Match, formation: PreMatchFormation, module: string): Promise<boolean> => {
+    if (matchDayHasBegun(match.day)) {
+        alert('You cannot change the formation after the match day has begun')
+        return false
+    } 
     const isHome = match.match.split('-')[0] === formation.s[0].id
     const newFormation: DPreMatchFormation = {
         b: formation.b.map(p => p.id),
@@ -257,4 +262,17 @@ export const updateMatchTeamFormation = async (match: Match, formation: PreMatch
     if (success) alert('Formations saved successfully')
     else alert('Error while saving formations')
     return success
+}
+
+export const matchDayHasBegun = (matchDay: number): boolean => {
+    const now = new Date().getTime()
+    let md = matchDay as keyof typeof matchDayTimestamps
+    const matchDayHasBegun = now > new Date(matchDayTimestamps[md].start).getTime()
+    return matchDayHasBegun
+}
+
+export const userCanEditMatch = (match: Match, teamId: string): boolean => {
+    const userInMatch = match.match.includes(teamId)
+    const matchDayHasNotBegun = !matchDayHasBegun(match.day)
+    return userInMatch && matchDayHasNotBegun
 }
