@@ -2,21 +2,40 @@ import { routes } from "../../../constants/routes"
 import { Link } from "react-router-dom"
 import s from './LinkIconButton.module.css'
 
+type Link = 'calendar' | 'teams' | 'login' | 'edit' | 'market'
+
 interface Props {
-    link: 'calendar' | 'teams' | 'login' | 'edit'
+    links: Link[]
     onClick?: () => void
 }
 
-export const LinkIconButton = ({link, onClick}: Props) => {
-    const to = link === 'calendar' ? routes.Home : routes.Teams
+export const LinkIconButton = ({links, onClick}: Props) => {
+    const destinationMap = {
+        calendar: routes.Home,
+        teams: routes.Teams,
+        market: routes.Market,
+        login: '#',
+        edit: '#'
+    }
     return (
-        <Link to={onClick ? '#' : to} className={s.backbuttonLink}>
-            <button className={s.backbutton} onClick={onClick}>
-                {link === 'calendar' ? (<>📆</>) : null}
-                {link === 'teams' ? (<>🏆</>) : null}
-                {link === 'login' ? (<>🔑</>) : null}
-                {link === 'edit' ? (<>🖊</>) : null}
-            </button>
-        </Link>
+        <div className={s.backbuttonLink}>
+            {links.map((link, i) => {
+                const to = destinationMap[link]
+                return (
+                <div className={s.singleWrapper}>
+                    <Link to={to}>
+                        <button className={s.backbutton} onClick={onClick}>
+                            {link === 'calendar' ? (<>📆</>) : null}
+                            {link === 'teams' ? (<>🏆</>) : null}
+                            {link === 'login' ? (<>🔑</>) : null}
+                            {link === 'edit' ? (<>🖊</>) : null}
+                            {link === 'market' ? (<>🛒</>) : null}
+                        </button>
+                    </Link>
+                </div>
+                )
+            })}
+        </div>
+
     );
 }

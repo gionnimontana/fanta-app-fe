@@ -24,9 +24,9 @@ export const EditFormButton = ({ match, matchDayTS }: Props) => {
     <>
       {isAuthenticated
         ? canEdit 
-            ? <LinkIconButton link="edit" onClick={() => setEdit(true)}/>
+            ? <LinkIconButton links={["edit"]} onClick={() => setEdit(true)}/>
             : null
-        : <LinkIconButton link="login" onClick={() => setShowLogin(true)}/>
+        : <LinkIconButton links={["login"]} onClick={() => setShowLogin(true)}/>
       }
       {showLogin ? <Login onClose={() => setShowLogin(false)}/> : null}
       {edit 

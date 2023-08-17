@@ -16,7 +16,7 @@ export const PlayerTable = ({ players, teams }: Props) => {
 
   return (
       <Table
-        minWidth={52}
+        minWidth={50}
         header={<></>}
       >
         <div className={s.player}>
@@ -26,7 +26,6 @@ export const PlayerTable = ({ players, teams }: Props) => {
           <p className={`${s.name} ${s.bold}`}>Team</p>
           <p className={`${s.value} ${s.bold}`}>FVM</p>
           <p className={`${s.value} ${s.bold}`}>SI</p>
-          <p className={`${s.value} ${s.bold}`}>PNM</p>
         </div>
         <div className={s.players}>
             {players.map((player, i) => {
@@ -38,7 +37,6 @@ export const PlayerTable = ({ players, teams }: Props) => {
                         <p className={s.name}>{teamNameMap[player.fanta_team]}</p>
                         <p className={s.value}>{player.fvm}</p>
                         <p className={s.value}>{player.starter_index}</p>
-                        <p className={s.value}>{player.play_next_match}</p>
                     </div>
                 )
             })}

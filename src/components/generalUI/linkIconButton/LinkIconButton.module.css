@@ -5,6 +5,10 @@
     z-index: 15;
 }
 
+.singleWrapper {
+    margin-bottom: 0.5rem;
+}
+
 .backbutton {
     background: var(--contrast);
     border-radius: 5rem;

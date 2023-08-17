@@ -26,7 +26,7 @@ export const Teams = () => {
                     </div>
                 </div>
             </div>
-            <LinkIconButton link="calendar"/>
+            <LinkIconButton links={["market", "calendar"]}/>
         </div>
     )
 }

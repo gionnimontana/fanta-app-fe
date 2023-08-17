@@ -14,7 +14,7 @@ export const HomeWrapper = () => {
         <div style={{width: '100vw', height: '100vh'}}>
             {isLoading ? <FullPageLoader/> : <Home currentDay={currentDay} />}
             {isError ? <p>An error occourred while fetching schedules</p> : null}
-            <LinkIconButton link="teams"/>
+            <LinkIconButton links={["market", "teams"]}/>
         </div>
     )
 }

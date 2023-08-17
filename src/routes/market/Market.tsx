@@ -1,3 +1,4 @@
+import { LinkIconButton } from "../../components/generalUI/linkIconButton/LinkIconButton"
 import { AppScreen } from "../../components/generalUI/appScreen/AppScreen"
 import { usePlayers } from "../../queries/players"
 import { useTeams } from "../../queries/teams"
@@ -15,6 +16,7 @@ export const Market = () => {
           ? <PlayerTableWrapper players={ap.data} teams={t.data}/>
           : <div>Something went wrong (no teams or player data)</div>
       }
+      <LinkIconButton links={["calendar", "teams"]}/>
     </AppScreen>
   )
 }
