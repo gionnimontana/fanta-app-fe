@@ -6,7 +6,7 @@ export interface Player {
     starter_index: number
     role: string
     play_next_match: number
-    price?: number
+    fanta_team: string
 }
 
 export interface PlayerMap {

@@ -1,0 +1,14 @@
+.container {
+  margin: 0.2rem;
+}
+
+.input {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #a9a9a9;
+    width: 8rem;
+}
+
+.label {
+  font-size: 0.8rem;;
+}

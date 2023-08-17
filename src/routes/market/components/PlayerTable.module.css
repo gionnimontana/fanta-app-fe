@@ -1,0 +1,48 @@
+.player {
+  display: flex;
+  height: 2.5rem;
+  align-items: center;
+}
+
+.filterContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.role {
+  text-transform: uppercase;
+  width: 2rem;
+  font-weight: bold;
+}
+
+.squad {
+  font-size: 1.2rem;
+  width: 14rem;
+  text-align: center;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.name {
+  width: 16rem;
+}
+
+.value {
+  width: 4rem;
+  text-align: center;
+}
+
+.players {
+  height: calc(95vh - 16rem);
+  overflow: auto;
+}
+
+@media only screen and (max-width: 385px) {
+  .players {
+      height: calc(95vh - 19rem);
+  }
+}
