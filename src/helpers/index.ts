@@ -1,18 +1,18 @@
 import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
 import { Player, PlayerMap } from "../types/players"
-import { matchDayTimestamps, validModules } from "../constants/settings"
+import { validModules } from "../constants/settings"
 import { editTeamBotMode } from "../queries/teams"
 import { updateMatchFormation } from "../queries/calendar"
+import { MatchDayTS } from "types/utils"
 
-export const getCurrentMatchDay = (): number => {
+export const getCurrentMatchDay = (matchDayTimestamps: MatchDayTS[]): number => {
     const nowTS = new Date().getTime()
     let matchDay = 1
-    for (let i: number = 1; i <= 38; i++) {
-        const dayString = i as keyof typeof matchDayTimestamps 
-        const endTS = new Date(matchDayTimestamps[dayString].end).getTime()
+    for (let i: number = 0; i <= matchDayTimestamps.length; i++) {
+        const endTS = new Date(matchDayTimestamps[i]?.end).getTime()
         if (nowTS < endTS) {
-            matchDay = i
+            matchDay = i + 1
             break
         }
     }
@@ -149,15 +149,15 @@ export const getMatchIcons = (match: Match, teams: Team[]): { home: string, away
 export const getTeamEmoji = (teamId: string, teams: Team[]): string => {
     const icon = teams.find(t => t.id === teamId)?.emoji
     if (icon) return icon
-    return "👀"
+    return "🍺"
 }
 
 export const getPlayerFormationIcon = (playerId: string, formation: PreMatchFormation): string => {
     const starter = formation.s.find(p => p.id === playerId)
     if (starter) return "🏁"
     const bencher = formation.b.find(p => p.id === playerId)
-    if (bencher) return "🍺"
-    return "👀"
+    if (bencher) return "👀"
+    return "🍺"
 }
 
 export const getNewFormationPlayerChange = (player: Player, formation: PreMatchFormation): PreMatchFormation => {
@@ -211,7 +211,7 @@ export const isValidFormation = (formation: PreMatchFormation, module: string): 
         return false
     }
     if (formation.b.length !== 12) {
-        alert('Invalid formation, there must be exactly 2 players not convocated 👀 (not on field 🏁 neither on bench 🍺)')
+        alert('Invalid formation, there must be exactly 2 players not convocated 🍺 (not on field 🏁 neither on bench 👀)')
         return false
     }
     return true
@@ -221,7 +221,7 @@ export const isValidModule = (module: string): boolean => {
     return validModules.includes(module)
 }
 
-export const updateModeMatchTeamFormation = async (match: Match, team: Team, formation: PreMatchFormation, module: string, botMode: boolean): Promise<boolean> => {
+export const updateModeMatchTeamFormation = async (match: Match, team: Team, formation: PreMatchFormation, module: string, botMode: boolean, matchDayBegun: boolean): Promise<boolean> => {
     const botModeChanged = team.auto_formation !== botMode
     if (botModeChanged) {
         const success = await editTeamBotMode(team.id, botMode)
@@ -240,15 +240,15 @@ export const updateModeMatchTeamFormation = async (match: Match, team: Team, for
         return true
     }
     if (!isValidFormation(formation, module)) return false
-    const success = await updateMatchTeamFormation(match, formation, module)
+    const success = await updateMatchTeamFormation(match, formation, module, matchDayBegun)
     if (success) {
         return true
     } 
     return false
 }
 
-export const updateMatchTeamFormation = async (match: Match, formation: PreMatchFormation, module: string): Promise<boolean> => {
-    if (matchDayHasBegun(match.day)) {
+export const updateMatchTeamFormation = async (match: Match, formation: PreMatchFormation, module: string, matchDayBegun: boolean): Promise<boolean> => {
+    if (matchDayBegun) {
         alert('You cannot change the formation after the match day has begun')
         return false
     } 
@@ -264,15 +264,15 @@ export const updateMatchTeamFormation = async (match: Match, formation: PreMatch
     return success
 }
 
-export const matchDayHasBegun = (matchDay: number): boolean => {
+export const matchDayHasBegun = (matchDay: number, matchDayTimestamps: MatchDayTS[]): boolean => {
     const now = new Date().getTime()
-    let md = matchDay as keyof typeof matchDayTimestamps
-    const matchDayHasBegun = now > new Date(matchDayTimestamps[md].start).getTime()
+    const md = matchDayTimestamps.find(md => md.day === matchDay)
+    if (!md) return true
+    const matchDayHasBegun = now > new Date(md.start).getTime()
     return matchDayHasBegun
 }
 
-export const userCanEditMatch = (match: Match, teamId: string): boolean => {
+export const userCanEditMatch = (match: Match, teamId: string, matchDayBegun: boolean): boolean => {
     const userInMatch = match.match.includes(teamId)
-    const matchDayHasNotBegun = !matchDayHasBegun(match.day)
-    return userInMatch && matchDayHasNotBegun
+    return userInMatch && !matchDayBegun
 }

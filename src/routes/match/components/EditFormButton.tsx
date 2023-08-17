@@ -4,18 +4,21 @@ import { LinkIconButton } from "../../../components/generalUI/linkIconButton/Lin
 import { useState } from "react"
 import { Login } from "../../../components/login/Login"
 import { EditFormationWrapper } from "./EditFormationWrapper"
-import { userCanEditMatch } from "../../../helpers"
+import { matchDayHasBegun, userCanEditMatch } from "../../../helpers"
+import { MatchDayTS } from "types/utils"
 
 interface Props {
   match: Match
+  matchDayTS: MatchDayTS[]
 }
 
-export const EditFormButton = ({ match }: Props) => {
+export const EditFormButton = ({ match, matchDayTS }: Props) => {
   const [showLogin, setShowLogin] = useState<boolean>(false)
   const [edit, setEdit] = useState<boolean>(false)
   const isAuthenticated = pb.authStore.isValid
   const userTeam = pb.authStore.model?.team
-  const canEdit = userCanEditMatch(match, userTeam)
+  const matchDayHasStarted = matchDayHasBegun(match.day, matchDayTS)
+  const canEdit = userCanEditMatch(match, userTeam, matchDayHasStarted)
 
   return (
     <>
@@ -26,7 +29,10 @@ export const EditFormButton = ({ match }: Props) => {
         : <LinkIconButton link="login" onClick={() => setShowLogin(true)}/>
       }
       {showLogin ? <Login onClose={() => setShowLogin(false)}/> : null}
-      {edit ? <EditFormationWrapper onClose={() => setEdit(false)} match={match}/> : null}
+      {edit 
+        ? <EditFormationWrapper onClose={() => setEdit(false)} match={match} matchDayHasStarted={matchDayHasStarted}/> 
+        : null
+      }
     </>
   )
 }

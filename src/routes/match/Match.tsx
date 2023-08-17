@@ -1,4 +1,4 @@
-import { useMatch } from "../../queries/calendar";
+import { useMatch, useMatchDayTS } from "../../queries/calendar";
 import { useTeams } from "../../queries/teams";
 import { useParams } from "react-router-dom"
 import { MatchScore } from "../../components/match/score/MatchScore";
@@ -13,6 +13,7 @@ export const Match = () => {
     const { id } = useParams();
     const m = useMatch(id || "")
     const t = useTeams()
+    const mdTS = useMatchDayTS()
     const teams = t.data || []
     const loading = m.isLoading || t.isLoading
 
@@ -26,7 +27,7 @@ export const Match = () => {
                 {m.data ? <MatchFormWrapper match={m.data} teams={teams}/> : null}
             </div>
             <BottomButton label="View all matches" to={routes.Home}/>
-            {m.data ? <EditFormButton match={m.data} /> : null}
+            {(m.data && mdTS.data) ? <EditFormButton match={m.data} matchDayTS={mdTS.data} /> : null}
         </AppScreen>
     );
 }

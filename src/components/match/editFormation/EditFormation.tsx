@@ -5,16 +5,16 @@ import { getNewFormationPlayerChange, getNewModuleOnChange, getPlayerFormationIc
 import { Match, PreMatchFormation } from "../../../types/matches"
 import s from './EditFormation.module.css'
 import { useState } from "react"
-import { validModules } from "../../../constants/settings"
 import { useQueryClient } from "react-query"
 
 interface Props {
     team: Team
     players: PlayerMap
     match: Match
+    matchDayHasStarted: boolean
 }
 
-export const EditFormation = ({team, players, match}: Props) => {
+export const EditFormation = ({team, players, match, matchDayHasStarted}: Props) => {
     const queryClient = useQueryClient()
     const initFormation = getTeamFormation(match, players, team.id)
     const roster = getRoster(team, players)
@@ -30,7 +30,7 @@ export const EditFormation = ({team, players, match}: Props) => {
     }
 
     const handleSaveformation = async() => {
-        const success = await updateModeMatchTeamFormation(match, team, formation, module, botMode)
+        const success = await updateModeMatchTeamFormation(match, team, formation, module, botMode, matchDayHasStarted)
         if (success) {
             queryClient.invalidateQueries(`team-${team.id}`)
             queryClient.invalidateQueries(`match-${match.id}`)

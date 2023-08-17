@@ -23,14 +23,14 @@ export const MatchFormations = ({ match, players, teams }: Props) => {
                     {p.home ? <div className={s.tot}>{p.home}</div> : null}
                     <div className={s.center}>{icon.home} {home.m} 🏁</div>
                     <MatchFormation formation={home.s} />
-                    <div className={s.marginTop}>{icon.home} 🍺</div>
+                    <div className={s.marginTop}>{icon.home} 👀</div>
                     <MatchFormation formation={home.b} />
                 </div>
                 <div className={s.form}>
                     {p.away ? <div className={s.tot}>{p.away}</div> : null}
                     <div className={s.center}>{icon.away} {away.m} 🏁</div>
                     <MatchFormation formation={away.s} />
-                    <div className={s.marginTop}>{icon.away} 🍺</div>
+                    <div className={s.marginTop}>{icon.away} 👀</div>
                     <MatchFormation formation={away.b} />
                 </div>
             </div>
