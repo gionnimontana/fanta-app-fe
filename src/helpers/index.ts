@@ -210,8 +210,8 @@ export const isValidFormation = (formation: PreMatchFormation, module: string): 
         alert('Invalid formation, there must be only one goalkeeper (P)') 
         return false
     }
-    if (formation.b.length !== 12) {
-        alert('Invalid formation, there must be exactly 2 players not convocated 🍺 (not on field 🏁 neither on bench 👀)')
+    if (formation.b.length > 12) {
+        alert('There cannot be over 12 players on the bench 👀')
         return false
     }
     return true

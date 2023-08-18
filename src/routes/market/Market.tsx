@@ -1,6 +1,6 @@
 import { LinkIconButton } from "../../components/generalUI/linkIconButton/LinkIconButton"
 import { AppScreen } from "../../components/generalUI/appScreen/AppScreen"
-import { usePlayers } from "../../queries/players"
+import { useOpenPurchasePlayers, usePlayers } from "../../queries/players"
 import { useTeams } from "../../queries/teams"
 import { PlayerTableWrapper } from "../../components/players/PlayerTable/PlayerTableWrapper"
 import s from './Market.module.css'
@@ -8,12 +8,13 @@ import s from './Market.module.css'
 export const Market = () => {
   const ap = usePlayers()
   const t = useTeams()
-  const isLoading = ap.isLoading || t.isLoading
+  const op = useOpenPurchasePlayers()
+  const isLoading = ap.isLoading || t.isLoading || op.isLoading
   return (
     <AppScreen loading={isLoading}>
       <h2 className={s.title}>🛒 Market 🛒</h2>
       {ap.data && t.data 
-          ? <PlayerTableWrapper players={ap.data} teams={t.data}/>
+          ? <PlayerTableWrapper players={ap.data} teams={t.data} activePurchases={op.data}/>
           : <div>Something went wrong (no teams or player data)</div>
       }
       <LinkIconButton links={["calendar", "teams"]}/>

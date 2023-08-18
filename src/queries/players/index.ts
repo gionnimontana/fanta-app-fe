@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { Match } from "types/matches";
-import { Player, PlayerMap } from "types/players";
+import { Player, PlayerMap, Purchase } from "types/players";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 
@@ -55,6 +55,16 @@ export function useMatchPlayers(match: Match) {
             return acc
         }, {} as {[key: string]: Player})
         return playerMap
+    }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
+}
+
+export function useOpenPurchasePlayers(){
+    return useQuery('purchase-players', async () => {
+        const urlParams = `?&perPage=500&filter=(closed=false)`
+        const response = await fetch(apiEndpoints.Purchases + urlParams)
+        const data = await response.json()
+        const openPurchasePlayers = data.items as Purchase[]
+        return openPurchasePlayers
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
   

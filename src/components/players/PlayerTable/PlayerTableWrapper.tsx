@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PlayerMap } from "../../../types/players";
+import { PlayerMap, Purchase } from "../../../types/players";
 import { Team } from "../../../types/teams";
 import { PlayerTable } from "./PlayerTable";
 import { Input } from "../../generalUI/Input/Input";
@@ -9,19 +9,22 @@ import s from "./PlayerTable.module.css";
 interface Props {
   players: PlayerMap;
   teams: Team[];
+  activePurchases: Purchase[];
 }
 
-export const PlayerTableWrapper = ({ players, teams }: Props) => {
+export const PlayerTableWrapper = ({ players, teams, activePurchases }: Props) => {
   const [role, setRole] = useState<string>('all');
   const [team, setTeam] = useState<string>('');
   const [search, setSearch] = useState<string>('');
+
+  const activePurchaseIds = activePurchases.map((p) => p.player);
 
   const filteredPlayers = Object.values(players).filter((p) => {
     const roleFilter = role === 'all' ? true : p.role === role;
     const teamFilter = team === 'all' ? true : p.fanta_team === team;
     const searchFilter = p.name.toLowerCase().includes(search.toLowerCase()) || p.team.toLowerCase().includes(search.toLowerCase())
     return roleFilter && teamFilter && searchFilter;
-  }).sort((a, b) => b.fvm - a.fvm);
+  }).sort((a, b) => b.fvm - a.fvm).sort((a, b) => Number(activePurchaseIds.includes(b.id)) - Number(activePurchaseIds.includes(a.id)));
 
   return (
     <>
@@ -54,7 +57,7 @@ export const PlayerTableWrapper = ({ players, teams }: Props) => {
             label="Team"
           />
       </div>
-      <PlayerTable players={filteredPlayers} teams={teams}/>
+      <PlayerTable players={filteredPlayers} teams={teams} activePurchases={activePurchases}/>
     </>
   );
 }

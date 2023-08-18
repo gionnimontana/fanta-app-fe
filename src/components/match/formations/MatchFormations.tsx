@@ -4,7 +4,6 @@ import { MatchFormation } from "./formation/MatchFormation";
 import { getMatchFormations, getMatchIcons, getMatchPoints } from "../../../helpers";
 import s from './MatchFormations.module.css'
 import { Team } from "../../../types/teams";
-import { useMatchPlayers } from "../../../queries/players";
 
 interface Props {
     match: Match

@@ -2,6 +2,15 @@
   display: flex;
   height: 2.5rem;
   align-items: center;
+  cursor: pointer;
+}
+
+.player:hover {
+  background: var(--backgroundLighter);
+}
+
+.purchase {
+  background: var(--backgroundLighter);
 }
 
 .filterContainer{
