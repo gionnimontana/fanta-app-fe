@@ -149,7 +149,7 @@ export const getMatchIcons = (match: Match, teams: Team[]): { home: string, away
 export const getTeamEmoji = (teamId: string, teams: Team[]): string => {
     const icon = teams.find(t => t.id === teamId)?.emoji
     if (icon) return icon
-    return "🍺"
+    return "🛒"
 }
 
 export const getPlayerFormationIcon = (playerId: string, formation: PreMatchFormation): string => {

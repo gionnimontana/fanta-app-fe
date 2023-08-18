@@ -17,10 +17,12 @@
   font-weight: bold;
 }
 
-.squad {
-  font-size: 1.2rem;
-  width: 14rem;
-  text-align: center;
+.team {
+  width: 2rem;
+}
+
+.from {
+  width: 8rem;
 }
 
 .bold {
@@ -28,7 +30,7 @@
 }
 
 .name {
-  width: 16rem;
+  width: 12rem;
 }
 
 .value {

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { PlayerMap } from "../../../types/players";
 import { Team } from "../../../types/teams";
 import { PlayerTable } from "./PlayerTable";
-import { Input } from "../../../components/generalUI/Input/Input";
-import { Select } from "../../../components/generalUI/Select/Select";
+import { Input } from "../../generalUI/Input/Input";
+import { Select } from "../../generalUI/Select/Select";
 import s from "./PlayerTable.module.css";
 
 interface Props {
@@ -29,7 +29,7 @@ export const PlayerTableWrapper = ({ players, teams }: Props) => {
           <Input 
             value={search} 
             onChange={(e) => setSearch(e.target.value)}
-            label="Search by name or from"
+            label="🔎 (Name / From)"
           />
           <Select
             value={role}
@@ -48,8 +48,8 @@ export const PlayerTableWrapper = ({ players, teams }: Props) => {
             onChange={(e) => setTeam(e.target.value)}
             options={[
               { value: 'all', name: 'All' },
-              { value: '', name: 'Free' },
-              ...teams.map((t) => ({ value: t.id, name: t.name })),
+              { value: '', name: 'Free 🛒' },
+              ...teams.map((t) => ({ value: t.id, name: t.name + ' ' + t.emoji })),
             ]}
             label="Team"
           />

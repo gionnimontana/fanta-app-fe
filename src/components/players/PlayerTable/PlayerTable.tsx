@@ -1,7 +1,8 @@
-import { Table } from "../../../components/generalUI/table/Table";
+import { Table } from "../../generalUI/table/Table";
 import { Player } from "../../../types/players";
 import { Team } from "../../../types/teams";
 import s from "./PlayerTable.module.css";
+import { getTeamEmoji } from "../../../helpers";
 
 interface Props {
   players: Player[];
@@ -10,10 +11,6 @@ interface Props {
 
 export const PlayerTable = ({ players, teams }: Props) => {
 
-  const teamNameMap: { [key: string]: string } = teams.reduce(
-    (acc, t) => ({ ...acc, [t.id]: t.name }), {}
-  );
-
   return (
       <Table
         minWidth={50}
@@ -21,9 +18,9 @@ export const PlayerTable = ({ players, teams }: Props) => {
       >
         <div className={s.player}>
           <p className={s.role}></p>
+          <p className={`${s.team} ${s.bold}`}></p>
           <p className={`${s.name} ${s.bold}`}>NAME</p>
-          <p className={`${s.name} ${s.bold}`}>FROM</p>
-          <p className={`${s.name} ${s.bold}`}>Team</p>
+          <p className={`${s.from} ${s.bold}`}>FROM</p>
           <p className={`${s.value} ${s.bold}`}>FVM</p>
           <p className={`${s.value} ${s.bold}`}>SI</p>
         </div>
@@ -32,9 +29,9 @@ export const PlayerTable = ({ players, teams }: Props) => {
                 return (
                     <div className={s.player} key={i}>
                         <p className={s.role}>{player.role}</p>
+                        <p className={s.team}>{getTeamEmoji(player.fanta_team, teams)}</p>
                         <p className={s.name}>{player.name}</p>
-                        <p className={s.name}>{player.team}</p>
-                        <p className={s.name}>{teamNameMap[player.fanta_team]}</p>
+                        <p className={s.from}>{player.team}</p>
                         <p className={s.value}>{player.fvm}</p>
                         <p className={s.value}>{player.starter_index}</p>
                     </div>

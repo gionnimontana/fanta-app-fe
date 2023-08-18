@@ -2,7 +2,7 @@ import { LinkIconButton } from "../../components/generalUI/linkIconButton/LinkIc
 import { AppScreen } from "../../components/generalUI/appScreen/AppScreen"
 import { usePlayers } from "../../queries/players"
 import { useTeams } from "../../queries/teams"
-import { PlayerTableWrapper } from "./components/PlayerTableWrapper"
+import { PlayerTableWrapper } from "../../components/players/PlayerTable/PlayerTableWrapper"
 import s from './Market.module.css'
 
 export const Market = () => {
