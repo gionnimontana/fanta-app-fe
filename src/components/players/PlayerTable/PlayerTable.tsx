@@ -13,7 +13,7 @@ export const PlayerTable = ({ players, teams }: Props) => {
 
   return (
       <Table
-        minWidth={50}
+        minWidth={32}
         header={<></>}
       >
         <div className={s.player}>
