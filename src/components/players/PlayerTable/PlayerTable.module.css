@@ -3,6 +3,8 @@
   height: 2.5rem;
   align-items: center;
   cursor: pointer;
+  padding: 0 0.5rem;
+  border-bottom: 1px solid var(--backgroundDark);
 }
 
 .player:hover {

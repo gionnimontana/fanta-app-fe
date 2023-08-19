@@ -22,7 +22,7 @@ export const PlayerTable = ({ players, teams, activePurchases }: Props) => {
   }
 
   const decoratedPlayerName = (player: Player) => {
-    if (isPurchase(player)) return `${player.name} 🔥`
+    if (isPurchase(player)) return `🔥 ${player.name}`
     else return player.name
   }
 

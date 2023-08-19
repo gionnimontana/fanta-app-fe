@@ -1,0 +1,5 @@
+.name {
+    width: calc(100% - 1.4rem);
+    padding: 1.4rem;
+    text-align: center;
+}

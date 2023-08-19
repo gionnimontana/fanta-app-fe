@@ -13,7 +13,9 @@ export const PlayerDetails = ({onClose, player, purchase}: Props) => {
     return (
         <Modal onClose={onClose}>
             <div className={s.container}>
-                {player.name}
+                <div className={s.name}>
+                    {player.name} ({player.team})
+                </div>
             </div>
         </Modal>
     )
