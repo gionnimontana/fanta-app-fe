@@ -240,19 +240,19 @@ export const updateModeMatchTeamFormation = async (match: Match, team: Team, for
         return true
     }
     if (!isValidFormation(formation, module)) return false
-    const success = await updateMatchTeamFormation(match, formation, module, matchDayBegun)
+    const success = await updateMatchTeamFormation(team.id, match, formation, module, matchDayBegun)
     if (success) {
         return true
     } 
     return false
 }
 
-export const updateMatchTeamFormation = async (match: Match, formation: PreMatchFormation, module: string, matchDayBegun: boolean): Promise<boolean> => {
+export const updateMatchTeamFormation = async (teamID: string, match: Match, formation: PreMatchFormation, module: string, matchDayBegun: boolean): Promise<boolean> => {
     if (matchDayBegun) {
         alert('You cannot change the formation after the match day has begun')
         return false
     } 
-    const isHome = match.match.split('-')[0] === formation.s[0].id
+    const isHome = match.match.split('-')[0] === teamID
     const newFormation: DPreMatchFormation = {
         b: formation.b.map(p => p.id),
         s: formation.s.map(p => p.id),
