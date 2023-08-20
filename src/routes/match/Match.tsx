@@ -16,12 +16,13 @@ export const Match = () => {
     const mdTS = useMatchDayTS()
     const teams = t.data || []
     const loading = m.isLoading || t.isLoading
+    const isData = m.data && mdTS.data
 
     return (
         <AppScreen loading={loading}>
             <div className={s.day}>Day {m.data?.day || '?'}</div>
             <div className={s.scoreContainer}>
-                {m.data ? <MatchScore match={m.data} teams={teams} linked={true}/> : null}
+                {isData ? <MatchScore match={m.data} teams={teams} linked={true} mdTS={mdTS.data}/> : null}
             </div>
             <div className={s.formationsContainer}>
                 {m.data ? <MatchFormWrapper match={m.data} teams={teams}/> : null}

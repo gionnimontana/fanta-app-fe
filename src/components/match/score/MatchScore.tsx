@@ -4,16 +4,19 @@ import { getMatchScore, getMatchTeams } from "../../../helpers"
 import { Match } from "../../../types/matches"
 import { Team } from "../../../types/teams"
 import s from "./MatchScore.module.css"
+import { useMatchDayTS } from "queries/calendar"
+import { MatchDayTS } from "types/utils"
 
 interface Props {
     match: Match
     teams: Team[]
     linked?: boolean
+    mdTS: MatchDayTS[]
 }
 
-export const MatchScore = ({ match, teams, linked }: Props) => {
+export const MatchScore = ({ match, teams, linked, mdTS }: Props) => {
     const { home, away } = getMatchTeams(match, teams)
-    const score = getMatchScore(match)
+    const score = getMatchScore(match, mdTS)
     const cN = `${s.name} creativeFont`
     return (
         <div className={s.container}>
