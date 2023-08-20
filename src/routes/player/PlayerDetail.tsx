@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Login } from '../../components/login/Login';
 import { pb } from '../../helpers/pb';
 import { useTeams } from '../../queries/teams';
+import { OpenPlayerPurchase } from '../../components/players/OpenPlayerPurchase/OpenPlayerPurchase';
 import s from './PlayerDetail.module.css'
 
 export const PlayerDetail = () => {
@@ -27,6 +28,11 @@ export const PlayerDetail = () => {
                 purchase={op.data?.find(p => p.player === id)}
                 teams={t.data || []}
             />}
+            <OpenPlayerPurchase 
+                player={p.data} 
+                activePurchases={op.data || []}
+                teams={t.data || []}
+            />
             {isAuthenticated ? <LinkIconButton links={['login']} onClick={() => setShowLogin(true)}/> : null}
             {showLogin ? <Login onClose={() => setShowLogin(false)}/> : null}
             <BottomButton to={routes.Market} label={'View all players'}/>

@@ -1,0 +1,46 @@
+.container {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.label {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.value {
+    font-size: 1.2rem;
+}
+
+.date {
+    font-size: 0.7rem;
+}
+
+.accepted {
+    font-size: 1.2rem;
+    line-height: 3rem;
+}
+
+.row {
+    margin: 0.2rem;
+    padding: 0.2rem;
+    text-align: center;
+    border: 1px solid;
+    border-radius: 0.5rem;
+    width: 3rem;
+}
+
+.doublerow {
+    margin: 0.2rem;
+    padding: 0.2rem;
+    text-align: center;
+    border: 1px solid;
+    border-radius: 0.5rem;
+    width: 7rem;
+}
