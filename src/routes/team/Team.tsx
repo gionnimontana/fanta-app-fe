@@ -19,7 +19,7 @@ export const Team = () => {
     return (
         <AppScreen loading={loading}>
             <Table 
-                minWidth={50}
+                minWidth={35}
                 header={
                     <div className={s.header}>
                         <p className={s.emoji}>{t.data?.emoji}</p>
@@ -33,7 +33,7 @@ export const Team = () => {
                 <div className={s.player}>
                     <p className={s.role}></p>
                     <p className={`${s.name} ${s.bold}`}>NAME</p>
-                    <p className={`${s.name} ${s.bold}`}>FROM</p>
+                    <p className={`${s.from} ${s.bold}`}>FROM</p>
                     <p className={`${s.value} ${s.bold}`}>FVM</p>
                     <p className={`${s.value} ${s.bold}`}>SI</p>
                     <p className={`${s.value} ${s.bold}`}>PNM</p>
@@ -44,7 +44,7 @@ export const Team = () => {
                             <div className={s.player} key={i}>
                                 <p className={s.role}>{player.role}</p>
                                 <p className={s.name}>{player.name}</p>
-                                <p className={s.name}>{player.team}</p>
+                                <p className={s.from}>{player.team}</p>
                                 <p className={s.value}>{player.fvm}</p>
                                 <p className={s.value}>{player.starter_index}</p>
                                 <p className={s.value}>{player.play_next_match}</p>

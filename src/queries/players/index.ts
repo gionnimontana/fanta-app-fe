@@ -23,7 +23,7 @@ export function usePlayer(id?: string) {
     return useQuery(`player-${id}`, async () => {
         const response = await fetch(apiEndpoints.Players + `/${id}`)
         const data = await response.json()
-        const player = data
+        const player = data as Player
         return player
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }

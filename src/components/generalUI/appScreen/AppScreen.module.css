@@ -11,7 +11,7 @@
     border-radius: 2rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease-in-out;
-    width: 95vw;
+    width: calc(100% - 3rem);
     height: 95vh;
     position: relative;
 }
