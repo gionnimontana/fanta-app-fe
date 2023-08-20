@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useTeams } from "../../../queries/teams"
-import { useCalendar } from "../../../queries/calendar"
+import { useCalendar, useMatchDayTS } from "../../../queries/calendar"
 import { useArticle } from "../../../queries/articles"
 import { MatchCard } from "../../../components/match/card/MatchCard"
 import { Match } from "types/matches"
@@ -19,8 +19,10 @@ export const Home = ({currentDay}: Props) => {
     const c = useCalendar(day)
     const a = useArticle('results', day)
     const t = useTeams()
-    const isLoading = c.isLoading || t.isLoading
+    const mdTs = useMatchDayTS()
+    const isLoading = c.isLoading || t.isLoading || mdTs.isLoading
     const isError = c.isError || t.isError
+    const isData = c.data && mdTs.data
 
     return (
         <>
@@ -34,8 +36,8 @@ export const Home = ({currentDay}: Props) => {
                     {isLoading ? <FullPageLoader/> : null}
                     {isError ? <p>An error occourred while fetching matches</p> : null}
                     <div className={s.cardContainer}>
-                        {c.data ? c.data.map((match: Match, i: number) => (
-                            <MatchCard key={i} match={match} teams={t.data || []}/>
+                        {isData ? c.data.map((match: Match, i: number) => (
+                            <MatchCard key={i} match={match} teams={t.data || []} mdTS={mdTs.data}/>
                         )) : null}
                     </div>
                     <MatchArticle day={day} article={a.data}/>

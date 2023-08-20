@@ -28,7 +28,8 @@ export const getMatchTeamsId = (matchString: string):
     return { homeTeamId, awayTeamId }
 }
 
-export const getMatchScore = (match: Match): Score => {
+export const getMatchScore = (match: Match, mdTS: MatchDayTS[]): Score => {
+    if (!matchDayHasEnded(match.day, mdTS)) return { home: undefined, away: undefined }
     const dehidratedMatch = match?.result ? JSON.parse(match.result)?.score as Score : null
     return dehidratedMatch ? dehidratedMatch : { home: undefined, away: undefined }
 }
@@ -271,6 +272,14 @@ export const matchDayHasBegun = (matchDay: number, matchDayTimestamps: MatchDayT
     if (!md) return true
     const matchDayHasBegun = now > new Date(md.start).getTime()
     return matchDayHasBegun
+}
+
+export const matchDayHasEnded = (matchDay: number, matchDayTimestamps: MatchDayTS[]): boolean => {
+    const now = new Date().getTime()
+    const md = matchDayTimestamps.find(md => md.day === matchDay)
+    if (!md) return true
+    const matchDayHasEnded = now > new Date(md.end).getTime()
+    return matchDayHasEnded
 }
 
 export const userCanEditMatch = (match: Match, teamId: string, matchDayBegun: boolean): boolean => {
