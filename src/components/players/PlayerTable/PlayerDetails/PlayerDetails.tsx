@@ -9,12 +9,17 @@ interface Props {
 }
 
 export const PlayerDetails = ({onClose, player, purchase}: Props) => {
+    const styledHeader = (pl: Player, pu: Purchase | undefined) => {
+        let name = `${pl.name} (${pl.team})`
+        if (pu) name = `🔥 ${name} 🔥`
+        return name
+    }
 
     return (
         <Modal onClose={onClose}>
             <div className={s.container}>
                 <div className={s.name}>
-                    {player.name} ({player.team})
+                    {styledHeader(player, purchase)}
                 </div>
             </div>
         </Modal>

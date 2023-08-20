@@ -5,6 +5,7 @@ import { validModules } from "../constants/settings"
 import { editTeamBotMode } from "../queries/teams"
 import { updateMatchFormation } from "../queries/calendar"
 import { MatchDayTS } from "types/utils"
+import { ChangeEvent, Dispatch } from "react"
 
 export const getCurrentMatchDay = (matchDayTimestamps: MatchDayTS[]): number => {
     const nowTS = new Date().getTime()
@@ -275,4 +276,21 @@ export const matchDayHasBegun = (matchDay: number, matchDayTimestamps: MatchDayT
 export const userCanEditMatch = (match: Match, teamId: string, matchDayBegun: boolean): boolean => {
     const userInMatch = match.match.includes(teamId)
     return userInMatch && !matchDayBegun
+}
+
+export const getLocalStoredFilters = (): { [key: string]: string } => {
+    const filters = localStorage.getItem('marketfilters')
+    if (!filters) return {
+        role: 'all',
+        team: 'all',
+    }
+    return JSON.parse(filters)
+}
+
+export const setLocalStoredFilters = (filterKey: string, action: Dispatch<React.SetStateAction<string>>) => 
+    (e: ChangeEvent<HTMLSelectElement>) => {
+    const currentFilters = getLocalStoredFilters()
+    currentFilters[filterKey] = e.target.value
+    localStorage.setItem('marketfilters', JSON.stringify(currentFilters))
+    action(currentFilters[filterKey])
 }
