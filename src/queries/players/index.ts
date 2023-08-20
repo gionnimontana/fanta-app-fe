@@ -19,9 +19,9 @@ export function usePlayers() {
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime });
 }
 
-export function usePlayer(id: string) {
+export function usePlayer(id?: string) {
     return useQuery(`player-${id}`, async () => {
-        const response = await fetch(apiEndpoints.Players + `/:${id}`)
+        const response = await fetch(apiEndpoints.Players + `/${id}`)
         const data = await response.json()
         const player = data
         return player
@@ -55,6 +55,16 @@ export function useMatchPlayers(match: Match) {
             return acc
         }, {} as {[key: string]: Player})
         return playerMap
+    }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
+}
+
+export const usePurchasePlayer = (purchaseId?: string) => {
+    return useQuery(`purchase-player-${purchaseId}`, async () => {
+        const urlParams = `?&filter=(id='${purchaseId}')&expand=player`
+        const response = await fetch(apiEndpoints.Purchases + urlParams)
+        const data = await response.json()
+        console.log('ooooooo', data)
+        return []
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 

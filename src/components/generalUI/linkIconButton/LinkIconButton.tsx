@@ -22,7 +22,7 @@ export const LinkIconButton = ({links, onClick}: Props) => {
             {links.map((link, i) => {
                 const to = destinationMap[link]
                 return (
-                <div className={s.singleWrapper}>
+                <div className={s.singleWrapper} key={i}>
                     <Link to={to}>
                         <button className={s.backbutton} onClick={onClick}>
                             {link === 'calendar' ? (<>📆</>) : null}

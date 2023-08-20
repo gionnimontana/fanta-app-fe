@@ -13,7 +13,7 @@ export const Market = () => {
   return (
     <AppScreen loading={isLoading}>
       <h2 className={s.title}>🛒 Market 🛒</h2>
-      {ap.data && t.data 
+      {ap.data && t.data  && op.data
           ? <PlayerTableWrapper players={ap.data} teams={t.data} activePurchases={op.data}/>
           : <div>Something went wrong (no teams or player data)</div>
       }

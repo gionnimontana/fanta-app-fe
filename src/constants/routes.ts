@@ -4,4 +4,5 @@ export const routes = {
     Team: "/team/:id",
     Teams: "/teams",
     Market: "/market",
+    Player: "/player/:id",
 }
