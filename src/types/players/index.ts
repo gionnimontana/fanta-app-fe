@@ -12,3 +12,14 @@ export interface Player {
 export interface PlayerMap {
     [key: string]: Player
 }
+
+export interface Purchase {
+    id: string
+    player: string
+    from_team: string
+    to_team: string
+    price: number
+    closed: boolean
+    validated: boolean
+    updated: string
+}

@@ -1,10 +1,12 @@
 import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
-import { Player, PlayerMap } from "../types/players"
-import { validModules } from "../constants/settings"
+import { Player, PlayerMap, Purchase } from "../types/players"
+import { marketWindow, validModules } from "../constants/settings"
 import { editTeamBotMode } from "../queries/teams"
 import { updateMatchFormation } from "../queries/calendar"
 import { MatchDayTS } from "types/utils"
+import { ChangeEvent, Dispatch } from "react"
+import { pb } from "./pb"
 
 export const getCurrentMatchDay = (matchDayTimestamps: MatchDayTS[]): number => {
     const nowTS = new Date().getTime()
@@ -211,8 +213,8 @@ export const isValidFormation = (formation: PreMatchFormation, module: string): 
         alert('Invalid formation, there must be only one goalkeeper (P)') 
         return false
     }
-    if (formation.b.length !== 12) {
-        alert('Invalid formation, there must be exactly 2 players not convocated 🍺 (not on field 🏁 neither on bench 👀)')
+    if (formation.b.length > 12) {
+        alert('There cannot be over 12 players on the bench 👀')
         return false
     }
     return true
@@ -284,4 +286,53 @@ export const matchDayHasEnded = (matchDay: number, matchDayTimestamps: MatchDayT
 export const userCanEditMatch = (match: Match, teamId: string, matchDayBegun: boolean): boolean => {
     const userInMatch = match.match.includes(teamId)
     return userInMatch && !matchDayBegun
+}
+
+export const getLocalStoredFilters = (): { [key: string]: string } => {
+    const filters = localStorage.getItem('marketfilters')
+    if (!filters) return {
+        role: 'all',
+        team: 'all',
+    }
+    return JSON.parse(filters)
+}
+
+export const setLocalStoredFilters = (filterKey: string, action: Dispatch<React.SetStateAction<string>>) => 
+    (e: ChangeEvent<HTMLSelectElement>) => {
+    const currentFilters = getLocalStoredFilters()
+    currentFilters[filterKey] = e.target.value
+    localStorage.setItem('marketfilters', JSON.stringify(currentFilters))
+    action(currentFilters[filterKey])
+}
+
+export type PurchaseAction = 'makeOffer' | 'acceptOffer' | 'cancelOffer' | 'releasePlayer' | 'marketClosed'
+export const getPossiblePurchaseActions = (player?: Player, purchase?: Purchase): PurchaseAction[] => {
+    if (!marketWindowIsOpen()) return []
+    if (!player) return []
+    const userTeam = pb.authStore.model?.team;
+    if (!userTeam) return []
+    const playerIsInUserTeam = player.fanta_team === userTeam
+    if (playerIsInUserTeam) {
+        if (purchase) return ['acceptOffer']
+        return ['releasePlayer']
+    }
+    if (userTeam === purchase?.to_team) return ['cancelOffer']
+    return ['makeOffer']
+}
+
+export const marketWindowIsOpen = (): boolean => {
+    const now = new Date().getTime()
+    const start = new Date(marketWindow.start).getTime()
+    const end = new Date(marketWindow.end).getTime()
+    return now > start && now < end
+}
+
+export const getTeamBudget = (purchases: Purchase[], team?: Team): number => {
+    if (!team) return 0
+    const budget = team.credits - purchases.reduce((acc, p) => {
+        if (p.from_team === team.id && p.validated) return acc - p.price
+        else if (p.to_team === team.id) return acc + p.price
+        return acc
+    }, 0)
+    return budget
 }

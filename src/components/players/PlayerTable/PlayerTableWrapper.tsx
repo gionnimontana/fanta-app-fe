@@ -1,27 +1,32 @@
 import { useState } from "react";
-import { PlayerMap } from "../../../types/players";
+import { PlayerMap, Purchase } from "../../../types/players";
 import { Team } from "../../../types/teams";
 import { PlayerTable } from "./PlayerTable";
 import { Input } from "../../generalUI/Input/Input";
 import { Select } from "../../generalUI/Select/Select";
 import s from "./PlayerTable.module.css";
+import { getLocalStoredFilters, setLocalStoredFilters } from "../../../helpers";
 
 interface Props {
   players: PlayerMap;
   teams: Team[];
+  activePurchases: Purchase[];
 }
 
-export const PlayerTableWrapper = ({ players, teams }: Props) => {
-  const [role, setRole] = useState<string>('all');
-  const [team, setTeam] = useState<string>('');
+export const PlayerTableWrapper = ({ players, teams, activePurchases }: Props) => {
+  const lsfilters = getLocalStoredFilters()
+  const [role, setRole] = useState<string>(lsfilters['role']);
+  const [team, setTeam] = useState<string>(lsfilters['team']);
   const [search, setSearch] = useState<string>('');
+
+  const activePurchaseIds = activePurchases.map((p) => p.player);
 
   const filteredPlayers = Object.values(players).filter((p) => {
     const roleFilter = role === 'all' ? true : p.role === role;
     const teamFilter = team === 'all' ? true : p.fanta_team === team;
     const searchFilter = p.name.toLowerCase().includes(search.toLowerCase()) || p.team.toLowerCase().includes(search.toLowerCase())
     return roleFilter && teamFilter && searchFilter;
-  }).sort((a, b) => b.fvm - a.fvm);
+  }).sort((a, b) => b.fvm - a.fvm).sort((a, b) => Number(activePurchaseIds.includes(b.id)) - Number(activePurchaseIds.includes(a.id)));
 
   return (
     <>
@@ -33,7 +38,7 @@ export const PlayerTableWrapper = ({ players, teams }: Props) => {
           />
           <Select
             value={role}
-            onChange={(e) => setRole(e.target.value)}
+            onChange={setLocalStoredFilters('role', setRole)}
             options={[
               { value: 'all', name: 'All' },
               { value: 'p', name: 'P' },
@@ -45,7 +50,7 @@ export const PlayerTableWrapper = ({ players, teams }: Props) => {
           />
           <Select
             value={team}
-            onChange={(e) => setTeam(e.target.value)}
+            onChange={setLocalStoredFilters('team', setTeam)}
             options={[
               { value: 'all', name: 'All' },
               { value: '', name: 'Free 🛒' },
@@ -54,7 +59,7 @@ export const PlayerTableWrapper = ({ players, teams }: Props) => {
             label="Team"
           />
       </div>
-      <PlayerTable players={filteredPlayers} teams={teams}/>
+      <PlayerTable players={filteredPlayers} teams={teams} activePurchases={activePurchases}/>
     </>
   );
 }

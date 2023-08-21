@@ -39,7 +39,11 @@
 }
 
 .name {
-    width: 16rem;
+    width: 12rem;
+}
+
+.from {
+    width: 8rem;
 }
 
 .value {

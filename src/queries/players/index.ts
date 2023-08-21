@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { Match } from "types/matches";
-import { Player, PlayerMap } from "types/players";
+import { Player, PlayerMap, Purchase } from "types/players";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 
@@ -19,11 +19,11 @@ export function usePlayers() {
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime });
 }
 
-export function usePlayer(id: string) {
+export function usePlayer(id?: string) {
     return useQuery(`player-${id}`, async () => {
-        const response = await fetch(apiEndpoints.Players + `/:${id}`)
+        const response = await fetch(apiEndpoints.Players + `/${id}`)
         const data = await response.json()
-        const player = data
+        const player = data as Player
         return player
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
@@ -56,5 +56,52 @@ export function useMatchPlayers(match: Match) {
         }, {} as {[key: string]: Player})
         return playerMap
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
+}
+
+export const usePurchasePlayer = (purchaseId?: string) => {
+    return useQuery(`purchase-player-${purchaseId}`, async () => {
+        const urlParams = `?&filter=(id='${purchaseId}')&expand=player`
+        const response = await fetch(apiEndpoints.Purchases + urlParams)
+        const data = await response.json()
+        console.log('ooooooo', data)
+        return []
+    }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
+}
+
+export function useOpenPurchasePlayers(){
+    return useQuery('purchase-players', async () => {
+        const urlParams = `?&perPage=500&filter=(closed=false)`
+        const response = await fetch(apiEndpoints.Purchases + urlParams)
+        const data = await response.json()
+        const openPurchasePlayers = data.items as Purchase[]
+        return openPurchasePlayers
+    }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
+}
+
+export function createPurchaseOffer(playerId: string, from_team: string, to_team: string | null, price: number) {
+    return fetch(apiEndpoints.Purchases, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "player": playerId,
+            "to_team": to_team,
+            "from_team": from_team,
+            "price": price,
+            "closed": false,
+            "validated": from_team ? false : true
+        })
+    })
+}
+
+export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: any}) {
+    return fetch(apiEndpoints.Purchases + `/${purchaseId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
 }
   

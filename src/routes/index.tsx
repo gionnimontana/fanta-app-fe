@@ -5,6 +5,7 @@ import { Match } from "./match/Match";
 import { Team } from "./team/Team";
 import { Teams } from "./teams/Teams";
 import { Market } from "./market/Market";
+import { PlayerDetail } from "./player/PlayerDetail";
   
 export const router = createBrowserRouter([
   {
@@ -26,5 +27,9 @@ export const router = createBrowserRouter([
   {
     path: routes.Market,
     element: <Market/>,
+  },
+  {
+    path: routes.Player,
+    element: <PlayerDetail/>,
   }
 ]);
