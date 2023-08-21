@@ -1,4 +1,4 @@
-import { useOpenPurchasePlayers, usePlayer } from '../../queries/players';
+import { useOpenPurchasePlayers, usePlayer, usePlayers } from '../../queries/players';
 import { useParams } from 'react-router-dom';
 import { AppScreen } from '../../components/generalUI/appScreen/AppScreen';
 import { BottomButton } from '../../components/generalUI/bottomButton/BottonButton';
@@ -11,16 +11,20 @@ import { pb } from '../../helpers/pb';
 import { useTeams } from '../../queries/teams';
 import { OpenPlayerPurchase } from '../../components/players/OpenPlayerPurchase/OpenPlayerPurchase';
 import { PlayerActions } from '../../components/players/PlayerActions/PlayerAction';
+import { getTeamBudget } from '../../helpers';
 import s from './PlayerDetail.module.css'
 
 export const PlayerDetail = () => {
     const { id } = useParams();
+    const ap = usePlayers()
     const p = usePlayer(id)
     const op = useOpenPurchasePlayers()
     const t = useTeams()
     const [showLogin, setShowLogin] = useState<boolean>(false)
-    const loading = p.isLoading || op.isLoading || t.isLoading
+    const loading = p.isLoading || op.isLoading || t.isLoading || ap.isLoading
     const isAuthenticated = pb.authStore.isValid
+    const targetTeam = t.data?.find(t => t.id === pb.authStore.model?.team)
+    const teamBudget = getTeamBudget(op.data || [], ap.data || {}, targetTeam)
 
     return (
         <AppScreen loading={loading}>
@@ -38,7 +42,8 @@ export const PlayerDetail = () => {
                 ? <LinkIconButton links={['login']} onClick={() => setShowLogin(true)}/> 
                 : <PlayerActions
                     player={p.data}
-                    purchase={op.data?.find(p => p.player === id)}
+                    purchases={op.data || []}
+                    teamBudget={teamBudget}
                 />
             }
             {showLogin ? <Login onClose={() => setShowLogin(false)}/> : null}

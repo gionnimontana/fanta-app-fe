@@ -1,7 +1,7 @@
 import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
 import { Player, PlayerMap, Purchase } from "../types/players"
-import { validModules } from "../constants/settings"
+import { marketWindow, validModules } from "../constants/settings"
 import { editTeamBotMode } from "../queries/teams"
 import { updateMatchFormation } from "../queries/calendar"
 import { MatchDayTS } from "types/utils"
@@ -305,16 +305,35 @@ export const setLocalStoredFilters = (filterKey: string, action: Dispatch<React.
     action(currentFilters[filterKey])
 }
 
-export type PurchaseAction = 'makeOffer' | 'acceptOffer' | 'cancelOffer'
+export type PurchaseAction = 'makeOffer' | 'acceptOffer' | 'cancelOffer' | 'releasePlayer' | 'marketClosed'
 export const getPossiblePurchaseActions = (player?: Player, purchase?: Purchase): PurchaseAction[] => {
+    if (!marketWindowIsOpen()) return []
     if (!player) return []
     const userTeam = pb.authStore.model?.team;
     if (!userTeam) return []
-    const playerIsInUserTeam = player.team === userTeam
+    const playerIsInUserTeam = player.fanta_team === userTeam
     if (playerIsInUserTeam) {
         if (purchase) return ['acceptOffer']
-        return []
+        return ['releasePlayer']
     }
     if (userTeam === purchase?.team) return ['cancelOffer']
     return ['makeOffer']
+}
+
+export const marketWindowIsOpen = (): boolean => {
+    const now = new Date().getTime()
+    const start = new Date(marketWindow.start).getTime()
+    const end = new Date(marketWindow.end).getTime()
+    return now > start && now < end
+}
+
+export const getTeamBudget = (purchases: Purchase[], players: PlayerMap, team?: Team): number => {
+    if (!team) return 0
+    const budget = team.credits - purchases.reduce((acc, p) => {
+        const purchaseTeam = players[p.player]?.fanta_team
+        if (purchaseTeam === team.id && p.validated) return acc + p.price
+        else if (p.team === team.id) return acc - p.price
+        return acc
+    }, 0)
+    return budget
 }

@@ -77,4 +77,30 @@ export function useOpenPurchasePlayers(){
         return openPurchasePlayers
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
+
+export function createPurchaseOffer(playerId: string, teamId: string | null, price: number, validated: boolean) {
+    return fetch(apiEndpoints.Purchases, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "player": playerId,
+            "team": teamId,
+            "price": price,
+            "closed": false,
+            "validated": validated
+        })
+    })
+}
+
+export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: any}) {
+    return fetch(apiEndpoints.Purchases + `/${purchaseId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+}
   

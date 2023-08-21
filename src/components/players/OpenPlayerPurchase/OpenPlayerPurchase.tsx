@@ -34,7 +34,7 @@ export const OpenPlayerPurchase = ({ player, teams, activePurchases }: Props) =>
                             <div className={s.date}>{expire}</div>
                         </div>
                         <div className={s.row}>
-                            <div className={s.label}>Valid</div>
+                            <div className={s.label}>Accepted</div>
                             <div className={s.value}>{acceptIcon}</div>
                         </div>
                     </div>
