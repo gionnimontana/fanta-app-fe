@@ -15,7 +15,7 @@ interface Props {
 export const MakeOffer = ({ purchase, player, teamBudget }: Props) => {
     const queryClient = useQueryClient()
     const userTeam = pb.authStore.model?.team;
-    const baseOffer = purchase ? purchase.price : player?.fvm || 1
+    const baseOffer = purchase ? purchase.price + 1 : player?.fvm || 1
     const [loading, setLoading] = useState<boolean>(false)
     const [offerValue, setOfferValue] = useState<number>(baseOffer)
 
@@ -27,10 +27,9 @@ export const MakeOffer = ({ purchase, player, teamBudget }: Props) => {
       setLoading(true)
       let res: Response | { ok: false } = {ok : false}
       if (purchase) {
-        res = await updatePurchaseOffer(purchase.id, {team: userTeam, price: offerValue})
+        res = await updatePurchaseOffer(purchase.id, {to_team: userTeam, price: offerValue})
       } else {
-        const playerHaveTeam = !Boolean(player.fanta_team)
-        res = await createPurchaseOffer(player.id, userTeam, offerValue, playerHaveTeam)
+        res = await createPurchaseOffer(player.id, player.fanta_team, userTeam, offerValue)
       }
       if (res.ok) {
         queryClient.invalidateQueries('purchase-players')

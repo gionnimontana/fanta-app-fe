@@ -16,7 +16,8 @@ export interface PlayerMap {
 export interface Purchase {
     id: string
     player: string
-    team: string
+    from_team: string
+    to_team: string
     price: number
     closed: boolean
     validated: boolean

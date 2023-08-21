@@ -78,7 +78,7 @@ export function useOpenPurchasePlayers(){
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 
-export function createPurchaseOffer(playerId: string, teamId: string | null, price: number, validated: boolean) {
+export function createPurchaseOffer(playerId: string, from_team: string, to_team: string | null, price: number) {
     return fetch(apiEndpoints.Purchases, {
         method: 'POST',
         headers: {
@@ -86,10 +86,11 @@ export function createPurchaseOffer(playerId: string, teamId: string | null, pri
         },
         body: JSON.stringify({
             "player": playerId,
-            "team": teamId,
+            "to_team": to_team,
+            "from_team": from_team,
             "price": price,
             "closed": false,
-            "validated": validated
+            "validated": to_team ? false : true
         })
     })
 }

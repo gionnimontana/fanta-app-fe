@@ -15,7 +15,7 @@ export const ReleasePlayer = ({ player }: Props) => {
     const onClick = async () => {
       if (!player) return alert('Something went wrong, no player found, please contact the admin')
       setLoading(true)
-      const res = await createPurchaseOffer(player.id, null, player.fvm - 1, true)
+      const res = await createPurchaseOffer(player.id, player.fanta_team, null, player.fvm - 1)
       if (res.ok) {
         queryClient.invalidateQueries('purchase-players')
         alert('Player offered to the market successfully')

@@ -23,7 +23,7 @@ export const OpenPlayerPurchase = ({ player, teams, activePurchases }: Props) =>
                     <div className={s.stats}>
                         <div className={s.row}>
                             <div className={s.label}>From</div>
-                            <div className={s.value}>{getTeamEmoji(openPurchase.team, teams)}</div>
+                            <div className={s.value}>{getTeamEmoji(openPurchase.to_team, teams)}</div>
                         </div>
                         <div className={s.row}>
                             <div className={s.label}>💰</div>

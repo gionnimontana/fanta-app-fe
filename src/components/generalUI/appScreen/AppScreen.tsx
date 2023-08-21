@@ -4,12 +4,15 @@ import s from './AppScreen.module.css'
 interface Props {
     children: React.ReactNode
     loading?: boolean
+    header?: React.ReactNode | string
 }
 
-export const AppScreen = ({ children, loading }: Props) => {
+export const AppScreen = ({ children, loading, header }: Props) => {
+    const cn = header ? s.container : s.containerNoHeader
     return (
         <div className={s.outer}>
-            <div className={s.container}>
+            {header ? <div className={s.header}>{header}</div> : null}
+            <div className={cn}>
                 {loading ? (
                     <div className={s.loader}><FullPageLoader/></div>
                 ): (

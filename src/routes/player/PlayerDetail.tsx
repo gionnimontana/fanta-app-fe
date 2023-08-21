@@ -12,22 +12,27 @@ import { useTeams } from '../../queries/teams';
 import { OpenPlayerPurchase } from '../../components/players/OpenPlayerPurchase/OpenPlayerPurchase';
 import { PlayerActions } from '../../components/players/PlayerActions/PlayerAction';
 import { getTeamBudget } from '../../helpers';
+import { TeamMarketHeader } from '../../components/teams/teamMarketHeader/TeamMarketHeader';
 import s from './PlayerDetail.module.css'
 
 export const PlayerDetail = () => {
     const { id } = useParams();
-    const ap = usePlayers()
     const p = usePlayer(id)
     const op = useOpenPurchasePlayers()
     const t = useTeams()
     const [showLogin, setShowLogin] = useState<boolean>(false)
-    const loading = p.isLoading || op.isLoading || t.isLoading || ap.isLoading
+    const loading = p.isLoading || op.isLoading || t.isLoading
     const isAuthenticated = pb.authStore.isValid
     const targetTeam = t.data?.find(t => t.id === pb.authStore.model?.team)
-    const teamBudget = getTeamBudget(op.data || [], ap.data || {}, targetTeam)
+    const teamBudget = getTeamBudget(op.data || [], targetTeam)
 
     return (
-        <AppScreen loading={loading}>
+        <AppScreen 
+            loading={loading}
+            header={targetTeam ? (
+                <TeamMarketHeader team={targetTeam} budget={teamBudget} purchases={op.data || []}/>
+            ) : null}
+        >
             {p.data && <PlayerDetails
                 player={p.data}
                 purchase={op.data?.find(p => p.player === id)}
