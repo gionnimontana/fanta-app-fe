@@ -6,7 +6,7 @@ import { MatchDayTS } from "types/utils";
 
 export function useMatchDayTS() {
     return useQuery(`schedules`, async () => {
-        const response = await fetch(apiEndpoints.Schedules + `?perPage=38`)
+        const response = await fetch(apiEndpoints.Schedules + `?perPage=50&sort=day`)
         const data = await response.json()
         const calendar = data
         return calendar.items as MatchDayTS[]
