@@ -11,7 +11,7 @@ interface Props {
 
 export const TeamMarketHeader = ({team, budget, purchases}: Props) => {
     const inPurchase = purchases.filter(p => p.to_team === team.id).length
-    const outPurchase = purchases.filter(p => p.from_team === team.id).length
+    const outPurchase = purchases.filter(p => p.from_team === team.id && p.validated).length
 
     return (
         <div className={s.container}>

@@ -49,7 +49,7 @@ export const MakeOffer = ({ purchase, player, teamBudget }: Props) => {
               onChange={setOfferValue}
             />
             <LoadingButton loading={loading} onClick={onClick} width={'12rem'}>
-              Make Offer
+              {purchase?.to_team === userTeam ? 'Update offer': 'Make offer'}
             </LoadingButton>
             <div style={{padding: '2rem'}}>
               Pressing this button you are going to make an offer of {offerValue} credits for {player?.name}, the offer cannot be revoked.

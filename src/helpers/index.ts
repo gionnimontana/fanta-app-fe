@@ -316,7 +316,7 @@ export const getPossiblePurchaseActions = (player?: Player, purchase?: Purchase)
         if (purchase) return ['acceptOffer']
         return ['releasePlayer']
     }
-    if (userTeam === purchase?.team) return ['cancelOffer']
+    if (userTeam === purchase?.to_team) return ['cancelOffer']
     return ['makeOffer']
 }
 
