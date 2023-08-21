@@ -1,11 +1,12 @@
 import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
-import { Player, PlayerMap } from "../types/players"
+import { Player, PlayerMap, Purchase } from "../types/players"
 import { validModules } from "../constants/settings"
 import { editTeamBotMode } from "../queries/teams"
 import { updateMatchFormation } from "../queries/calendar"
 import { MatchDayTS } from "types/utils"
 import { ChangeEvent, Dispatch } from "react"
+import { pb } from "./pb"
 
 export const getCurrentMatchDay = (matchDayTimestamps: MatchDayTS[]): number => {
     const nowTS = new Date().getTime()
@@ -302,4 +303,18 @@ export const setLocalStoredFilters = (filterKey: string, action: Dispatch<React.
     currentFilters[filterKey] = e.target.value
     localStorage.setItem('marketfilters', JSON.stringify(currentFilters))
     action(currentFilters[filterKey])
+}
+
+export type PurchaseAction = 'makeOffer' | 'acceptOffer' | 'cancelOffer'
+export const getPossiblePurchaseActions = (player?: Player, purchase?: Purchase): PurchaseAction[] => {
+    if (!player) return []
+    const userTeam = pb.authStore.model?.team;
+    if (!userTeam) return []
+    const playerIsInUserTeam = player.team === userTeam
+    if (playerIsInUserTeam) {
+        if (purchase) return ['acceptOffer']
+        return []
+    }
+    if (userTeam === purchase?.team) return ['cancelOffer']
+    return ['makeOffer']
 }

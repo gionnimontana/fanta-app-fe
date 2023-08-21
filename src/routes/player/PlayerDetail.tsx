@@ -10,6 +10,7 @@ import { Login } from '../../components/login/Login';
 import { pb } from '../../helpers/pb';
 import { useTeams } from '../../queries/teams';
 import { OpenPlayerPurchase } from '../../components/players/OpenPlayerPurchase/OpenPlayerPurchase';
+import { PlayerActions } from '../../components/players/PlayerActions/PlayerAction';
 import s from './PlayerDetail.module.css'
 
 export const PlayerDetail = () => {
@@ -33,7 +34,13 @@ export const PlayerDetail = () => {
                 activePurchases={op.data || []}
                 teams={t.data || []}
             />
-            {isAuthenticated ? <LinkIconButton links={['login']} onClick={() => setShowLogin(true)}/> : null}
+            {!isAuthenticated 
+                ? <LinkIconButton links={['login']} onClick={() => setShowLogin(true)}/> 
+                : <PlayerActions
+                    player={p.data}
+                    purchase={op.data?.find(p => p.player === id)}
+                />
+            }
             {showLogin ? <Login onClose={() => setShowLogin(false)}/> : null}
             <BottomButton to={routes.Market} label={'View all players'}/>
         </AppScreen>
