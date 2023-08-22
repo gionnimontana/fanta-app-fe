@@ -19,7 +19,7 @@ export const PlayerTable = ({ players, teams, activePurchases }: Props) => {
 
   const decoratedPlayerName = (player: Player) => {
     const target = getPlayerPurchase(player)
-    if (target) return `🔥 ${target.to_team} ${player.name}`
+    if (target) return `🔥 ${getTeamEmoji(target.to_team, teams)} ${player.name}`
     else return player.name
   }
 
