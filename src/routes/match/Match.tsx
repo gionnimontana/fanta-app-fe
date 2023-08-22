@@ -17,6 +17,7 @@ export const Match = () => {
     const teams = t.data || []
     const loading = m.isLoading || t.isLoading
     const isData = m.data && mdTS.data
+    const matchDay = m.data?.day || undefined
 
     return (
         <AppScreen loading={loading}>
@@ -27,7 +28,7 @@ export const Match = () => {
             <div className={s.formationsContainer}>
                 {m.data ? <MatchFormWrapper match={m.data} teams={teams}/> : null}
             </div>
-            <BottomButton label="View all matches" to={routes.Home}/>
+            <BottomButton label={`View day ${matchDay} matches`} to={routes.Home.replace(':id', `${matchDay}`)}/>
             {(m.data && mdTS.data) ? <EditFormButton match={m.data} matchDayTS={mdTS.data} /> : null}
         </AppScreen>
     );

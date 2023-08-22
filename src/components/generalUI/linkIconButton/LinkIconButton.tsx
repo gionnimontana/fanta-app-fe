@@ -11,7 +11,7 @@ interface Props {
 
 export const LinkIconButton = ({links, onClick}: Props) => {
     const destinationMap = {
-        calendar: routes.Home,
+        calendar: routes.Home.replace(':id', ''),
         teams: routes.Teams,
         market: routes.Market,
         login: '#',

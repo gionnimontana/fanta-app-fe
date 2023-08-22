@@ -3,10 +3,12 @@ import { FullPageLoader } from "../../components/generalUI/fullPageLoader/FullPa
 import { LinkIconButton } from "../../components/generalUI/linkIconButton/LinkIconButton"
 import { getCurrentMatchDay } from "../../helpers"
 import { Home } from "./components/Home"
+import { useParams } from "react-router-dom"
 
 export const HomeWrapper = () => {
+    const { id } = useParams();
     const c = useMatchDayTS()
-    const currentDay = getCurrentMatchDay(c.data || [])
+    const currentDay = id ? Number(id) : getCurrentMatchDay(c.data || [])
     const isLoading = c.isLoading 
     const isError = c.isError
 
