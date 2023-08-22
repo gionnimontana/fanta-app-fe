@@ -10,10 +10,11 @@ import { pb } from "./pb"
 
 export const getCurrentMatchDay = (matchDayTimestamps: MatchDayTS[]): number => {
     const nowTS = new Date().getTime()
+    const newTS = nowTS - (24 * 60 * 60 * 1000);
     let matchDay = 1
     for (let i: number = 0; i <= matchDayTimestamps.length; i++) {
         const endTS = new Date(matchDayTimestamps[i]?.end).getTime()
-        if (nowTS < endTS) {
+        if (newTS < endTS) {
             matchDay = i + 1
             break
         }
