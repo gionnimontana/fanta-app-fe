@@ -90,7 +90,7 @@ export function createPurchaseOffer(playerId: string, from_team: string, to_team
             "from_team": from_team,
             "price": price,
             "closed": false,
-            "validated": from_team ? false : true
+            "validated": from_team && to_team ? false : true
         })
     })
 }
