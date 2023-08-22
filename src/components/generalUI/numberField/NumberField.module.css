@@ -7,10 +7,11 @@
   padding: 0.5rem;
   margin: 0.5rem;
   border-radius: 2rem;
+  background-color: var(--contrast);
 }
 
 .disabled {
-  background-color: var(--basictext);
+  background-color: var(--backgroundLighter);
   cursor: not-allowed;
 }
 
