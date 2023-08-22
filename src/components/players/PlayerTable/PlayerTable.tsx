@@ -22,7 +22,7 @@ export const PlayerTable = ({ players, teams, activePurchases }: Props) => {
   const decoratedPlayerName = (player: Player) => {
     if (isPurchase(player)) {
       const purchase = activePurchases.find((p) => p.player === player.id)
-      return `🔥 ${getTeamEmoji(purchase?.to_team, teams)} ${player.name}`
+      return `🔥${getTeamEmoji(purchase?.to_team, teams)} ${player.name}`
     }
     else return player.name
   }
