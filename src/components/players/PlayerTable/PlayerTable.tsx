@@ -13,19 +13,18 @@ interface Props {
 }
 
 export const PlayerTable = ({ players, teams, activePurchases }: Props) => {
-  const activePurchaseIds = activePurchases.map((p) => p.player);
-
-  const isPurchase = (player: Player) => {
-    return activePurchaseIds.includes(player.id)
+  const getPlayerPurchase = (player: Player) => {
+    return activePurchases.find(p => p.player = player.id)
   }
 
   const decoratedPlayerName = (player: Player) => {
-    if (isPurchase(player)) return `🔥 ${player.name}`
+    const target = getPlayerPurchase(player)
+    if (target) return `🔥 ${target.to_team} ${player.name}`
     else return player.name
   }
 
   const pCn = (player: Player) => {
-    if (isPurchase(player)) return `${s.player} ${s.purchase}`
+    if (getPlayerPurchase(player)) return `${s.player} ${s.purchase}`
     else return s.player
   }
 
