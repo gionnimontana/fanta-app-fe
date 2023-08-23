@@ -1,11 +1,14 @@
 import { Team } from "../../../types/teams"
 import { Table } from "../../../components/generalUI/table/Table"
 import { Player, PlayerMap } from "../../../types/players"
-import { getNewFormationPlayerChange, getNewModuleOnChange, getPlayerFormationIcon, getRoster, getTeamFormation, updateModeMatchTeamFormation } from "../../../helpers"
+import { getNewFormationPlayerChange, getNewModuleOnChange, getRoster, getTeamFormation, updateModeMatchTeamFormation } from "../../../helpers"
 import { Match, PreMatchFormation } from "../../../types/matches"
 import s from './EditFormation.module.css'
 import { useState } from "react"
 import { useQueryClient } from "react-query"
+import { EditFromationTable } from "./components/EditFromationTable/EditFromationTable"
+import { EditFormationHeader } from "./components/EditFormationHeader/EditFormationHeader"
+import { SortBenchOrder } from "./components/SortBenchOrder/SortBenchOrder"
 
 interface Props {
     team: Team
@@ -21,6 +24,7 @@ export const EditFormation = ({team, players, match, matchDayHasStarted}: Props)
     const [formation, setFormation] = useState<PreMatchFormation>(initFormation)
     const [module, setModule] = useState<string>(formation.m || '0-0-0')
     const [botMode, setBotMode] = useState<boolean>(team.auto_formation)
+    const [benchOrderView, setBenchOrderView] = useState<boolean>(false)
 
     const handlePlayerClick = (player: Player) => () => {
         const newFormation = getNewFormationPlayerChange(player, formation)
@@ -30,6 +34,10 @@ export const EditFormation = ({team, players, match, matchDayHasStarted}: Props)
     }
 
     const handleSaveformation = async() => {
+        // if (!botMode && !benchOrderView) {
+        //     setBenchOrderView(true)
+        //     return
+        // }
         const success = await updateModeMatchTeamFormation(match, team, formation, module, botMode, matchDayHasStarted)
         if (success) {
             queryClient.invalidateQueries(`team-${team.id}`)
@@ -42,55 +50,24 @@ export const EditFormation = ({team, players, match, matchDayHasStarted}: Props)
             <Table 
                 minWidth={25}
                 header={
-                    <div 
-                        className={s.header}
-                        onClick={() => setBotMode(!botMode)}
-                    >
-                        <p className={s.emoji}>{team.emoji}</p>
-                        <button 
-                            className={s.headerText}
-                            onClick={() => setBotMode(!botMode)}
-                        >
-                            {botMode 
-                                ? 'BotMode'
-                                : module
-                            }
-                        </button>
-                        <p className={s.emoji}>{team.emoji}</p>
-                    </div>
+                    <EditFormationHeader 
+                        botMode={botMode} 
+                        setBotMode={setBotMode} 
+                        module={module}
+                        team={team}
+                    />
                 }
             >
-                <div className={s.player}>
-                    <p className={s.positionH}></p>
-                    <p className={s.role}></p>
-                    <p className={`${s.name} ${s.bold}`}>NAME</p>
-                    <p className={`${s.name} ${s.bold}`}>FROM</p>
-                    <p className={`${s.value} ${s.bold}`}>FVM</p>
-                    <p className={`${s.value} ${s.bold}`}>PNM</p>
-                </div>
-                <div className={s.players}>
-                    {roster.map((player, i) => {
-                        const icon = botMode 
-                            ? '🤖'
-                            : getPlayerFormationIcon(player.id, formation)
-                        const isStarter = icon === '🏁'
-                        return (
-                            <div className={`${isStarter ? s.starter : ''} ${s.player}`} key={i}>
-                                <div 
-                                    className={s.position}
-                                    onClick={handlePlayerClick(player)}
-                                >
-                                    {icon}
-                                </div>
-                                <p className={s.role}>{player.role}</p>
-                                <p className={s.name}>{player.name}</p>
-                                <p className={s.name}>{player.team}</p>
-                                <p className={s.value}>{player.fvm}</p>
-                                <p className={s.value}>{player.play_next_match}</p>
-                            </div>
-                        )
-                    })}
-                </div>
+                {benchOrderView ? (
+                    <SortBenchOrder/>
+                ) : (
+                    <EditFromationTable
+                        roster={roster}
+                        botMode={botMode}
+                        formation={formation}
+                        handlePlayerClick={handlePlayerClick}
+                    />
+                )}
             </Table>
             <div className={s.savebuttoncontainer}>
                 <button className={s.savebutton} onClick={handleSaveformation}>Save</button>
