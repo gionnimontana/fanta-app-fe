@@ -1,46 +1,40 @@
 import { useState } from "react";
-import { arrayMove } from "./array-move";
+import { arrayMove } from "./utils";
 import Draggable from "./Draggable";
 
 export interface DraggableItem {
-  id: string | number;
+  id: string;
+  name: string;
 }
 
-export interface DraggableItems {
-  items: Array<DraggableItem | any>;
-  setItems: (items: any) => void;
-  children?: React.ReactNode;
-  component: (item: any) => JSX.Element;
+interface Props {
+  items: DraggableItem[]
+  setItems: (items: DraggableItem[]) => void
+  component: (item: DraggableItem[]) => JSX.Element
 }
 
-export const SortableList = ({ items, setItems, component }: DraggableItems) => {
-  const [dragId, setDragId] = useState("");
+export const SortableList = ({ items, setItems, component }: Props) => {
+  const [dragId, setDragId] = useState<string>("");
 
-  const onDrop = (ev: any, item: any) => {
-    let currentPos = 0,
-      droppedPos = 0;
-
-    for (let i = 0; i < items.length; i++) {
-      if (dragId == items[i].id) {
+  const onDrop = (toId: string, fromId?: string, i?: DraggableItem[]) => {
+    let currentPos = 0
+    let droppedPos = 0
+    const itm = i ? i : items
+    for (let i = 0; i < itm.length; i++) {
+      const from = fromId ? fromId : dragId
+      if (from == itm[i].id) {
         currentPos = i;
       }
-
-      if (ev.currentTarget.id == items[i].id) {
+      if (toId == itm[i].id) {
         droppedPos = i;
       }
     }
-
-    const newItems = arrayMove([...items], currentPos, droppedPos);
+    const newItems = arrayMove([...itm], currentPos, droppedPos);
     setItems(newItems);
   };
 
-  const onDragStart = (ev: any, item: any) => {
-    setDragId(item.id);
-  };
-
-  const renderComponent = (componentJsx: any, item: any, index: number) => {
+  const renderComponent = (componentJsx: any, item: DraggableItem, index: number) => {
     const Component = componentJsx;
-
     return <Component item={item} index={index} />;
   };
 
@@ -51,8 +45,9 @@ export const SortableList = ({ items, setItems, component }: DraggableItems) => 
           key={index}
           id={item.id}
           onDrop={onDrop}
-          onDragStart={onDragStart}
+          setDragId={setDragId}
           item={item}
+          items={items}
         >
           {renderComponent(component, item, index)}
         </Draggable>

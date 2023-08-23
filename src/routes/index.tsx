@@ -32,9 +32,5 @@ export const router = createBrowserRouter([
   {
     path: routes.Player,
     element: <PlayerDetail/>,
-  },
-  {
-    path: "/carota",
-    element: <SortBenchOrder/>,
   }
 ]);

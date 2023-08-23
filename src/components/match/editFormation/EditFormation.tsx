@@ -9,6 +9,8 @@ import { useQueryClient } from "react-query"
 import { EditFromationTable } from "./components/EditFromationTable/EditFromationTable"
 import { EditFormationHeader } from "./components/EditFormationHeader/EditFormationHeader"
 import { SortBenchOrder } from "./components/SortBenchOrder/SortBenchOrder"
+import { useNavigate } from "react-router-dom"
+import { routes } from "../../../constants/routes"
 
 interface Props {
     team: Team
@@ -19,6 +21,7 @@ interface Props {
 
 export const EditFormation = ({team, players, match, matchDayHasStarted}: Props) => {
     const queryClient = useQueryClient()
+    const navigate = useNavigate();
     const initFormation = getTeamFormation(match, players, team.id)
     const roster = getRoster(team, players)
     const [formation, setFormation] = useState<PreMatchFormation>(initFormation)
@@ -34,21 +37,22 @@ export const EditFormation = ({team, players, match, matchDayHasStarted}: Props)
     }
 
     const handleSaveformation = async() => {
-        // if (!botMode && !benchOrderView) {
-        //     setBenchOrderView(true)
-        //     return
-        // }
+        if (!botMode && !benchOrderView) {
+            setBenchOrderView(true)
+            return
+        }
         const success = await updateModeMatchTeamFormation(match, team, formation, module, botMode, matchDayHasStarted)
         if (success) {
             queryClient.invalidateQueries(`team-${team.id}`)
             queryClient.invalidateQueries(`match-${match.id}`)
+            navigate(0);
         }
     }
     
     return (
         <div>
             <Table 
-                minWidth={25}
+                minWidth={benchOrderView ? 0 : 25}
                 header={
                     <EditFormationHeader 
                         botMode={botMode} 
@@ -59,7 +63,10 @@ export const EditFormation = ({team, players, match, matchDayHasStarted}: Props)
                 }
             >
                 {benchOrderView ? (
-                    <SortBenchOrder/>
+                    <SortBenchOrder
+                        formation={formation}
+                        setFormation={setFormation}
+                    />
                 ) : (
                     <EditFromationTable
                         roster={roster}
