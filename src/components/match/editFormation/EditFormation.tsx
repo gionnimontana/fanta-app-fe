@@ -50,7 +50,7 @@ export const EditFormation = ({team, players, match, matchDayHasStarted}: Props)
     
     return (
         <div>
-            {benchOrderView ? (
+            {!benchOrderView ? (
                 <Table 
                     minWidth={25}
                     header={
