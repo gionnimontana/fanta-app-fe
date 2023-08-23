@@ -10,7 +10,6 @@ import { EditFromationTable } from "./components/EditFromationTable/EditFromatio
 import { EditFormationHeader } from "./components/EditFormationHeader/EditFormationHeader"
 import { SortBenchOrder } from "./components/SortBenchOrder/SortBenchOrder"
 import { useNavigate } from "react-router-dom"
-import { routes } from "../../../constants/routes"
 
 interface Props {
     team: Team

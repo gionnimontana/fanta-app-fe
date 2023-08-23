@@ -4,9 +4,10 @@ import { Player, PlayerMap, Purchase } from "../types/players"
 import { marketWindow, validModules } from "../constants/settings"
 import { editTeamBotMode } from "../queries/teams"
 import { updateMatchFormation } from "../queries/calendar"
-import { MatchDayTS } from "types/utils"
+import { MatchDayTS } from "../types/utils"
 import { ChangeEvent, Dispatch } from "react"
 import { pb } from "./pb"
+import { routes } from "../constants/routes"
 
 export const getCurrentMatchDay = (matchDayTimestamps: MatchDayTS[]): number => {
     const nowTS = new Date().getTime()
@@ -337,4 +338,19 @@ export const getTeamBudget = (purchases: Purchase[], team?: Team): number => {
         return acc
     }, 0)
     return budget
+}
+
+export const getPreviousAndNextMatchId = (match: Match | undefined, matches: Match[]): { previous: string | null, next: string | null } => {
+    if (!match) return { previous: null, next: null }
+    const matchIndex = matches.findIndex(m => m.id === match.id)
+    const previous = matches[matchIndex - 1]?.id || matches[matches.length - 1]?.id || null
+    const next = matches[matchIndex + 1]?.id  || matches[0].id || null
+    return { previous, next }
+}
+
+export const getPreviousAndNextMatchNavigator = (match: Match | undefined, matches: Match[], nv: (to: string) => void): { previous: () => void, next: () => void } => {
+    const { previous, next } = getPreviousAndNextMatchId(match, matches)
+    const previousNavigator = previous ? () => nv(routes.Match.replace(':id', previous)) : () => {}
+    const nextNavigator = next ? () => nv(routes.Match.replace(':id', next)) : () => {}
+    return { previous: previousNavigator, next: nextNavigator }
 }

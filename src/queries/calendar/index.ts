@@ -13,8 +13,9 @@ export function useMatchDayTS() {
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime });
 }
 
-export function useCalendar(day: number) {
+export function useCalendar(day?: number) {
     return useQuery(`calendar-${day}`, async () => {
+        if (!day) return []
         const response = await fetch(apiEndpoints.Calendar + `?filter=(day=${day})`)
         const data = await response.json()
         const calendar = data
