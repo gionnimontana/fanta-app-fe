@@ -15,7 +15,9 @@ export const SortBenchOrder = ({ formation, setFormation }: Props) => {
   const DragComponent = ({ item, index, role }: any) => {
     return (
       <div className={s.dragComponent} id={item.id}>
-        {index + 1}° - <strong>{item.role.toUpperCase()}</strong> - {item.name}
+        <div className={s.playerindex}>{index + 1}°</div> 
+        <strong className={s.playerRole}>{item.role}</strong>
+        {item.name}
       </div>
     );
   };

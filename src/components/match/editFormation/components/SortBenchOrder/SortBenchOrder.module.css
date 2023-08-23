@@ -1,6 +1,17 @@
 .dragComponent {
   padding: 0.5rem;
   border: 1px solid var(--backgroundLighter);
+  display: flex;
+  align-items: center;
+}
+
+.playerindex {
+  width: 2rem;
+}
+
+.playerRole{
+  text-transform: capitalize;
+  width: 2rem;
 }
 
 .header{
@@ -20,5 +31,5 @@
 }
 
 .dragContainer {
-  height: calc(100vh - 12rem);
+  height: calc(100vh - 15rem);
 }
