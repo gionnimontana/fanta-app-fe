@@ -50,31 +50,28 @@ export const EditFormation = ({team, players, match, matchDayHasStarted}: Props)
     
     return (
         <div>
-            <Table 
-                minWidth={benchOrderView ? 0 : 25}
-                header={
-                    <EditFormationHeader 
-                        botMode={botMode} 
-                        setBotMode={setBotMode} 
-                        module={module}
-                        team={team}
-                    />
-                }
-            >
-                {benchOrderView ? (
-                    <SortBenchOrder
-                        formation={formation}
-                        setFormation={setFormation}
-                    />
-                ) : (
+            {benchOrderView ? (
+                <Table 
+                    minWidth={25}
+                    header={
+                        <EditFormationHeader 
+                            botMode={botMode} 
+                            setBotMode={setBotMode} 
+                            module={module}
+                            team={team}
+                        />
+                    }
+                >
                     <EditFromationTable
                         roster={roster}
                         botMode={botMode}
                         formation={formation}
                         handlePlayerClick={handlePlayerClick}
                     />
-                )}
-            </Table>
+                </Table>
+            ) : (
+                <SortBenchOrder formation={formation} setFormation={setFormation}/>
+            )}
             <div className={s.savebuttoncontainer}>
                 <button className={s.savebutton} onClick={handleSaveformation}>Save</button>
             </div>

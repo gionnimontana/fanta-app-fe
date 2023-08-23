@@ -344,7 +344,7 @@ export const getPreviousAndNextMatchId = (match: Match | undefined, matches: Mat
     if (!match) return { previous: null, next: null }
     const matchIndex = matches.findIndex(m => m.id === match.id)
     const previous = matches[matchIndex - 1]?.id || matches[matches.length - 1]?.id || null
-    const next = matches[matchIndex + 1]?.id  || matches[0].id || null
+    const next = matches[matchIndex + 1]?.id  || matches[0]?.id || null
     return { previous, next }
 }
 
