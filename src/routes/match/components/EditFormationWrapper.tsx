@@ -25,6 +25,7 @@ export const EditFormationWrapper = ({onClose, match, matchDayHasStarted}: Props
                     players={p.data} 
                     match={match} 
                     matchDayHasStarted={matchDayHasStarted}
+                    onClose={onClose}
                   /> 
                 : null
             }

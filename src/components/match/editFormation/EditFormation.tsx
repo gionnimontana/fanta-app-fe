@@ -16,9 +16,10 @@ interface Props {
     players: PlayerMap
     match: Match
     matchDayHasStarted: boolean
+    onClose: () => void
 }
 
-export const EditFormation = ({team, players, match, matchDayHasStarted}: Props) => {
+export const EditFormation = ({team, players, match, matchDayHasStarted, onClose}: Props) => {
     const queryClient = useQueryClient()
     const navigate = useNavigate();
     const initFormation = getTeamFormation(match, players, team.id)
@@ -44,7 +45,7 @@ export const EditFormation = ({team, players, match, matchDayHasStarted}: Props)
         if (success) {
             queryClient.invalidateQueries(`team-${team.id}`)
             queryClient.invalidateQueries(`match-${match.id}`)
-            navigate(0);
+            onClose();
         }
     }
     
