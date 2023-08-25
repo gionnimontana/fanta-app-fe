@@ -1,5 +1,5 @@
 import { Purchase } from "../../../../types/players";
-import { LoadingButton } from "../../../../components/generalUI/loadingButton/LoadingButton";
+import { smartNotification } from "../../../../components/generalUI/notifications/notifications"
 import { useState } from "react";
 
 interface Props {
@@ -10,7 +10,7 @@ export const CancelOffer = ({ purchase }: Props) => {
     const [loading, setLoading] = useState<boolean>(false)
 
     const onClick = async () => {
-      if (!purchase) alert('Something went wrong, no purchase found')
+      if (!purchase) smartNotification('Something went wrong, no purchase found')
       setLoading(true)
       
     }

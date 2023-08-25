@@ -4,6 +4,7 @@ import { useState } from "react";
 import { updatePurchaseOffer, createPurchaseOffer } from "../../../../queries/players";
 import { useQueryClient } from "react-query";
 import { pb } from "../../../../helpers/pb";
+import { smartNotification } from "../../../../components/generalUI/notifications/notifications"
 import { NumberField } from "../../../../components/generalUI/numberField/NumberField";
 
 interface Props {
@@ -22,8 +23,8 @@ export const MakeOffer = ({ purchase, player, teamBudget }: Props) => {
     const haveBudgetForOffer = Number(teamBudget) >= baseOffer
 
     const onClick = async () => {
-      if (!player) return alert('Something went wrong, no player found, please contact the admin')
-      if (!userTeam) return alert('Something went wrong, no team found, please contact the admin')
+      if (!player) return smartNotification('Something went wrong, no player found, please contact the admin')
+      if (!userTeam) return smartNotification('Something went wrong, no team found, please contact the admin')
       setLoading(true)
       let res: Response | { ok: false } = {ok : false}
       if (purchase) {
@@ -33,8 +34,8 @@ export const MakeOffer = ({ purchase, player, teamBudget }: Props) => {
       }
       if (res.ok) {
         queryClient.invalidateQueries('purchase-players')
-        alert('Offer created')
-      } else alert('Something went wrong, could be a bug, please contact the admin')
+        smartNotification('Offer created')
+      } else smartNotification('Something went wrong, could be a bug, please contact the admin')
       setLoading(false)
     }
 

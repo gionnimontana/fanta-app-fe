@@ -1,5 +1,6 @@
 import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
+import { smartNotification } from "../components/generalUI/notifications/notifications"
 import { Player, PlayerMap, Purchase } from "../types/players"
 import { marketWindow, validModules } from "../constants/settings"
 import { editTeamBotMode } from "../queries/teams"
@@ -208,16 +209,16 @@ export const getNewModuleOnChange = (formation: PreMatchFormation): string => {
 export const isValidFormation = (formation: PreMatchFormation, module: string): boolean => {
     const validModule = isValidModule(module)
     if (!validModule) {
-        alert('Invalid formation, you must use one of the following modules: ' + validModules.join(', ')) 
+        smartNotification('Invalid formation, you must use one of the following modules: ' + validModules.join(', ')) 
         return false
     }
     const haveOneGoalkeeper = formation.s.filter(p => p.role === 'p').length === 1
     if (!haveOneGoalkeeper) {
-        alert('Invalid formation, there must be only one goalkeeper (P)') 
+        smartNotification('Invalid formation, there must be only one goalkeeper (P)') 
         return false
     }
     if (formation.b.length > 12) {
-        alert('There cannot be over 12 players on the bench 👀')
+        smartNotification('There cannot be over 12 players on the bench 👀')
         return false
     }
     return true
@@ -233,16 +234,16 @@ export const updateModeMatchTeamFormation = async (match: Match, team: Team, for
         const success = await editTeamBotMode(team.id, botMode)
         if (success) {
             if (botMode) { 
-                alert('🤖 Bot mode enabled, the formation will be managed by the bot each day at 12:00 and at the beginning of the first match 🤖')
+                smartNotification('🤖 Bot mode enabled, the formation will be managed by the bot each day at 12:00 and at the beginning of the first match 🤖')
                 return true
             }
-            else alert('Bot mode disabled, the formation in use will be the one you set on this screen')
+            else smartNotification('Bot mode disabled, the formation in use will be the one you set on this screen')
         } else {
-            alert('Error while updating bot mode')
+            smartNotification('Error while updating bot mode')
         }
     }
     if (botMode) {
-        alert('Bot mode is on, the formation will be managed by the bot each day at 12:00 and at the beginning of the first match')
+        smartNotification('Bot mode is on, the formation will be managed by the bot each day at 12:00 and at the beginning of the first match')
         return true
     }
     if (!isValidFormation(formation, module)) return false
@@ -255,7 +256,7 @@ export const updateModeMatchTeamFormation = async (match: Match, team: Team, for
 
 export const updateMatchTeamFormation = async (teamID: string, match: Match, formation: PreMatchFormation, module: string, matchDayBegun: boolean): Promise<boolean> => {
     if (matchDayBegun) {
-        alert('You cannot change the formation after the match day has begun')
+        smartNotification('You cannot change the formation after the match day has begun')
         return false
     } 
     const isHome = match.match.split('-')[0] === teamID
@@ -265,8 +266,8 @@ export const updateMatchTeamFormation = async (teamID: string, match: Match, for
         m: module.replaceAll('-', '')
     }
     const success = await updateMatchFormation(match.id, isHome, newFormation)
-    if (success) alert('Formations saved successfully')
-    else alert('Error while saving formations')
+    if (success) smartNotification('Formations saved successfully')
+    else smartNotification('Error while saving formations')
     return success
 }
 

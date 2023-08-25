@@ -2,6 +2,7 @@ import { Player } from "../../../../types/players";
 import { LoadingButton } from "../../../../components/generalUI/loadingButton/LoadingButton";
 import { useState } from "react";
 import { createPurchaseOffer } from "../../../../queries/players";
+import { smartNotification } from "../../../../components/generalUI/notifications/notifications"
 import { useQueryClient } from "react-query";
 
 interface Props {
@@ -13,13 +14,13 @@ export const ReleasePlayer = ({ player }: Props) => {
     const [loading, setLoading] = useState<boolean>(false)
 
     const onClick = async () => {
-      if (!player) return alert('Something went wrong, no player found, please contact the admin')
+      if (!player) return smartNotification('Something went wrong, no player found, please contact the admin')
       setLoading(true)
       const res = await createPurchaseOffer(player.id, player.fanta_team, null, player.fvm - 1)
       if (res.ok) {
         queryClient.invalidateQueries('purchase-players')
-        alert('Player offered to the market successfully')
-      } else alert('Something went wrong, could be a bug, please contact the admin')
+        smartNotification('Player offered to the market successfully')
+      } else smartNotification('Something went wrong, could be a bug, please contact the admin')
       setLoading(false)
     }
 

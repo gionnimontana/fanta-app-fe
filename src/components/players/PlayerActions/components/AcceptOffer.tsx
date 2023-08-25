@@ -1,8 +1,9 @@
 import { Purchase } from "../../../../types/players";
-import { LoadingButton } from "../../../../components/generalUI/loadingButton/LoadingButton";
+import { LoadingButton } from "../../../../components/generalUI/loadingButton/LoadingButton"
 import { useState } from "react";
 import { updatePurchaseOffer } from "../../../../queries/players";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "react-query"
+import { smartNotification } from "../../../../components/generalUI/notifications/notifications"
 
 interface Props {
   purchase?: Purchase;
@@ -13,13 +14,13 @@ export const AcceptOffer = ({ purchase }: Props) => {
     const [loading, setLoading] = useState<boolean>(false)
 
     const onClick = async () => {
-      if (!purchase) return alert('Something went wrong, no purchase found, please contact the admin')
+      if (!purchase) return smartNotification('Something went wrong, no purchase found, please contact the admin')
       setLoading(true)
       const res = await updatePurchaseOffer(purchase.id, {validated: true})
       if (res.ok) {
         queryClient.invalidateQueries('purchase-players')
-        alert('Offer created')
-      } else alert('Something went wrong, could be a bug, please contact the admin')
+        smartNotification('Offer created')
+      } else smartNotification('Something went wrong, could be a bug, please contact the admin')
       setLoading(false)
     }
 
