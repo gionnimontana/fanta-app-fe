@@ -1,6 +1,6 @@
 import { Player, Purchase } from "../../../../types/players";
 import { LoadingButton } from "../../../../components/generalUI/loadingButton/LoadingButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updatePurchaseOffer, createPurchaseOffer } from "../../../../queries/players";
 import { useQueryClient } from "react-query";
 import { pb } from "../../../../helpers/pb";
@@ -19,6 +19,10 @@ export const MakeOffer = ({ purchase, player, teamBudget }: Props) => {
     const baseOffer = purchase ? purchase.price + 1 : player?.fvm || 1
     const [loading, setLoading] = useState<boolean>(false)
     const [offerValue, setOfferValue] = useState<number>(baseOffer)
+
+    useEffect(() => {
+      setOfferValue(baseOffer)
+    }, [baseOffer])
 
     const haveBudgetForOffer = Number(teamBudget) >= baseOffer
 

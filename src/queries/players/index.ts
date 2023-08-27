@@ -1,8 +1,10 @@
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { Match } from "types/matches";
 import { Player, PlayerMap, Purchase } from "types/players";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
+import { useEffect } from "react";
+import { pb } from "../../helpers/pb";
 
 export function usePlayers() {
     return useQuery(`players`, async () => {
@@ -103,5 +105,17 @@ export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: a
         },
         body: JSON.stringify(payload)
     })
+}
+
+export const usePurchasesSubscription = () => {
+    const queryClient = useQueryClient()
+    useEffect(() => {
+        pb.collection('purchases').subscribe('*', function (e) {
+            queryClient.invalidateQueries(`purchase-players`)
+        });
+        return () => {
+            pb.collection('purchases').unsubscribe();
+        }
+    },[])
 }
   

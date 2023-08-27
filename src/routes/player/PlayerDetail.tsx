@@ -1,4 +1,4 @@
-import { useOpenPurchasePlayers, usePlayer, usePlayers } from '../../queries/players';
+import { useOpenPurchasePlayers, usePlayer, usePurchasesSubscription } from '../../queries/players';
 import { useParams } from 'react-router-dom';
 import { AppScreen } from '../../components/generalUI/appScreen/AppScreen';
 import { BottomButton } from '../../components/generalUI/bottomButton/BottonButton';
@@ -19,6 +19,7 @@ export const PlayerDetail = () => {
     const { id } = useParams();
     const p = usePlayer(id)
     const op = useOpenPurchasePlayers()
+    usePurchasesSubscription()
     const t = useTeams()
     const [showLogin, setShowLogin] = useState<boolean>(false)
     const loading = p.isLoading || op.isLoading || t.isLoading
