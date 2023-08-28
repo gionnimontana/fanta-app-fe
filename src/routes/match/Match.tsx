@@ -7,8 +7,8 @@ import { routes } from "../../constants/routes";
 import { BottomButton } from "../../components/generalUI/bottomButton/BottonButton";
 import { MatchFormWrapper } from "./components/MatchFormWrapper";
 import { EditFormButton } from "./components/EditFormButton";
-import { SwipeListener } from "../../components/generalUI/swipeListener/SwipeListener";
 import { getPreviousAndNextMatchNavigator } from "../../helpers";
+import { ArrowSwiperListener } from "../../components/generalUI/swipeListener/ArrowSwiperListener";
 import s from './Match.module.css'
 
 export const Match = () => {
@@ -26,7 +26,7 @@ export const Match = () => {
 
     return (
         <AppScreen loading={loading}>
-            <SwipeListener 
+            <ArrowSwiperListener 
                 onSwipeLeft={matchNavigator.next}
                 onSwipeRight={matchNavigator.previous}
                 className={s.swipeContainer}
@@ -38,7 +38,7 @@ export const Match = () => {
                 <div className={s.formationsContainer}>
                     {m.data ? <MatchFormWrapper match={m.data} teams={teams}/> : null}
                 </div>
-            </SwipeListener>
+            </ArrowSwiperListener>
             <BottomButton label={`View day ${matchDay} matches`} to={routes.Home.replace(':id', `${matchDay}`)}/>
             {(m.data && mdTS.data) ? <EditFormButton match={m.data} matchDayTS={mdTS.data} /> : null}
         </AppScreen>
