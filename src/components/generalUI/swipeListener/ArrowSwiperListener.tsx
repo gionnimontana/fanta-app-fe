@@ -30,8 +30,12 @@ export const ArrowSwiperListener: React.FC<SwipeListenerProps> = ({
         {children}
       </SwipeListener>
       <div className={s.container}>
-        <button className={s.button} id={s.left} onClick={onSwipeLeft}>{'<'}</button>
-        <button className={s.button} id={s.right} onClick={onSwipeRight}>{'>'}</button>
+        <button className={s.button} id={s.left} onClick={onSwipeLeft}>
+          <div className={s.buttonIcon}>◀</div>
+        </button>
+        <button className={s.button} id={s.right} onClick={onSwipeRight}>
+          <div className={s.buttonIcon}>▶</div>
+        </button>
       </div>
     </>
 

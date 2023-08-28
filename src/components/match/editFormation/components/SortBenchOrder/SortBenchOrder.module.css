@@ -9,6 +9,17 @@
   width: 2rem;
 }
 
+.upbutton {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.5rem;
+}
+
+.buttonIcon {
+  margin-top: -0.7rem;
+  margin-left: -0.4rem;
+}
+
 .playerRole{
   text-transform: capitalize;
   width: 2rem;
