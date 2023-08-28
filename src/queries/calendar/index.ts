@@ -3,6 +3,7 @@ import { DPreMatchFormation, Match } from "../../types/matches";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 import { MatchDayTS } from "types/utils";
+import { APIresponse, pbUpdate } from "../../helpers/pb";
 
 export function useMatchDayTS() {
     return useQuery(`schedules`, async () => {
@@ -32,15 +33,9 @@ export function useMatch(id: string) {
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 
-export async function updateMatchFormation(id: string, isHome: boolean, formation: DPreMatchFormation): Promise<boolean> {
+export async function updateMatchFormation(id: string, isHome: boolean, formation: DPreMatchFormation): Promise<APIresponse> {
     const targetField = isHome ? 'home_form' : 'away_form'
-    const results = await fetch(apiEndpoints.Calendar + `/${id}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ [targetField]: formation })
-    })
-    return results.ok
+    const body = { [targetField]: formation }
+    return pbUpdate('calendar', id, body)
 }
   

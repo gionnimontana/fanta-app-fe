@@ -4,7 +4,7 @@ import { Player, PlayerMap, Purchase } from "types/players";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 import { useEffect } from "react";
-import { pb } from "../../helpers/pb";
+import { pb, pbCreate, pbUpdate } from "../../helpers/pb";
 
 export function usePlayers() {
     return useQuery(`players`, async () => {
@@ -80,31 +80,20 @@ export function useOpenPurchasePlayers(){
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 
-export function createPurchaseOffer(playerId: string, from_team: string, to_team: string | null, price: number) {
-    return fetch(apiEndpoints.Purchases, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "player": playerId,
-            "to_team": to_team,
-            "from_team": from_team,
-            "price": price,
-            "closed": false,
-            "validated": from_team && to_team ? false : true
-        })
-    })
+export async function createPurchaseOffer(playerId: string, from_team: string, to_team: string | null, price: number): Promise<{ ok: boolean }> {
+    const data = {
+        "player": playerId,
+        "to_team": to_team,
+        "from_team": from_team,
+        "price": price,
+        "closed": false,
+        "validated": from_team && to_team ? false : true
+    }
+    return pbCreate('purchases', data)
 }
 
 export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: any}) {
-    return fetch(apiEndpoints.Purchases + `/${purchaseId}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    })
+    return pbUpdate('purchases', purchaseId, payload)
 }
 
 export const usePurchasesSubscription = () => {

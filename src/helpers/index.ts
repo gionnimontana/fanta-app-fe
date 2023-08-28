@@ -232,7 +232,7 @@ export const updateModeMatchTeamFormation = async (match: Match, team: Team, for
     const botModeChanged = team.auto_formation !== botMode
     if (botModeChanged) {
         const success = await editTeamBotMode(team.id, botMode)
-        if (success) {
+        if (success.ok) {
             if (botMode) { 
                 smartNotification('🤖 Bot mode enabled, the formation will be managed by the bot each day at 12:00 and at the beginning of the first match 🤖')
                 return true
@@ -266,9 +266,9 @@ export const updateMatchTeamFormation = async (teamID: string, match: Match, for
         m: module.replaceAll('-', '')
     }
     const success = await updateMatchFormation(match.id, isHome, newFormation)
-    if (success) smartNotification('Formations saved successfully')
+    if (success.ok) smartNotification('Formations saved successfully')
     else smartNotification('Error while saving formations')
-    return success
+    return success.ok
 }
 
 export const matchDayHasBegun = (matchDay: number, matchDayTimestamps: MatchDayTS[]): boolean => {

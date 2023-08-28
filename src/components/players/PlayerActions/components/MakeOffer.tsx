@@ -3,7 +3,7 @@ import { LoadingButton } from "../../../../components/generalUI/loadingButton/Lo
 import { useEffect, useState } from "react";
 import { updatePurchaseOffer, createPurchaseOffer } from "../../../../queries/players";
 import { useQueryClient } from "react-query";
-import { pb } from "../../../../helpers/pb";
+import { APIresponse, pb } from "../../../../helpers/pb";
 import { smartNotification } from "../../../../components/generalUI/notifications/notifications"
 import { NumberField } from "../../../../components/generalUI/numberField/NumberField";
 
@@ -30,7 +30,7 @@ export const MakeOffer = ({ purchase, player, teamBudget }: Props) => {
       if (!player) return smartNotification('Something went wrong, no player found, please contact the admin')
       if (!userTeam) return smartNotification('Something went wrong, no team found, please contact the admin')
       setLoading(true)
-      let res: Response | { ok: false } = {ok : false}
+      let res: APIresponse = {ok : false}
       if (purchase) {
         res = await updatePurchaseOffer(purchase.id, {to_team: userTeam, price: offerValue})
       } else {
