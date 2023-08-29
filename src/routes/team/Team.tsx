@@ -23,47 +23,47 @@ export const Team = () => {
 
     return (
         <AppScreen loading={loading}>
-            <ArrowSwiperListener 
-                onSwipeLeft={teamNavigator.next}
-                onSwipeRight={teamNavigator.previous}
-                className={s.swipeContainer}
-            >
-                <Table 
-                    minWidth={35}
-                    header={
-                        <div className={s.header}>
-                            <p className={s.emoji}>{team?.emoji}</p>
-                            <div className={s.headerText}>
-                                <div className={cN}>{team?.name || id}</div>
-                                <div className={s.credits}>{team?.credits} 💰</div>
-                            </div>
+            <Table 
+                minWidth={35}
+                header={
+                    <ArrowSwiperListener 
+                        onSwipeLeft={teamNavigator.next}
+                        onSwipeRight={teamNavigator.previous}
+                        className={s.swipeContainer}
+                    >
+                    <div className={s.header}>
+                        <p className={s.emoji}>{team?.emoji}</p>
+                        <div className={s.headerText}>
+                            <div className={cN}>{team?.name || id}</div>
+                            <div className={s.credits}>{team?.credits} 💰</div>
                         </div>
-                    }
-                >
-                    <div className={s.player}>
-                        <p className={s.role}></p>
-                        <p className={`${s.name} ${s.bold}`}>NAME</p>
-                        <p className={`${s.from} ${s.bold}`}>FROM</p>
-                        <p className={`${s.value} ${s.bold}`}>FVM</p>
-                        <p className={`${s.value} ${s.bold}`}>SI</p>
-                        <p className={`${s.value} ${s.bold}`}>PNM</p>
                     </div>
-                    <div className={s.players}>
-                        {roster.map((player, i) => {
-                            return (
-                                <div className={s.player} key={i}>
-                                    <p className={s.role}>{player.role}</p>
-                                    <p className={s.name}>{player.name}</p>
-                                    <p className={s.from}>{player.team}</p>
-                                    <p className={s.value}>{player.fvm}</p>
-                                    <p className={s.value}>{player.starter_index}</p>
-                                    <p className={s.value}>{player.play_next_match}</p>
-                                </div>
-                            )
-                        })}
-                    </div>
-                </Table>
-            </ArrowSwiperListener>
+                    </ArrowSwiperListener>
+                }
+            >
+                <div className={s.player}>
+                    <p className={s.role}></p>
+                    <p className={`${s.name} ${s.bold}`}>NAME</p>
+                    <p className={`${s.from} ${s.bold}`}>FROM</p>
+                    <p className={`${s.value} ${s.bold}`}>FVM</p>
+                    <p className={`${s.value} ${s.bold}`}>SI</p>
+                    <p className={`${s.value} ${s.bold}`}>PNM</p>
+                </div>
+                <div className={s.players}>
+                    {roster.map((player, i) => {
+                        return (
+                            <div className={s.player} key={i}>
+                                <p className={s.role}>{player.role}</p>
+                                <p className={s.name}>{player.name}</p>
+                                <p className={s.from}>{player.team}</p>
+                                <p className={s.value}>{player.fvm}</p>
+                                <p className={s.value}>{player.starter_index}</p>
+                                <p className={s.value}>{player.play_next_match}</p>
+                            </div>
+                        )
+                    })}
+                </div>
+            </Table>
             <BottomButton to={routes.Teams} label={'View all teams'}/>
             <LinkIconButton links={["market", "calendar"]}/>
         </AppScreen>
