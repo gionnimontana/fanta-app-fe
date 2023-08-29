@@ -23,6 +23,7 @@ export function usePlayers() {
 
 export function usePlayer(id?: string) {
     return useQuery(`player-${id}`, async () => {
+        if (!id) return undefined
         const response = await fetch(apiEndpoints.Players + `/${id}`)
         const data = await response.json()
         const player = data as Player
@@ -32,6 +33,7 @@ export function usePlayer(id?: string) {
 
 export const useTeamPlayers = (teamId?: string) => {
     return useQuery(`team-players-${teamId}`, async () => {
+    if (!teamId) return {}
     const urlParams = `?&perPage=60&filter=(fanta_team='${teamId}')`
     const response = await fetch(apiEndpoints.Players + urlParams)
     const data = await response.json()
@@ -39,13 +41,14 @@ export const useTeamPlayers = (teamId?: string) => {
     const playerMap = matchPlayers.reduce((acc: PlayerMap, player) => {
         acc[player.id] = player
         return acc
-    }, {} as {[key: string]: Player})
+    }, {} as PlayerMap)
     return playerMap
 }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 
 export function useMatchPlayers(match: Match) {
     return useQuery(`match-players-${match.id}`, async () => {
+        if (!match) return {}
         const h = match.match.split('-')[0]
         const a = match.match.split('-')[1]
         const urlParams = `?&perPage=60&filter=(fanta_team='${h}'|| fanta_team='${a}')`
@@ -62,10 +65,10 @@ export function useMatchPlayers(match: Match) {
 
 export const usePurchasePlayer = (purchaseId?: string) => {
     return useQuery(`purchase-player-${purchaseId}`, async () => {
+        if (!purchaseId) return {}
         const urlParams = `?&filter=(id='${purchaseId}')&expand=player`
         const response = await fetch(apiEndpoints.Purchases + urlParams)
         const data = await response.json()
-        console.log('ooooooo', data)
         return []
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }

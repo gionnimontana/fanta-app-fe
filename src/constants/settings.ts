@@ -15,3 +15,10 @@ export const marketWindow = {
     start: '2023-08-01T00:00:00',
     end: '2023-09-15T23:59:59'
 }
+
+export const playerByRoleBound = {
+    p: { max: 3, min: 2 },
+    d: { max: 10, min: 5 },
+    c: { max: 10, min: 5 },
+    a: { max: 8, min: 3 }
+}

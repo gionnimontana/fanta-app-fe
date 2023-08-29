@@ -1,4 +1,4 @@
-import { useOpenPurchasePlayers, usePlayer, usePurchasesSubscription } from '../../queries/players';
+import { useOpenPurchasePlayers, usePlayer, usePurchasesSubscription, useTeamPlayers } from '../../queries/players';
 import { useParams } from 'react-router-dom';
 import { AppScreen } from '../../components/generalUI/appScreen/AppScreen';
 import { BottomButton } from '../../components/generalUI/bottomButton/BottonButton';
@@ -16,22 +16,30 @@ import { TeamMarketHeader } from '../../components/teams/teamMarketHeader/TeamMa
 import s from './PlayerDetail.module.css'
 
 export const PlayerDetail = () => {
+    usePurchasesSubscription()
     const { id } = useParams();
     const p = usePlayer(id)
     const op = useOpenPurchasePlayers()
-    usePurchasesSubscription()
     const t = useTeams()
-    const [showLogin, setShowLogin] = useState<boolean>(false)
-    const loading = p.isLoading || op.isLoading || t.isLoading
-    const isAuthenticated = pb.authStore.isValid
     const targetTeam = t.data?.find(t => t.id === pb.authStore.model?.team)
+    const tp = useTeamPlayers(targetTeam?.id || '')
+    const loading = p.isLoading || op.isLoading || t.isLoading || tp.isLoading
+    const isAuthenticated = pb.authStore.isValid
     const teamBudget = getTeamBudget(op.data || [], targetTeam)
+    
+    const [showLogin, setShowLogin] = useState<boolean>(false)
 
     return (
         <AppScreen 
             loading={loading}
             header={targetTeam ? (
-                <TeamMarketHeader team={targetTeam} budget={teamBudget} purchases={op.data || []}/>
+                <TeamMarketHeader 
+                    team={targetTeam} 
+                    budget={teamBudget} 
+                    purchases={op.data || []}
+                    role={p.data?.role || ''}
+                    players={tp.data || {}}
+                />
             ) : null}
         >
             {p.data && <PlayerDetails

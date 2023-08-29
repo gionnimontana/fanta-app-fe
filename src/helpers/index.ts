@@ -2,7 +2,7 @@ import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
 import { smartNotification } from "../components/generalUI/notifications/notifications"
 import { Player, PlayerMap, Purchase } from "../types/players"
-import { marketWindow, validModules } from "../constants/settings"
+import { marketWindow, playerByRoleBound, validModules } from "../constants/settings"
 import { editTeamBotMode } from "../queries/teams"
 import { updateMatchFormation } from "../queries/calendar"
 import { MatchDayTS } from "../types/utils"
@@ -369,4 +369,20 @@ export const getPreviousAndNextTeamNavigator = (team: Team | undefined, teams: T
     const previousNavigator = previous ? () => nv(routes.Team.replace(':id', previous)) : () => {}
     const nextNavigator = next ? () => nv(routes.Team.replace(':id', next)) : () => {}
     return { previous: previousNavigator, next: nextNavigator }
+}
+
+export const getCurrentPlayerByRole = (players: PlayerMap, role: string, outPurchase: Purchase[]): number => {
+    const currentPlayers = Object.keys(players).filter(id => players[id].role === role)
+    const outIds = outPurchase.map(p => p.player)
+    const outPlayers = currentPlayers.filter(p => outIds.includes(p))
+    return currentPlayers.length - outPlayers.length
+}
+
+export const getMaxPlayerByRole = (role: string): number => {
+    const extremes = playerByRoleBound[role as keyof typeof playerByRoleBound]
+    return extremes?.max || 0
+}
+export const getMaxPurchaseByRole = (role: string, currentHouse: number) => {
+    const extremes = playerByRoleBound[role as keyof typeof playerByRoleBound]
+    return extremes?.max ? extremes.max - currentHouse : 0
 }
