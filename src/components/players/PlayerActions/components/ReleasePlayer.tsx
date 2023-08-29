@@ -7,9 +7,10 @@ import { useQueryClient } from "react-query";
 
 interface Props {
     player?: Player;
+    playerCanBeReleased?: boolean;
 }
 
-export const ReleasePlayer = ({ player }: Props) => {
+export const ReleasePlayer = ({ player, playerCanBeReleased }: Props) => {
     const queryClient = useQueryClient()
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -26,11 +27,14 @@ export const ReleasePlayer = ({ player }: Props) => {
 
     return (
       <>
-        <LoadingButton loading={loading} onClick={onClick} width={'12rem'}>
+        {playerCanBeReleased && <LoadingButton loading={loading} onClick={onClick} width={'12rem'}>
             Release player
-        </LoadingButton>
+        </LoadingButton>}
         <div style={{padding: '2rem'}}>
-          Pressing this button you are going to offer this player on the marker, the offer will be valid for 48 hours from last update, if no other team make an offer you will get the current FVM value minus 1 credit for the transfer market fee  
+          {playerCanBeReleased 
+            ? 'Pressing this button you are going to offer this player on the marker, the offer will be valid for 48 hours from last update, if no other team make an offer you will get the current FVM value minus 1 credit for the transfer market fee'
+            : 'You cannot release this player because you have reached the minimum number of players for this role'
+          }  
         </div>
       </>
 

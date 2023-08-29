@@ -11,9 +11,10 @@ interface Props {
   purchase?: Purchase;
   player?: Player;
   teamBudget?: number;
+  haveFreeRoleSlots?: boolean;
 }
 
-export const MakeOffer = ({ purchase, player, teamBudget }: Props) => {
+export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: Props) => {
     const queryClient = useQueryClient()
     const userTeam = pb.authStore.model?.team;
     const baseOffer = purchase ? purchase.price + 1 : player?.fvm || 1
@@ -45,27 +46,32 @@ export const MakeOffer = ({ purchase, player, teamBudget }: Props) => {
 
     return (
       <>
-        {haveBudgetForOffer ? (
-          <>
-            <NumberField
-              min={baseOffer}
-              max={400}
-              value={offerValue}
-              onChange={setOfferValue}
-            />
-            <LoadingButton loading={loading} onClick={onClick} width={'12rem'}>
-              {purchase?.to_team === userTeam ? 'Update offer': 'Make offer'}
-            </LoadingButton>
+        {haveFreeRoleSlots ? 
+          haveBudgetForOffer ? (
+            <>
+              <NumberField
+                min={baseOffer}
+                max={400}
+                value={offerValue}
+                onChange={setOfferValue}
+              />
+              <LoadingButton loading={loading} onClick={onClick} width={'12rem'}>
+                {purchase?.to_team === userTeam ? 'Update offer': 'Make offer'}
+              </LoadingButton>
+              <div style={{padding: '2rem'}}>
+                Pressing this button you are going to make an offer of {offerValue} credits for {player?.name}, the offer cannot be revoked.
+              </div>
+            </>
+          ): (
             <div style={{padding: '2rem'}}>
-              Pressing this button you are going to make an offer of {offerValue} credits for {player?.name}, the offer cannot be revoked.
+              You don't have enough budget to make an offer for this player (you need at least {baseOffer} credits while you have {teamBudget || 0} spendable credits)
             </div>
-          </>
-        ): (
+          )
+        : (
           <div style={{padding: '2rem'}}>
-            You don't have enough budget to make an offer for this player (you need at least {baseOffer} credits while you have {teamBudget || 0} spendable credits)
+            You don't have enough free role slots to make an offer for this player
           </div>
         )}
-
       </>
 
     )

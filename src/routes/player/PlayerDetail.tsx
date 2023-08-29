@@ -58,6 +58,7 @@ export const PlayerDetail = () => {
                     player={p.data}
                     purchases={op.data || []}
                     teamBudget={teamBudget}
+                    players={tp.data || {}}
                 />
             }
             {showLogin ? <Login onClose={() => setShowLogin(false)}/> : null}

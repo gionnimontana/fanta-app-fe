@@ -382,7 +382,32 @@ export const getMaxPlayerByRole = (role: string): number => {
     const extremes = playerByRoleBound[role as keyof typeof playerByRoleBound]
     return extremes?.max || 0
 }
+
+export const getMinPlayerByRole = (role: string): number => {
+    const extremes = playerByRoleBound[role as keyof typeof playerByRoleBound]
+    return extremes?.min || 0
+}
+
 export const getMaxPurchaseByRole = (role: string, currentHouse: number) => {
     const extremes = playerByRoleBound[role as keyof typeof playerByRoleBound]
     return extremes?.max ? extremes.max - currentHouse : 0
+}
+
+export const getMinPurchaseByRole = (role: string, currentHouse: number) => {
+    const extremes = playerByRoleBound[role as keyof typeof playerByRoleBound]
+    return extremes?.min ? extremes.min - currentHouse : 0
+}
+
+export const canMakeOffer = (role: string | undefined, players: PlayerMap, outPurchase: Purchase[]): boolean => {
+    if (!role) return false
+    const currentPlayers = getCurrentPlayerByRole(players, role, outPurchase)
+    const maxPlayers = getMaxPlayerByRole(role)
+    return currentPlayers < maxPlayers
+}
+
+export const canReleasePlayer = (role: string | undefined, players: PlayerMap, outPurchase: Purchase[]): boolean => {
+    if (!role) return false
+    const currentPlayers = getCurrentPlayerByRole(players, role, outPurchase)
+    const minPlayers = getMinPlayerByRole(role)
+    return currentPlayers > minPlayers
 }
