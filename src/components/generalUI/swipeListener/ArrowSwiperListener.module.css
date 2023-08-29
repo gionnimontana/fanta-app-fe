@@ -1,7 +1,6 @@
 .container {
   position: fixed;
   width: 100vw;
-  height: 100vh;
   top: 0;
   left: 0;
   display: flex;
@@ -17,6 +16,7 @@
   height: 2.5rem;
   width: 3rem;
   background: var(--backgroundLight);
+  margin-top: 48vh;
 }
 
 .buttonIcon {
