@@ -8,6 +8,7 @@ import { BottomButton } from '../../components/generalUI/bottomButton/BottonButt
 import { routes } from '../../constants/routes';
 import s from './Team.module.css'
 import { ArrowSwiperListener } from '../../components/generalUI/swipeListener/ArrowSwiperListener';
+import { LinkIconButton } from '../../components/generalUI/linkIconButton/LinkIconButton';
 
 export const Team = () => {
     const { id } = useParams();
@@ -64,6 +65,7 @@ export const Team = () => {
                 </Table>
             </ArrowSwiperListener>
             <BottomButton to={routes.Teams} label={'View all teams'}/>
+            <LinkIconButton links={["market", "calendar"]}/>
         </AppScreen>
     )
 }
