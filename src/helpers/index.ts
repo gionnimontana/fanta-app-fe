@@ -355,3 +355,18 @@ export const getPreviousAndNextMatchNavigator = (match: Match | undefined, match
     const nextNavigator = next ? () => nv(routes.Match.replace(':id', next)) : () => {}
     return { previous: previousNavigator, next: nextNavigator }
 }
+
+export const getPreviousAndNextTeamId = (team: Team | undefined, teams: Team[]): { previous: string | null, next: string | null } => {
+    if (!team) return { previous: null, next: null }
+    const teamIndex = teams.findIndex(t => t.id === team.id)
+    const previous = teams[teamIndex - 1]?.id || teams[teams.length - 1]?.id || null
+    const next = teams[teamIndex + 1]?.id  || teams[0]?.id || null
+    return { previous, next }
+}
+
+export const getPreviousAndNextTeamNavigator = (team: Team | undefined, teams: Team[], nv: (to: string) => void): { previous: () => void, next: () => void } => {
+    const { previous, next } = getPreviousAndNextTeamId(team, teams)
+    const previousNavigator = previous ? () => nv(routes.Team.replace(':id', previous)) : () => {}
+    const nextNavigator = next ? () => nv(routes.Team.replace(':id', next)) : () => {}
+    return { previous: previousNavigator, next: nextNavigator }
+}
