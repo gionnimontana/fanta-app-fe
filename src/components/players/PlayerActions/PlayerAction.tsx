@@ -11,14 +11,15 @@ interface Props {
     player?: Player;
     purchases: Purchase[];
     teamBudget?: number;
-    players?: PlayerMap;
+    teamplayers: PlayerMap
+    allPlayers: PlayerMap
 }
 
-export const PlayerActions = ({ player, purchases, teamBudget, players }: Props) => {
+export const PlayerActions = ({ player, purchases, teamBudget, teamplayers, allPlayers }: Props) => {
     const targetPurchase = purchases.find(p => p.player === player?.id)
     const possibleActions = getPossiblePurchaseActions(player, targetPurchase)
-    const haveFreeRoleSlots = canMakeOffer(player?.role, players || {}, purchases)
-    const playerCanBeReleased = canReleasePlayer(player?.role, players || {}, purchases)
+    const haveFreeRoleSlots = canMakeOffer(player?.role, allPlayers, purchases)
+    const playerCanBeReleased = canReleasePlayer(player?.role, teamplayers, purchases)
 
     return (
         <div className={s.container}>

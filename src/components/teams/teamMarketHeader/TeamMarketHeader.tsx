@@ -1,20 +1,22 @@
 import { PlayerMap, Purchase } from "../../../types/players"
 import s from './TeamMarketHeader.module.css'
 import { Team } from "../../../types/teams"
-import { getCurrentPlayerByRole, getMaxPlayerByRole, getMaxPurchaseByRole, getRoleEmoji } from "../../../helpers"
+import { getCurrentPlayerByRole, getMaxPlayerByRole, getMaxPurchaseByRole, getRoleEmoji, getCurrentPurchaseByRole } from "../../../helpers"
 
 interface Props {
     team: Team
     budget: number
     purchases: Purchase[]
     role: string
-    players: PlayerMap
+    teamplayers: PlayerMap
+    allPlayers: PlayerMap
 }
 
-export const TeamMarketHeader = ({team, budget, purchases, role, players}: Props) => {
-    const inPurchase = purchases.filter(p => p.to_team === team.id).length
+export const TeamMarketHeader = ({team, budget, purchases, role, teamplayers, allPlayers}: Props) => {
+    const inPurchase = purchases.filter(p => p.to_team === team.id)
     const outPurchase = purchases.filter(p => p.from_team === team.id && p.validated)
-    const currentHouse = getCurrentPlayerByRole(players, role, outPurchase)
+    const currentPurchaseByRole = getCurrentPurchaseByRole(allPlayers, role, inPurchase)
+    const currentHouse = getCurrentPlayerByRole(teamplayers, role, outPurchase)
     const maxHouse = getMaxPlayerByRole(role)
     const maxPurchaseByRole = getMaxPurchaseByRole(role, currentHouse)
 
@@ -22,15 +24,15 @@ export const TeamMarketHeader = ({team, budget, purchases, role, players}: Props
         <div className={s.container}>
             <div className={s.stats}>
                 <div className={s.row}>
-                    <div className={s.label}>You</div>
-                    <div className={s.value}>{team.emoji}</div>
+                    {/* <div className={s.label}>You</div> */}
+                    <div className={s.teamIcon}>{team.emoji}</div>
                 </div>
                 <div className={s.row}>
-                    <div className={s.label}>💰</div>
+                    <div className={s.label}>💰 🏠</div>
                     <div className={s.value}>{team.credits}</div>
                 </div>
                 <div className={s.row}>
-                    <div className={s.label}>Free 💰</div>
+                    <div className={s.label}>💰 🔥</div>
                     <div className={s.value}>{budget}</div>
                 </div>
                 <div className={s.row}>
@@ -39,7 +41,7 @@ export const TeamMarketHeader = ({team, budget, purchases, role, players}: Props
                 </div>
                 <div className={s.row}>
                     <div className={s.label}>{getRoleEmoji(role)} 🔥</div>
-                    <div className={s.value}>{inPurchase}/{maxPurchaseByRole}</div>
+                    <div className={s.value}>{currentPurchaseByRole}/{maxPurchaseByRole}</div>
                 </div>
             </div>
         </div>

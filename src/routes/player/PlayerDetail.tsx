@@ -1,4 +1,4 @@
-import { useOpenPurchasePlayers, usePlayer, usePurchasesSubscription, useTeamPlayers } from '../../queries/players';
+import { useOpenPurchasePlayers, usePlayer, usePlayers, usePurchasesSubscription, useTeamPlayers } from '../../queries/players';
 import { useParams } from 'react-router-dom';
 import { AppScreen } from '../../components/generalUI/appScreen/AppScreen';
 import { BottomButton } from '../../components/generalUI/bottomButton/BottonButton';
@@ -18,12 +18,13 @@ import s from './PlayerDetail.module.css'
 export const PlayerDetail = () => {
     usePurchasesSubscription()
     const { id } = useParams();
-    const p = usePlayer(id)
     const op = useOpenPurchasePlayers()
     const t = useTeams()
     const targetTeam = t.data?.find(t => t.id === pb.authStore.model?.team)
     const tp = useTeamPlayers(targetTeam?.id || '')
-    const loading = p.isLoading || op.isLoading || t.isLoading || tp.isLoading
+    const ap = usePlayers()
+    const p = (ap.data && id) ? ap.data[id] : undefined
+    const loading = op.isLoading || t.isLoading || tp.isLoading || ap.isLoading
     const isAuthenticated = pb.authStore.isValid
     const teamBudget = getTeamBudget(op.data || [], targetTeam)
     
@@ -37,28 +38,30 @@ export const PlayerDetail = () => {
                     team={targetTeam} 
                     budget={teamBudget} 
                     purchases={op.data || []}
-                    role={p.data?.role || ''}
-                    players={tp.data || {}}
+                    role={p?.role || ''}
+                    teamplayers={tp.data || {}}
+                    allPlayers={ap.data || {}}
                 />
             ) : null}
         >
-            {p.data && <PlayerDetails
-                player={p.data}
+            {p && <PlayerDetails
+                player={p}
                 purchase={op.data?.find(p => p.player === id)}
                 teams={t.data || []}
             />}
             <OpenPlayerPurchase 
-                player={p.data} 
+                player={p} 
                 activePurchases={op.data || []}
                 teams={t.data || []}
             />
             {!isAuthenticated 
                 ? <LinkIconButton links={['login']} onClick={() => setShowLogin(true)}/> 
                 : <PlayerActions
-                    player={p.data}
+                    player={p}
                     purchases={op.data || []}
                     teamBudget={teamBudget}
-                    players={tp.data || {}}
+                    teamplayers={tp.data || {}}
+                    allPlayers={ap.data || {}}
                 />
             }
             {showLogin ? <Login onClose={() => setShowLogin(false)}/> : null}

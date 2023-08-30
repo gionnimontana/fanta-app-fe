@@ -378,6 +378,13 @@ export const getCurrentPlayerByRole = (players: PlayerMap, role: string, outPurc
     return currentPlayers.length - outPlayers.length
 }
 
+export const getCurrentPurchaseByRole = (players: PlayerMap, role: string, inPurchase: Purchase[]): number => {
+    const currentPlayers = Object.keys(players).filter(id => players[id].role === role)
+    const inIds = inPurchase.map(p => p.player)
+    const inPlayers = currentPlayers.filter(p => inIds.includes(p))
+    return inPlayers.length
+}
+
 export const getMaxPlayerByRole = (role: string): number => {
     const extremes = playerByRoleBound[role as keyof typeof playerByRoleBound]
     return extremes?.max || 0
@@ -398,11 +405,19 @@ export const getMinPurchaseByRole = (role: string, currentHouse: number) => {
     return extremes?.min ? extremes.min - currentHouse : 0
 }
 
-export const canMakeOffer = (role: string | undefined, players: PlayerMap, outPurchase: Purchase[]): boolean => {
-    if (!role) return false
-    const currentPlayers = getCurrentPlayerByRole(players, role, outPurchase)
-    const maxPlayers = getMaxPlayerByRole(role)
-    return currentPlayers < maxPlayers
+export const canMakeOffer = (role: string | undefined, players: PlayerMap, purchases: Purchase[]): boolean => {
+    const teamId = pb.authStore.model?.team
+    if (!role || !teamId) return false
+    const inPurchase = purchases.filter(p => p.to_team === teamId)
+    const outPurchase = purchases.filter(p => p.from_team === teamId && p.validated)
+    const currentPurchaseByRole = getCurrentPurchaseByRole(players, role, inPurchase)
+    const teamplayers: PlayerMap = Object.keys(players).reduce((acc: PlayerMap, id) => {
+        if (players[id].fanta_team === teamId) acc[id] = players[id]
+        return acc
+    }, {})
+    const currentHouse = getCurrentPlayerByRole(teamplayers, role, outPurchase)
+    const maxPurchaseByRole = getMaxPurchaseByRole(role, currentHouse)
+    return currentPurchaseByRole < maxPurchaseByRole
 }
 
 export const canReleasePlayer = (role: string | undefined, players: PlayerMap, outPurchase: Purchase[]): boolean => {
