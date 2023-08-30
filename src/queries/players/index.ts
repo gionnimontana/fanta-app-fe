@@ -83,14 +83,15 @@ export function useOpenPurchasePlayers(){
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 
-export async function createPurchaseOffer(playerId: string, from_team: string, to_team: string | null, price: number): Promise<{ ok: boolean }> {
+export async function createPurchaseOffer(playerId: string, from_team: string, to_team: string | null, price: number, max_price: number): Promise<{ ok: boolean }> {
     const data = {
         "player": playerId,
         "to_team": to_team,
         "from_team": from_team,
         "price": price,
         "closed": false,
-        "validated": from_team && to_team ? false : true
+        "validated": from_team && to_team ? false : true,
+        "max_price": max_price,
     }
     return pbCreate('purchases', data)
 }

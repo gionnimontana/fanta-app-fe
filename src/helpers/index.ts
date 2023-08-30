@@ -7,8 +7,9 @@ import { editTeamBotMode } from "../queries/teams"
 import { updateMatchFormation } from "../queries/calendar"
 import { MatchDayTS } from "../types/utils"
 import { ChangeEvent, Dispatch } from "react"
-import { pb } from "./pb"
+import { APIresponse, pb } from "./pb"
 import { routes } from "../constants/routes"
+import { createPurchaseOffer, updatePurchaseOffer } from "../queries/players"
 
 export const getCurrentMatchDay = (matchDayTimestamps: MatchDayTS[]): number => {
     const nowTS = new Date().getTime()
@@ -431,4 +432,33 @@ export const getRoleEmoji = (role: string): string => {
     const roleIcon = roleEmojiMap[role as keyof typeof roleEmojiMap]
     if (roleIcon) return roleIcon
     return "❓"
-} 
+}
+
+export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | undefined, player: Player, price: number): Promise<boolean> => {
+    let purchaseChange = false
+    let canHandleOffer = true
+    let minimalOffer = player.fvm
+    if (purchase) {
+        minimalOffer = purchase.price + 1
+        if (price < purchase.max_price) {
+            canHandleOffer = false
+            await updatePurchaseOffer(purchase.id, {price: price})
+            purchaseChange = true
+            smartNotification(`You offer has been rejected since current team leader has set a max price higher than your offer. Your offer has been updated to ${price}`)
+        }
+    }
+    if (canHandleOffer) {
+        let res: APIresponse = {ok : false}
+        if (purchase) {
+            res = await updatePurchaseOffer(purchase.id, {to_team: userTeam, price: minimalOffer, max_price: price})
+        } else {
+            res = await createPurchaseOffer(player.id, player.fanta_team, userTeam, minimalOffer, price)
+        }
+        if (res.ok) {
+            smartNotification('Offer created')
+            purchaseChange = true
+        } else smartNotification('Something went wrong, could be a bug, please contact the admin')
+    }
+
+    return purchaseChange
+}

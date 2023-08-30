@@ -22,4 +22,5 @@ export interface Purchase {
     closed: boolean
     validated: boolean
     updated: string
+    max_price: number
 }

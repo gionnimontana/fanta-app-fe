@@ -1,11 +1,10 @@
 import { Player, Purchase } from "../../../../types/players";
 import { LoadingButton } from "../../../../components/generalUI/loadingButton/LoadingButton";
 import { useEffect, useState } from "react";
-import { updatePurchaseOffer, createPurchaseOffer } from "../../../../queries/players";
-import { useQueryClient } from "react-query";
-import { APIresponse, pb } from "../../../../helpers/pb";
+import { pb } from "../../../../helpers/pb";
 import { smartNotification } from "../../../../components/generalUI/notifications/notifications"
 import { NumberField } from "../../../../components/generalUI/numberField/NumberField";
+import { makePurchaseOffer } from "../../../../helpers";
 
 interface Props {
   purchase?: Purchase;
@@ -15,7 +14,6 @@ interface Props {
 }
 
 export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: Props) => {
-    const queryClient = useQueryClient()
     const userTeam = pb.authStore.model?.team;
     const baseOffer = purchase ? purchase.price + 1 : player?.fvm || 1
     const [loading, setLoading] = useState<boolean>(false)
@@ -31,16 +29,7 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
       if (!player) return smartNotification('Something went wrong, no player found, please contact the admin')
       if (!userTeam) return smartNotification('Something went wrong, no team found, please contact the admin')
       setLoading(true)
-      let res: APIresponse = {ok : false}
-      if (purchase) {
-        res = await updatePurchaseOffer(purchase.id, {to_team: userTeam, price: offerValue})
-      } else {
-        res = await createPurchaseOffer(player.id, player.fanta_team, userTeam, offerValue)
-      }
-      if (res.ok) {
-        queryClient.invalidateQueries('purchase-players')
-        smartNotification('Offer created')
-      } else smartNotification('Something went wrong, could be a bug, please contact the admin')
+      await makePurchaseOffer(userTeam, purchase, player, offerValue)
       setLoading(false)
     }
 
@@ -59,7 +48,8 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
                 {purchase?.to_team === userTeam ? 'Update offer': 'Make offer'}
               </LoadingButton>
               <div style={{padding: '2rem'}}>
-                Pressing this button you are going to make an offer of {offerValue} credits for {player?.name}, the offer cannot be revoked.
+                Pressing this button you are going to make an offer of {baseOffer} credits for {player?.name}, the offer cannot be revoked.
+                {baseOffer < offerValue && `if another player makes an offer for this player, your offer will be automatically increased by 1 credit until it reaches ${offerValue} credits`}
               </div>
             </>
           ): (
