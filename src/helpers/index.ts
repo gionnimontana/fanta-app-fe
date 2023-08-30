@@ -430,5 +430,5 @@ export const canReleasePlayer = (role: string | undefined, players: PlayerMap, o
 export const getRoleEmoji = (role: string): string => {
     const roleIcon = roleEmojiMap[role as keyof typeof roleEmojiMap]
     if (roleIcon) return roleIcon
-    return "⛔"
+    return "❓"
 } 

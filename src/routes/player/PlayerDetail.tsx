@@ -1,4 +1,4 @@
-import { useOpenPurchasePlayers, usePlayer, usePlayers, usePurchasesSubscription, useTeamPlayers } from '../../queries/players';
+import { useOpenPurchasePlayers, usePlayers, usePurchasesSubscription, useTeamPlayers } from '../../queries/players';
 import { useParams } from 'react-router-dom';
 import { AppScreen } from '../../components/generalUI/appScreen/AppScreen';
 import { BottomButton } from '../../components/generalUI/bottomButton/BottonButton';

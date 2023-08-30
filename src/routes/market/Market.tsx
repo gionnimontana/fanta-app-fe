@@ -1,11 +1,12 @@
 import { LinkIconButton } from "../../components/generalUI/linkIconButton/LinkIconButton"
 import { AppScreen } from "../../components/generalUI/appScreen/AppScreen"
-import { useOpenPurchasePlayers, usePlayers } from "../../queries/players"
+import { useOpenPurchasePlayers, usePlayers, usePurchasesSubscription } from "../../queries/players"
 import { useTeams } from "../../queries/teams"
 import { PlayerTableWrapper } from "../../components/players/PlayerTable/PlayerTableWrapper"
 import s from './Market.module.css'
 
 export const Market = () => {
+  usePurchasesSubscription()
   const ap = usePlayers()
   const t = useTeams()
   const op = useOpenPurchasePlayers()

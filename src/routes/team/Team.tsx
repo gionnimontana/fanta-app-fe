@@ -8,7 +8,8 @@ import { BottomButton } from '../../components/generalUI/bottomButton/BottonButt
 import { routes } from '../../constants/routes';
 import s from './Team.module.css'
 import { ArrowSwiperListener } from '../../components/generalUI/swipeListener/ArrowSwiperListener';
-import { LinkIconButton } from '../../components/generalUI/linkIconButton/LinkIconButton';
+import { LinkIconButton, LinkType } from '../../components/generalUI/linkIconButton/LinkIconButton';
+import { pb } from '../../helpers/pb';
 
 export const Team = () => {
     const { id } = useParams();
@@ -20,6 +21,8 @@ export const Team = () => {
     const loading = teams.isLoading || p.isLoading
     const cN = `${s.squad} creativeFont`
     const teamNavigator = getPreviousAndNextTeamNavigator(team, teams.data || [], navigate)
+    const userTeam = pb.authStore.model?.team
+    const links: LinkType[] = team?.id === userTeam ? ["logout", "market", "calendar"] : ["market", "calendar"]
 
     return (
         <AppScreen loading={loading}>
@@ -65,7 +68,7 @@ export const Team = () => {
                 </div>
             </Table>
             <BottomButton to={routes.Teams} label={'View all teams'}/>
-            <LinkIconButton links={["market", "calendar"]}/>
+            <LinkIconButton links={links}/>
         </AppScreen>
     )
 }
