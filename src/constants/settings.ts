@@ -22,3 +22,10 @@ export const playerByRoleBound = {
     c: { max: 10, min: 5 },
     a: { max: 8, min: 3 }
 }
+
+export const roleEmojiMap = {
+    p: "🖐",
+    d: "🛡️",
+    c: "🏹",
+    a: "⚔️"
+}

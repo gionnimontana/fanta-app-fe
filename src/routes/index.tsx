@@ -6,7 +6,6 @@ import { Team } from "./team/Team";
 import { Teams } from "./teams/Teams";
 import { Market } from "./market/Market";
 import { PlayerDetail } from "./player/PlayerDetail";
-import { SortBenchOrder } from "../components/match/editFormation/components/SortBenchOrder/SortBenchOrder";
   
 export const router = createBrowserRouter([
   {

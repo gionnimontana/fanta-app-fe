@@ -1,6 +1,6 @@
 import { Player, Purchase } from "../../../types/players"
 import s from './PlayerDetails.module.css'
-import { getTeamEmoji } from "../../../helpers"
+import { getRoleEmoji, getTeamEmoji } from "../../../helpers"
 import { Team } from "../../../types/teams"
 
 interface Props {
@@ -24,7 +24,7 @@ export const PlayerDetails = ({player, purchase, teams}: Props) => {
             <div className={s.stats}>
                 <div className={s.row}>
                     <div className={s.label}>Role</div>
-                    <div className={s.value}>{player.role.toUpperCase()}</div>
+                    <div className={s.value}>{getRoleEmoji(player.role)}</div>
                 </div>
                 <div className={s.row}>
                     <div className={s.label}>Team</div>

@@ -2,7 +2,7 @@ import { Team } from "../types/teams"
 import { DPreMatchFormation, DResult, Match, PlayerVote, PreMatchFormation, Score, Votes } from "../types/matches"
 import { smartNotification } from "../components/generalUI/notifications/notifications"
 import { Player, PlayerMap, Purchase } from "../types/players"
-import { marketWindow, playerByRoleBound, validModules } from "../constants/settings"
+import { marketWindow, playerByRoleBound, roleEmojiMap, validModules } from "../constants/settings"
 import { editTeamBotMode } from "../queries/teams"
 import { updateMatchFormation } from "../queries/calendar"
 import { MatchDayTS } from "../types/utils"
@@ -411,3 +411,9 @@ export const canReleasePlayer = (role: string | undefined, players: PlayerMap, o
     const minPlayers = getMinPlayerByRole(role)
     return currentPlayers > minPlayers
 }
+
+export const getRoleEmoji = (role: string): string => {
+    const roleIcon = roleEmojiMap[role as keyof typeof roleEmojiMap]
+    if (roleIcon) return roleIcon
+    return "⛔"
+} 

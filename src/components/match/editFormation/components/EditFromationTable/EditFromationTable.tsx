@@ -1,5 +1,5 @@
 import { Player } from "../../../../../types/players"
-import { getPlayerFormationIcon, getRoster } from "../../../../../helpers"
+import { getPlayerFormationIcon, getRoleEmoji, getRoster } from "../../../../../helpers"
 import { PreMatchFormation } from "../../../../../types/matches"
 import s from './EditFromationTable.module.css'
 
@@ -35,7 +35,7 @@ export const EditFromationTable = ({ roster, botMode, handlePlayerClick, formati
                         >
                             {icon}
                         </div>
-                        <p className={s.role}>{player.role}</p>
+                        <p className={s.role}>{getRoleEmoji(player.role)}</p>
                         <p className={s.name}>{player.name}</p>
                         <p className={s.name}>{player.team}</p>
                         <p className={s.value}>{player.fvm}</p>

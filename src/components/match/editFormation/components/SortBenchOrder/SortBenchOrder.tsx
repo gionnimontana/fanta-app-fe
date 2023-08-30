@@ -3,6 +3,7 @@ import {DraggableItem, SortableList} from '../../../../../components/generalUI/s
 import s from './SortBenchOrder.module.css';
 import { PlayerVote, PreMatchFormation } from 'types/matches';
 import { customSortItemUp } from '../../../../../components/generalUI/sortableList/utils';
+import { getRoleEmoji } from '../../../../../helpers';
 
 interface Props {
   formation: PreMatchFormation
@@ -23,7 +24,7 @@ export const SortBenchOrder = ({ formation, setFormation }: Props) => {
           }
         </button>
         <div className={s.playerindex}>{index + 1}°</div> 
-        <strong className={s.playerRole}>{item.role}</strong>
+        <strong className={s.playerRole}>{getRoleEmoji(item.role)}</strong>
         {item.name}
       </div>
     );

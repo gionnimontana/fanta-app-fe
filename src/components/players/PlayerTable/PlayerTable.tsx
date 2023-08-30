@@ -2,8 +2,8 @@ import { Table } from "../../generalUI/table/Table";
 import { Player, Purchase } from "../../../types/players";
 import { Team } from "../../../types/teams";
 import s from "./PlayerTable.module.css";
-import { getTeamEmoji } from "../../../helpers";
-import { Link, Route } from "react-router-dom";
+import { getRoleEmoji, getTeamEmoji } from "../../../helpers";
+import { Link } from "react-router-dom";
 import { routes } from "../../../constants/routes";
 
 interface Props {
@@ -51,7 +51,7 @@ export const PlayerTable = ({ players, teams, activePurchases }: Props) => {
                 const targetRoute = routes.Player.replace(':id', player.id)
                 return (
                     <Link className={pCn(player)} key={i} to={targetRoute}>
-                        <p className={s.role}>{player.role}</p>
+                        <p className={s.role}>{getRoleEmoji(player.role)}</p>
                         <p className={s.team}>{getTeamEmoji(player.fanta_team, teams)}</p>
                         <p className={s.name}>{decoratedPlayerName(player)}</p>
                         <p className={s.from}>{player.team}</p>

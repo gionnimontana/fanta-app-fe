@@ -1,4 +1,4 @@
-import { getPreviousAndNextTeamNavigator, getRoster } from '../../helpers';
+import { getPreviousAndNextTeamNavigator, getRoleEmoji, getRoster } from '../../helpers';
 import { useTeamPlayers } from '../../queries/players';
 import { useTeams } from '../../queries/teams';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -53,7 +53,7 @@ export const Team = () => {
                     {roster.map((player, i) => {
                         return (
                             <div className={s.player} key={i}>
-                                <p className={s.role}>{player.role}</p>
+                                <p className={s.role}>{getRoleEmoji(player.role)}</p>
                                 <p className={s.name}>{player.name}</p>
                                 <p className={s.from}>{player.team}</p>
                                 <p className={s.value}>{player.fvm}</p>

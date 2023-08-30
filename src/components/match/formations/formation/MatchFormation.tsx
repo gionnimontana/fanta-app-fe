@@ -1,3 +1,4 @@
+import { getRoleEmoji } from "../../../../helpers";
 import { PlayerVote } from "../../../../types/matches";
 import s from './MatchFormation.module.css'
 
@@ -11,7 +12,7 @@ export const MatchFormation = ({ formation }: Props) => {
             {formation.map((player, i) => {
                 return (
                     <div className={s.player} key={i}>
-                        <p className={s.role}>{player.role}</p>
+                        <p className={s.role}>{getRoleEmoji(player.role)}</p>
                         <p className={s.name}>{player.name}</p>
                         <p className={s.vote}>{player.vote || '-'}</p>
                     </div>

@@ -1,8 +1,7 @@
 import { PlayerMap, Purchase } from "../../../types/players"
 import s from './TeamMarketHeader.module.css'
 import { Team } from "../../../types/teams"
-import { useTeamPlayers } from "../../../queries/players"
-import { getCurrentPlayerByRole, getMaxPlayerByRole, getMaxPurchaseByRole } from "../../../helpers"
+import { getCurrentPlayerByRole, getMaxPlayerByRole, getMaxPurchaseByRole, getRoleEmoji } from "../../../helpers"
 
 interface Props {
     team: Team
@@ -35,11 +34,11 @@ export const TeamMarketHeader = ({team, budget, purchases, role, players}: Props
                     <div className={s.value}>{budget}</div>
                 </div>
                 <div className={s.row}>
-                    <div className={s.label}>{role.toUpperCase()} 🏠</div>
+                    <div className={s.label}>{getRoleEmoji(role)} 🏠</div>
                     <div className={s.value}>{currentHouse}/{maxHouse}</div>
                 </div>
                 <div className={s.row}>
-                    <div className={s.label}>{role.toUpperCase()} 🔥</div>
+                    <div className={s.label}>{getRoleEmoji(role)} 🔥</div>
                     <div className={s.value}>{inPurchase}/{maxPurchaseByRole}</div>
                 </div>
             </div>

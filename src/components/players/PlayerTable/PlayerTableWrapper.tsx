@@ -5,7 +5,7 @@ import { PlayerTable } from "./PlayerTable";
 import { Input } from "../../generalUI/Input/Input";
 import { Select } from "../../generalUI/Select/Select";
 import s from "./PlayerTable.module.css";
-import { getLocalStoredFilters, setLocalStoredFilters } from "../../../helpers";
+import { getLocalStoredFilters, getRoleEmoji, setLocalStoredFilters } from "../../../helpers";
 
 interface Props {
   players: PlayerMap;
@@ -41,10 +41,10 @@ export const PlayerTableWrapper = ({ players, teams, activePurchases }: Props) =
             onChange={setLocalStoredFilters('role', setRole)}
             options={[
               { value: 'all', name: 'All' },
-              { value: 'p', name: 'P' },
-              { value: 'd', name: 'D' },
-              { value: 'c', name: 'C' },
-              { value: 'a', name: 'A' },
+              { value: 'p', name: `${getRoleEmoji("p")}(P)` },
+              { value: 'd', name: `${getRoleEmoji("d")}(D)` },
+              { value: 'c', name: `${getRoleEmoji("c")}(C)` },
+              { value: 'a', name: `${getRoleEmoji("a")}(A)` },
             ]}
             label="Role"
           />
