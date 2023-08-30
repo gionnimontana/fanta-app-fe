@@ -312,7 +312,7 @@ export const setLocalStoredFilters = (filterKey: string, action: Dispatch<React.
 
 export type PurchaseAction = 'makeOffer' | 'acceptOffer' | 'cancelOffer' | 'releasePlayer' | 'marketClosed'
 export const getPossiblePurchaseActions = (player?: Player, purchase?: Purchase): PurchaseAction[] => {
-    if (!marketWindowIsOpen()) return []
+    if (!marketWindowIsOpen()) return ['marketClosed']
     if (!player) return []
     const userTeam = pb.authStore.model?.team;
     if (!userTeam) return []
