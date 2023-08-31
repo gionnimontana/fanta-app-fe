@@ -19,6 +19,7 @@ export const TeamCard = ({ team, rank }: Props) => {
                     : null}
                     <p className={cN}>{team.name}</p>
                     <p className={s.points}>{team.score?.pts}</p>
+                    <p className={s.value}>{team.score?.vs}</p>
                     <p className={s.value}>{team.score?.mp}</p>
                     <p className={s.value}>{team.score?.w}</p>
                     <p className={s.value}>{team.score?.d}</p>

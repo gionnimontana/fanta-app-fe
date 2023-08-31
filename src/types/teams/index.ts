@@ -15,4 +15,5 @@ export interface TeamScore {
     "mp": number
     "pts": number
     "w": number
+    "vs": number
   }

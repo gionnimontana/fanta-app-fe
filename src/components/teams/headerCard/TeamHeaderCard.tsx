@@ -8,6 +8,7 @@ export const TeamHeaderCard = () => {
                     <p className={s.rank}>#</p>
                     <p className={s.name}>Name</p>
                     <p className={s.value}>🏆</p>
+                    <p className={s.value}>PTS</p>
                     <p className={s.value}>MP</p>
                     <p className={s.value}>W</p>
                     <p className={s.value}>D</p>
