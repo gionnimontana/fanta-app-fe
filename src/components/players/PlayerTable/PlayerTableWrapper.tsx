@@ -53,8 +53,8 @@ export const PlayerTableWrapper = ({ players, teams, activePurchases }: Props) =
             onChange={setLocalStoredFilters('team', setTeam)}
             options={[
               { value: 'all', name: 'All' },
-              { value: '', name: 'Free 🛒' },
-              ...teams.map((t) => ({ value: t.id, name: t.name + ' ' + t.emoji })),
+              { value: '', name: '🛒 Free' },
+              ...teams.map((t) => ({ value: t.id, name: t.emoji + ' ' + t.name })),
             ]}
             label="Team"
           />

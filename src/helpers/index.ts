@@ -35,7 +35,7 @@ export const getMatchTeamsId = (matchString: string):
 
 export const getMatchScore = (match: Match, mdTS: MatchDayTS[]): Score => {
     if (!matchDayHasEnded(match.day, mdTS)) return { home: undefined, away: undefined }
-    const dehidratedMatch = match?.result ? JSON.parse(match.result)?.score as Score : null
+    const dehidratedMatch = match?.result ? match.result.score : null
     return dehidratedMatch ? dehidratedMatch : { home: undefined, away: undefined }
 }
 
@@ -97,7 +97,7 @@ export const getPlayerVotes = (votes: Votes, players: PlayerMap): PlayerVote[] =
 }
 
 export const getMatchResult = (match: Match): DResult | null => {
-    return match?.result ? JSON.parse(match.result) as DResult : null
+    return match?.result ? match.result : null
 }
 
 export const getTeamFormation = (match: Match, players: PlayerMap, teamId: string):

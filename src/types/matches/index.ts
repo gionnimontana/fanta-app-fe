@@ -2,7 +2,7 @@ export interface Match {
     id: string,
     day: number
     match: string
-    result: string
+    result: DResult
     home_form: DPreMatchFormation
     away_form: DPreMatchFormation
 }
