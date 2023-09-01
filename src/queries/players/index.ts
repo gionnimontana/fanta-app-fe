@@ -23,7 +23,7 @@ export function usePlayers() {
         const playerMap = allPlayers.reduce((acc: PlayerMap, player) => {
             acc[player.id] = {
                 ...player,
-                fanta_team: teamPlayersMap[player.id]
+                fanta_team: teamPlayersMap[player.id] || ''
             }
             return acc
         }, {} as {[key: string]: Player})
