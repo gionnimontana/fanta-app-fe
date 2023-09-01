@@ -7,4 +7,5 @@ export const apiEndpoints = {
     Articles: `${baseUrl}/articles/records`,
     Purchases: `${baseUrl}/purchases/records`,
     Schedules: `${baseUrl}/schedules/records`,
+    TeamPlayers: `${baseUrl}/team_players/records`,
 };

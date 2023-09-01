@@ -1,5 +1,5 @@
-import { getPreviousAndNextTeamNavigator, getRoleEmoji, getRoster } from '../../helpers';
-import { useTeamPlayers } from '../../queries/players';
+import { getPreviousAndNextTeamNavigator, getRoleEmoji, getRoster, getTeamPlayers } from '../../helpers';
+import { usePlayers } from '../../queries/players';
 import { useTeams } from '../../queries/teams';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AppScreen } from '../../components/generalUI/appScreen/AppScreen';
@@ -16,8 +16,9 @@ export const Team = () => {
     const navigate = useNavigate()
     const teams = useTeams()
     const team = teams.data?.find(t => t.id === id)
-    const p = useTeamPlayers(id)
-    const roster = getRoster(team, p.data || {})
+    const p = usePlayers()
+    const teamPlayers = getTeamPlayers(team?.id, p.data || {})
+    const roster = getRoster(team, teamPlayers)
     const loading = teams.isLoading || p.isLoading
     const cN = `${s.squad} creativeFont`
     const teamNavigator = getPreviousAndNextTeamNavigator(team, teams.data || [], navigate)

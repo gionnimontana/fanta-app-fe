@@ -1,4 +1,4 @@
-import { useOpenPurchasePlayers, usePlayers, usePurchasesSubscription, useTeamPlayers } from '../../queries/players';
+import { useOpenPurchasePlayers, usePlayers, usePurchasesSubscription } from '../../queries/players';
 import { useParams } from 'react-router-dom';
 import { AppScreen } from '../../components/generalUI/appScreen/AppScreen';
 import { BottomButton } from '../../components/generalUI/bottomButton/BottonButton';
@@ -11,7 +11,7 @@ import { pb } from '../../helpers/pb';
 import { useTeams } from '../../queries/teams';
 import { OpenPlayerPurchase } from '../../components/players/OpenPlayerPurchase/OpenPlayerPurchase';
 import { PlayerActions } from '../../components/players/PlayerActions/PlayerAction';
-import { getTeamBudget } from '../../helpers';
+import { getTeamBudget, getTeamPlayers } from '../../helpers';
 import { TeamMarketHeader } from '../../components/teams/teamMarketHeader/TeamMarketHeader';
 import s from './PlayerDetail.module.css'
 
@@ -21,10 +21,10 @@ export const PlayerDetail = () => {
     const op = useOpenPurchasePlayers()
     const t = useTeams()
     const targetTeam = t.data?.find(t => t.id === pb.authStore.model?.team)
-    const tp = useTeamPlayers(targetTeam?.id || '')
     const ap = usePlayers()
+    const tp = getTeamPlayers(targetTeam?.id, ap.data || {})
     const p = (ap.data && id) ? ap.data[id] : undefined
-    const loading = op.isLoading || t.isLoading || tp.isLoading || ap.isLoading
+    const loading = op.isLoading || t.isLoading || ap.isLoading
     const isAuthenticated = pb.authStore.isValid
     const teamBudget = getTeamBudget(op.data || [], targetTeam)
     
@@ -39,7 +39,7 @@ export const PlayerDetail = () => {
                     budget={teamBudget} 
                     purchases={op.data || []}
                     role={p?.role || ''}
-                    teamplayers={tp.data || {}}
+                    teamplayers={tp}
                     allPlayers={ap.data || {}}
                 />
             ) : null}
@@ -60,7 +60,7 @@ export const PlayerDetail = () => {
                     player={p}
                     purchases={op.data || []}
                     teamBudget={teamBudget}
-                    teamplayers={tp.data || {}}
+                    teamplayers={tp}
                     allPlayers={ap.data || {}}
                 />
             }

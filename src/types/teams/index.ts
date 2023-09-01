@@ -17,3 +17,9 @@ export interface TeamScore {
     "w": number
     "vs": number
   }
+
+  export interface TeamPlayer {
+    league: string
+    player: string
+    team: string
+  }

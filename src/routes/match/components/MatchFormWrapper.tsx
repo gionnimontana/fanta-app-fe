@@ -1,7 +1,7 @@
 import { MatchFormations } from "../../../components/match/formations/MatchFormations";
 import { Team } from "../../../types/teams";
 import { Match } from "../../../types/matches";
-import { useMatchPlayers } from "../../../queries/players";
+import { usePlayers } from "../../../queries/players";
 
 interface Props {
     match: Match
@@ -9,11 +9,11 @@ interface Props {
 }
 
 export const MatchFormWrapper = ({match, teams}: Props) => {
-    const mp = useMatchPlayers(match)
+    const p = usePlayers()
 
-    if (!mp.data) return null
+    if (!p.data) return null
 
     return (
-        <MatchFormations match={match} players={mp.data} teams={teams}/>
+        <MatchFormations match={match} players={p.data} teams={teams}/>
     );
 }

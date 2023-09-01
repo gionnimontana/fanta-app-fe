@@ -15,7 +15,7 @@ export const ReleasePlayer = ({ player, playerCanBeReleased }: Props) => {
     const [loading, setLoading] = useState<boolean>(false)
 
     const onClick = async () => {
-      if (!player) return smartNotification('Something went wrong, no player found, please contact the admin')
+      if (!player || !player.fanta_team) return smartNotification('Something went wrong, no player found, please contact the admin')
       setLoading(true)
       const res = await createPurchaseOffer(player.id, player.fanta_team, null, player.fvm - 1, player.fvm - 1)
       if (res.ok) {

@@ -434,6 +434,15 @@ export const getRoleEmoji = (role: string): string => {
     return "❓"
 }
 
+export const getTeamPlayers = (teamId: string | undefined, players: PlayerMap): PlayerMap => {
+    if (!teamId) return {}
+    const teamplayers: PlayerMap = Object.keys(players).reduce((acc: PlayerMap, id) => {
+        if (players[id].fanta_team === teamId) acc[id] = players[id]
+        return acc
+    }, {})
+    return teamplayers
+}
+
 export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | undefined, player: Player, price: number): Promise<boolean> => {
     let purchaseChange = false
     let canHandleOffer = true
