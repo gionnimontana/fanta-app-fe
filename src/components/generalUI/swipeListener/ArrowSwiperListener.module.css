@@ -1,15 +1,5 @@
-.container {
-  position: fixed;
-  width: 100vw;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: -1;
-}
-
 .button {
+  position: fixed;
   background: var(--contrast);
   border-radius: 5rem;
   font-size: 1rem;
@@ -17,7 +7,15 @@
   height: 2.5rem;
   width: 3rem;
   background: var(--backgroundLight);
-  margin-top: 48vh;
+  top: 48vh;
+}
+
+#left {
+  left: 0;
+}
+
+#right {
+  right: 0;
 }
 
 .buttonIcon {
