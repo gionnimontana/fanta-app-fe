@@ -421,9 +421,10 @@ export const canMakeOffer = (role: string | undefined, players: PlayerMap, purch
     return currentPurchaseByRole < maxPurchaseByRole
 }
 
-export const canReleasePlayer = (role: string | undefined, players: PlayerMap, outPurchase: Purchase[]): boolean => {
+export const canReleasePlayer = (role: string | undefined, players: PlayerMap, purchases: Purchase[]): boolean => {
     if (!role) return false
-    const currentPlayers = getCurrentPlayerByRole(players, role, outPurchase)
+    const outPurchases = purchases.filter(p => p.validated)
+    const currentPlayers = getCurrentPlayerByRole(players, role, outPurchases)
     const minPlayers = getMinPlayerByRole(role)
     return currentPlayers > minPlayers
 }
