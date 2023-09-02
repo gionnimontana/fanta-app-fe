@@ -8,6 +8,7 @@
   width: 3rem;
   background: var(--backgroundLight);
   top: 48vh;
+  border: solid 0.1rem var(--basictext);
 }
 
 #left {
@@ -26,7 +27,7 @@
 }
 
 @media screen and (max-width: 1050px) {
-  .container {
+  .button {
     display: none;
   }
 }
