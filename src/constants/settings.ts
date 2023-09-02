@@ -12,7 +12,7 @@ export const validModules = [
 ]
 
 export const marketWindow = {
-    start: '2023-08-04T00:00:00',
+    start: '2023-09-04T00:00:00',
     end: '2023-10-04T23:59:59'
 }
 
