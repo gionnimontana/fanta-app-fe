@@ -15,8 +15,24 @@
     text-overflow: ellipsis;
 }
 
+.scoreBasic {
+    width: 2rem;
+}
+
+.scoreInProgress{
+    font-size: 1rem;
+    width: 3.8rem;
+}
+
+.scoreInProgress::after{
+    content: "pt";
+}
+
 .score {
     margin: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media only screen and (max-width: 520px) {
@@ -26,6 +42,5 @@
     .score {
         width: 100%;
         order: 1;
-        text-align: center;
     }
 }
