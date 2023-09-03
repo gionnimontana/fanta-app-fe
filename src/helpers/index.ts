@@ -41,11 +41,12 @@ export const sumAllVotes = (votes?: Votes): number => {
 }
 
 export const getMatchScore = (match: Match, mdTS: MatchDayTS[]): Score => {
-    if (!matchDayHasEnded(match.day, mdTS)) {
+    if (isMatchDayIsInProgess(match.day, mdTS)) {
         const home = sumAllVotes(match.result?.home)
         const away = sumAllVotes(match.result?.away)
         return { home, away }
     }
+    if (!matchDayHasEnded(match.day, mdTS)) return { home: undefined, away: undefined }
     const dehidratedMatch = match?.result ? match.result.score : null
     return dehidratedMatch ? dehidratedMatch : { home: undefined, away: undefined }
 }

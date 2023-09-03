@@ -1,6 +1,6 @@
 import { routes } from "../../../constants/routes"
 import { Link } from "react-router-dom"
-import { getMatchScore, getMatchTeams, isMatchDayIsInProgess } from "../../../helpers"
+import { getMatchScore, getMatchTeams, isMatchDayIsInProgess, matchDayHasEnded } from "../../../helpers"
 import { Match } from "../../../types/matches"
 import { Team } from "../../../types/teams"
 import s from "./MatchScore.module.css"
@@ -16,10 +16,11 @@ interface Props {
 export const MatchScore = ({ match, teams, linked, mdTS }: Props) => {
     const { home, away } = getMatchTeams(match, teams)
     const matchInProgess = isMatchDayIsInProgess(match.day, mdTS)
+    const matchEnded = matchDayHasEnded(match.day, mdTS)
     const score = getMatchScore(match, mdTS)
     const cNn = `${s.name} creativeFont`
     const cNs = matchInProgess ? s.scoreInProgress : s.scoreBasic
-    const separator = matchInProgess ? '⏳' : '-'
+    const separator = matchEnded ? '-' : matchInProgess ? '⏳' : '📆'
     return (
         <div className={s.container}>
             {linked ? (

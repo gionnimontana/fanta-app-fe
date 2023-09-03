@@ -26,6 +26,7 @@
 
 .scoreInProgress::after{
     content: "pt";
+    font-size: 0.7rem;
 }
 
 .score {
