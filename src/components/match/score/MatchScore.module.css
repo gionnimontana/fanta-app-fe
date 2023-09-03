@@ -10,9 +10,17 @@
     align-items: center;
     justify-content: center;
     font-size: 0.8rem;
-    width: 11rem;
+    width: 10rem;
     height: 2rem;
     text-overflow: ellipsis;
+}
+
+.link {
+    border: solid 1px var(--basictext);
+    border-radius: 2rem;
+    color: var(--basictext);
+    cursor: pointer;
+    margin: 0.5rem;
 }
 
 .scoreBasic {

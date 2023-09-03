@@ -24,7 +24,7 @@ export const MatchScore = ({ match, teams, linked, mdTS }: Props) => {
     return (
         <div className={s.container}>
             {linked ? (
-                <Link to={routes.Team.replace(':id', home?.id || '')}>
+                <Link className={s.link} to={routes.Team.replace(':id', home?.id || '')}>
                     <p className={cNn}>{home?.name}</p>
                 </Link>
             ) : <p className={cNn}>{home?.name}</p>}
@@ -36,7 +36,7 @@ export const MatchScore = ({ match, teams, linked, mdTS }: Props) => {
                 {away?.emoji}
             </p>
             {linked ?(
-                <Link to={routes.Team.replace(':id', away?.id || '')}>
+                <Link className={s.link} to={routes.Team.replace(':id', away?.id || '')}>
                     <p className={cNn}>{away?.name}</p>
                 </Link>
             ) : <p className={cNn}>{away?.name}</p>}
