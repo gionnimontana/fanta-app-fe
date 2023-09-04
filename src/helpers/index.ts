@@ -328,7 +328,7 @@ export const setLocalStoredFilters = (filterKey: string, action: Dispatch<React.
     action(currentFilters[filterKey])
 }
 
-export type PurchaseAction = 'makeOffer' | 'acceptOffer' | 'cancelOffer' | 'releasePlayer' | 'marketClosed'
+export type PurchaseAction = 'makeOffer' | 'acceptOffer' | 'releasePlayer' | 'marketClosed'
 export const getPossiblePurchaseActions = (player?: Player, purchase?: Purchase): PurchaseAction[] => {
     if (!marketWindowIsOpen()) return ['marketClosed']
     if (!player) return []
@@ -339,7 +339,6 @@ export const getPossiblePurchaseActions = (player?: Player, purchase?: Purchase)
         if (purchase) return ['acceptOffer']
         return ['releasePlayer']
     }
-    if (userTeam === purchase?.to_team) return ['cancelOffer']
     return ['makeOffer']
 }
 

@@ -1,7 +1,6 @@
 import { Player, PlayerMap, Purchase } from "../../../types/players";
 import { canMakeOffer, canReleasePlayer, getPossiblePurchaseActions } from "../../../helpers";
 import { marketWindow } from "../../../constants/settings";
-import { CancelOffer } from "./components/CancelOffer";
 import { ReleasePlayer } from "./components/ReleasePlayer";
 import { AcceptOffer } from "./components/AcceptOffer";
 import { MakeOffer } from "./components/MakeOffer";
@@ -39,9 +38,6 @@ export const PlayerActions = ({ player, purchases, teamBudget, teamplayers, allP
                     purchase={targetPurchase}
                     playerCanBeReleased={playerCanBeReleased}
                 />
-            )}
-            {possibleActions.includes('cancelOffer') && (
-                <CancelOffer purchase={targetPurchase}/>
             )}
             {possibleActions.includes('releasePlayer') && (
                 <ReleasePlayer 
