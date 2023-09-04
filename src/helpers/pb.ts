@@ -24,3 +24,14 @@ export const pbUpdate = async (collection: string, id: string, data: any): Promi
   }
   return res
 }
+
+export const pbDelete = async (collection: string, id: string): Promise<APIresponse> => {
+  let res: { ok: boolean } = { ok: false }
+  try {
+      await pb.collection(collection).delete(id)
+      res.ok = true
+  }
+  catch (e) {
+  }
+  return res
+}

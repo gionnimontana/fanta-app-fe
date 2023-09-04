@@ -3,7 +3,7 @@ import { Player, PlayerMap, Purchase } from "types/players";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 import { useEffect } from "react";
-import { pb, pbCreate, pbUpdate } from "../../helpers/pb";
+import { pb, pbCreate, pbDelete, pbUpdate } from "../../helpers/pb";
 import { TeamPlayer } from "../../types/teams";
 
 export function usePlayers() {
@@ -57,6 +57,10 @@ export async function createPurchaseOffer(playerId: string, from_team: string | 
 
 export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: any}) {
     return pbUpdate('purchases', purchaseId, payload)
+}
+
+export function deletePurchaseOffer(purchaseId: string) {
+    return pbDelete('purchases', purchaseId)
 }
 
 export const usePurchasesSubscription = () => {
