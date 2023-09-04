@@ -18,6 +18,8 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
     const baseOffer = purchase ? purchase.price + 1 : player?.fvm || 1
     const [loading, setLoading] = useState<boolean>(false)
     const [offerValue, setOfferValue] = useState<number>(baseOffer)
+    const freePlayer = Boolean(!player?.fanta_team) || Boolean(purchase?.validated)
+    const currentOffer = freePlayer ? baseOffer : offerValue
 
     useEffect(() => {
       setOfferValue(baseOffer)
@@ -48,8 +50,8 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
                 {purchase?.to_team === userTeam ? 'Update offer': 'Make offer'}
               </LoadingButton>
               <div style={{padding: '2rem'}}>
-                Pressing this button you are going to make an offer of {baseOffer} credits for {player?.name}, the offer cannot be revoked.
-                {baseOffer < offerValue && `if another player makes an offer for this player, your offer will be automatically increased by 1 credit until it reaches ${offerValue} credits`}
+                Pressing this button you are going to make an offer of {currentOffer} credits for {player?.name}, the offer cannot be revoked.
+                {currentOffer < offerValue && `if another player makes an offer for this player, your offer will be automatically increased by 1 credit until it reaches ${offerValue} credits`}
               </div>
             </>
           ): (
