@@ -53,8 +53,11 @@
   overflow: auto;
 }
 
-@media only screen and (max-width: 385px) {
-  .players {
-      height: calc(95vh - 19rem);
+@media only screen and (max-width: 470px) {
+  .select {
+    max-width: 5rem;
+  }
+  .input {
+    max-width: 6rem;
   }
 }

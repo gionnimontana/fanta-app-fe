@@ -4,8 +4,8 @@ import { Team } from "../../../types/teams";
 import { PlayerTable } from "./PlayerTable";
 import { Input } from "../../generalUI/Input/Input";
 import { Select } from "../../generalUI/Select/Select";
-import s from "./PlayerTable.module.css";
 import { getLocalStoredFilters, getRoleEmoji, setLocalStoredFilters } from "../../../helpers";
+import s from "./PlayerTable.module.css";
 
 interface Props {
   players: PlayerMap;
@@ -32,6 +32,7 @@ export const PlayerTableWrapper = ({ players, teams, activePurchases }: Props) =
     <>
       <div className={s.filterContainer}>
           <Input 
+            className={s.input}
             value={search} 
             onChange={(e) => setSearch(e.target.value)}
             label="🔎 (Name / From)"
@@ -49,6 +50,7 @@ export const PlayerTableWrapper = ({ players, teams, activePurchases }: Props) =
             label="Role"
           />
           <Select
+            className={s.select}
             value={team}
             onChange={setLocalStoredFilters('team', setTeam)}
             options={[

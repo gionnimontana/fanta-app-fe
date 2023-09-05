@@ -489,7 +489,7 @@ export const addLeavingPlayers = (players: PlayerMap | undefined, purchases: Pur
 }
 
 export const getPlayerLeavingName = (player: Player): string => {
-    if (player.leaving) return `${player.name} 👜`
+    if (player.leaving) return `${player.name} 🛒`
     return player.name
 }
 
