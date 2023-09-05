@@ -513,7 +513,7 @@ export const getTeamPlayers = (teamId: string | undefined, players: PlayerMap): 
 export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | undefined, player: Player, price: number): Promise<boolean> => {
     let purchaseChange = false
     let canHandleOffer = true
-    const freePlayer = player.fanta_team === undefined
+    const freePlayer = player.fanta_team === ""
     let minimalOffer = freePlayer ? player.fvm : price
     if (purchase) {
         minimalOffer = purchase.price + 1
