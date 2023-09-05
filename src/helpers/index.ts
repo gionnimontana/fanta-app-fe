@@ -116,7 +116,17 @@ export const getTeamFormation = (match: Match, players: PlayerMap, teamId: strin
     PreMatchFormation => {
         const { home, away } = getMatchFormations(match, players)
         const isHome = match.match.split('-')[0] === teamId
-        return isHome ? home : away
+        const out = isHome ? home : away
+        return removeFormationLeavingPlayers(out, players)
+}
+
+export const removeFormationLeavingPlayers = (formation: PreMatchFormation, players: PlayerMap): PreMatchFormation => {
+    const newFormation = {
+        ...formation,
+        s: formation.s.filter(p => !players[p.id].leaving),
+        b: formation.b.filter(p => !players[p.id].leaving)
+    }
+    return newFormation
 }
 
 export const getMatchFormations = (match: Match, players: PlayerMap):
@@ -451,6 +461,38 @@ export const getRoleEmoji = (role: string): string => {
     if (roleIcon) return roleIcon
     return "❓"
 }
+
+export const getPurchasePerPlayerMap = (purchases: Purchase[]): {[playerId: string]: Purchase} => {
+    const purchasPerPlayerMap = purchases.reduce((acc: {[playerId: string]: Purchase}, p) => {
+        acc[p.player] = p
+        return acc
+    }, {})
+return purchasPerPlayerMap
+}
+
+export const addLeavingPlayers = (players: PlayerMap | undefined, purchases: Purchase[] | undefined): PlayerMap => {
+    if (!purchases) return players || {}
+    if (!players) return {}
+    const purchasPerPlayerMap = getPurchasePerPlayerMap(purchases)
+    const playersWithLeaving = Object.keys(players).reduce((acc: PlayerMap, id) => {
+        const player = players[id]
+        const purchase = purchasPerPlayerMap[id]
+        if (purchase && purchase.validated) {
+                acc[id] = {
+                    ...player,
+                    leaving: true
+                }
+        } else acc[id] = player
+        return acc
+    }, {})
+    return playersWithLeaving
+}
+
+export const getPlayerLeavingName = (player: Player): string => {
+    if (player.leaving) return `${player.name} 👜`
+    return player.name
+}
+
 
 export const getTeamPlayers = (teamId: string | undefined, players: PlayerMap): PlayerMap => {
     if (!teamId) return {}

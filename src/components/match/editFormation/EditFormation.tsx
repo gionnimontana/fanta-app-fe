@@ -9,7 +9,6 @@ import { useQueryClient } from "react-query"
 import { EditFromationTable } from "./components/EditFromationTable/EditFromationTable"
 import { EditFormationHeader } from "./components/EditFormationHeader/EditFormationHeader"
 import { SortBenchOrder } from "./components/SortBenchOrder/SortBenchOrder"
-import { useNavigate } from "react-router-dom"
 
 interface Props {
     team: Team
@@ -21,7 +20,6 @@ interface Props {
 
 export const EditFormation = ({team, players, match, matchDayHasStarted, onClose}: Props) => {
     const queryClient = useQueryClient()
-    const navigate = useNavigate();
     const initFormation = getTeamFormation(match, players, team.id)
     const roster = getRoster(team, players)
     const [formation, setFormation] = useState<PreMatchFormation>(initFormation)
@@ -30,6 +28,7 @@ export const EditFormation = ({team, players, match, matchDayHasStarted, onClose
     const [benchOrderView, setBenchOrderView] = useState<boolean>(false)
 
     const handlePlayerClick = (player: Player) => () => {
+        if (player.leaving) return
         const newFormation = getNewFormationPlayerChange(player, formation)
         const newModule = getNewModuleOnChange(newFormation)
         setFormation(newFormation)

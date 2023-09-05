@@ -1,5 +1,5 @@
 import { Player } from "../../../../../types/players"
-import { getPlayerFormationIcon, getRoleEmoji, getRoster } from "../../../../../helpers"
+import { getPlayerFormationIcon, getRoleEmoji, getPlayerLeavingName } from "../../../../../helpers"
 import { PreMatchFormation } from "../../../../../types/matches"
 import s from './EditFromationTable.module.css'
 
@@ -10,7 +10,7 @@ interface Props {
     handlePlayerClick: (player: Player) => () => void
 }
 
-export const EditFromationTable = ({ roster, botMode, handlePlayerClick, formation}: Props) => {   
+export const EditFromationTable = ({ roster, botMode, handlePlayerClick, formation}: Props) => { 
     return (
       <div>
         <div className={s.player}>
@@ -27,8 +27,9 @@ export const EditFromationTable = ({ roster, botMode, handlePlayerClick, formati
                     ? '🤖'
                     : getPlayerFormationIcon(player.id, formation)
                 const isStarter = icon === '🏁'
+                const addClass = isStarter ? s.starter : player.leaving ? s.leaving : ''
                 return (
-                    <div className={`${isStarter ? s.starter : ''} ${s.player}`} key={i}>
+                    <div className={`${addClass} ${s.player}`} key={i}>
                         <div 
                             className={s.position}
                             onClick={handlePlayerClick(player)}
@@ -36,7 +37,7 @@ export const EditFromationTable = ({ roster, botMode, handlePlayerClick, formati
                             {icon}
                         </div>
                         <p className={s.role}>{getRoleEmoji(player.role)}</p>
-                        <p className={s.name}>{player.name}</p>
+                        <p className={s.name}>{getPlayerLeavingName(player)}</p>
                         <p className={s.name}>{player.team}</p>
                         <p className={s.value}>{player.fvm}</p>
                         <p className={s.value}>{player.play_next_match}</p>

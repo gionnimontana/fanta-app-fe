@@ -7,6 +7,7 @@ export interface Player {
     role: string
     play_next_match: number
     fanta_team?: string
+    leaving?: boolean
 }
 
 export interface PlayerMap {

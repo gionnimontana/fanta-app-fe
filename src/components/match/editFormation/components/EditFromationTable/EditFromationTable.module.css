@@ -9,6 +9,11 @@
     border-radius: 1rem;
 }
 
+.leaving {
+    background: var(--backgroundDark);
+    border-radius: 1rem;
+}
+
 .position {
     font-size: 1.3rem;
     background: var(--contrast);
