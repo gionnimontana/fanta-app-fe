@@ -19,12 +19,15 @@ export const PlayerTable = ({ players, teams, activePurchases }: Props) => {
     return activePurchaseIds.includes(player.id)
   }
 
-  const decoratedPlayerName = (player: Player) => {
+  const getPurchaseAndName = (player: Player) => {
+    let name = player.name
+    let offer = ''
     if (isPurchase(player)) {
       const purchase = activePurchases.find((p) => p.player === player.id)
-      return `🔥${getTeamEmoji(purchase?.to_team, teams)} ${player.name}`
+      offer = `${purchase?.price} ${getTeamEmoji(purchase?.to_team, teams)}`
+      name = `🔥 ${player.name}`
     }
-    else return player.name
+    return [name, offer]
   }
 
   const pCn = (player: Player) => {
@@ -43,18 +46,21 @@ export const PlayerTable = ({ players, teams, activePurchases }: Props) => {
           <p className={`${s.team} ${s.bold}`}></p>
           <p className={`${s.name} ${s.bold}`}>NAME</p>
           <p className={`${s.from} ${s.bold}`}>FROM</p>
+          <p className={`${s.value} ${s.bold}`}>🔥</p>
           <p className={`${s.value} ${s.bold}`}>FVM</p>
           <p className={`${s.value} ${s.bold}`}>SI</p>
         </div>
         <div className={s.players}>
             {players.map((player, i) => {
                 const targetRoute = routes.Player.replace(':id', player.id)
+                const [name, offer] = getPurchaseAndName(player)
                 return (
                     <Link className={pCn(player)} key={i} to={targetRoute}>
                         <p className={s.role}>{getRoleEmoji(player.role)}</p>
                         <p className={s.team}>{getTeamEmoji(player.fanta_team, teams)}</p>
-                        <p className={s.name}>{decoratedPlayerName(player)}</p>
+                        <p className={s.name}>{name}</p>
                         <p className={s.from}>{player.team}</p>
+                        <p className={s.value}>{offer}</p>
                         <p className={s.value}>{player.fvm}</p>
                         <p className={s.value}>{player.starter_index}</p>
                     </Link>
