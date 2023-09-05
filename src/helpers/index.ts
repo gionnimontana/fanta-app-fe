@@ -470,6 +470,13 @@ export const getPurchasePerPlayerMap = (purchases: Purchase[]): {[playerId: stri
 return purchasPerPlayerMap
 }
 
+export const getRankEmoji = (rank: number): string => {
+    if (rank === 0) return "🥇"
+    if (rank === 1) return "🥈"
+    if (rank === 2) return "🥉"
+    return `#${rank + 1}`
+}
+
 export const addLeavingPlayers = (players: PlayerMap | undefined, purchases: Purchase[] | undefined): PlayerMap => {
     if (!purchases) return players || {}
     if (!players) return {}

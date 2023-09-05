@@ -17,8 +17,10 @@
   }
 
   .rank {
-    font-weight: bold;
     width: 4rem;
+    text-align: center;
+    line-height: 1rem;
+    font-size: 1.2rem;
   }
   
   .link {

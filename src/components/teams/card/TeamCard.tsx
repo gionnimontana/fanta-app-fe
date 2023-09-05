@@ -1,6 +1,7 @@
 import { routes } from "../../../constants/routes"
 import { Link } from "react-router-dom"
 import { Team } from "../../../types/teams"
+import { getRankEmoji } from "../../../helpers"
 import s from "./TeamCard.module.css"
 
 interface Props {
@@ -15,7 +16,7 @@ export const TeamCard = ({ team, rank }: Props) => {
             <div className={s.container}>
                 <div className={s.card}>
                     {rank !== undefined ? 
-                        <p className={s.rank}>#{rank + 1} {team.emoji}</p> 
+                        <p className={s.rank}>{getRankEmoji(rank)} {team.emoji}</p> 
                     : null}
                     <p className={cN}>{team.name}</p>
                     <p className={s.points}>{team.score?.pts}</p>
