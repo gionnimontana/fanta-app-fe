@@ -1,4 +1,4 @@
-import { getPlayerLeavingName, getRoleEmoji, getRoster, getTeamPlayers } from '../../../helpers';
+import { getPlayerLeavingName, getRoleEmoji, getRoster} from '../../../helpers';
 import { Table } from '../../generalUI/table/Table';
 import { ArrowSwiperListener } from '../../generalUI/swipeListener/ArrowSwiperListener';
 import { Team } from '../../../types/teams';

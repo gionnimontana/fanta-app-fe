@@ -13,7 +13,7 @@ export const MatchFormation = ({ formation }: Props) => {
                 return (
                     <div className={s.player} key={i}>
                         <p className={s.role}>{getRoleEmoji(player.role)}</p>
-                        <p className={s.name}>{player.name}</p>
+                        <p className={s.name}>{player.role === '?' ? '🗿 🧟 🗿' : player.name}</p>
                         <p className={s.vote}>{player.vote || '-'}</p>
                     </div>
                 )
