@@ -363,7 +363,7 @@ export const getTeamBudget = (purchases: Purchase[], team?: Team): number => {
     if (!team) return 0
     const budget = team.credits - purchases.reduce((acc, p) => {
         if (p.from_team === team.id && p.validated) return acc - p.price
-        else if (p.to_team === team.id) return acc + p.price
+        else if (p.to_team === team.id) return acc + p.max_price
         return acc
     }, 0)
     return budget

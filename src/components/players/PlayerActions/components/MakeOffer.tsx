@@ -42,7 +42,7 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
             <>
               <NumberField
                 min={baseOffer}
-                max={400}
+                max={Number(teamBudget)}
                 value={offerValue}
                 onChange={setOfferValue}
               />
