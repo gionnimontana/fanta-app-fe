@@ -38,6 +38,7 @@ export const AcceptOffer = ({ purchase, playerCanBeReleased }: Props) => {
     }
 
     const showButton = !purchase?.validated && playerCanBeReleased
+    const showDeclineButton = !purchase?.from_team
 
     return (
       <>
@@ -46,9 +47,11 @@ export const AcceptOffer = ({ purchase, playerCanBeReleased }: Props) => {
               Accept Offer
           </LoadingButton>
         )}
-        <LoadingButton loading={loading} onClick={handleDecline} className={s.offerButton}>
+        {showDeclineButton && (
+          <LoadingButton loading={loading} onClick={handleDecline} className={s.offerButton}>
             Decline Offer
-        </LoadingButton>
+          </LoadingButton>
+        )}
         <div style={{padding: '2rem'}}>
           {purchase?.validated 
             ? 'You have validated this offer, other teams can rise offers for this player. It will be tranfered within the next 48 hours from last update, you will earn the last offer credits' 
