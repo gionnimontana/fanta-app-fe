@@ -35,9 +35,11 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
       setLoading(false)
     }
 
+    const hfs = purchase?.to_team === userTeam || haveFreeRoleSlots
+
     return (
       <>
-        {haveFreeRoleSlots ? 
+        {hfs ? 
           haveBudgetForOffer ? (
             <>
               <NumberField
