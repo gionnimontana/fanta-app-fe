@@ -4,6 +4,11 @@
     align-items: center;
 }
 
+.valueBox{
+    display: flex;
+    justify-content: center;
+}
+
 .header {
     display: flex;
     padding: 1rem;
@@ -13,8 +18,7 @@
 }
 
 .credits {
-    width: 100%;
-    text-align: center;
+    margin-right: 0.5rem;
 }
 
 .emoji {

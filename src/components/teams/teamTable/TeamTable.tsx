@@ -13,6 +13,7 @@ interface Props {
 
 export const TeamTable = ({teamNavigator, team, teamPlayers }: Props) => {
     const roster = getRoster(team, teamPlayers)
+    const rosterValue = roster.reduce((acc, player) => acc + player.fvm, 0)
     const cN = `${s.squad} creativeFont`
 
     return (
@@ -28,7 +29,10 @@ export const TeamTable = ({teamNavigator, team, teamPlayers }: Props) => {
                     <p className={s.emoji}>{team?.emoji}</p>
                     <div className={s.headerText}>
                         <div className={cN}>{team?.name}</div>
-                        <div className={s.credits}>{team?.credits} 💰</div>
+                        <div className={s.valueBox}>
+                            <div className={s.credits}>{team?.credits} 💰</div>
+                            <div className={s.rosterValue}>{rosterValue} 💪</div>
+                        </div>
                     </div>
                 </div>
                 </ArrowSwiperListener>
