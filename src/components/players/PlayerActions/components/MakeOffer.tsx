@@ -20,12 +20,14 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
     const [offerValue, setOfferValue] = useState<number>(baseOffer)
     const freePlayer = Boolean(!player?.fanta_team) || Boolean(purchase?.validated)
     const currentOffer = freePlayer ? baseOffer : offerValue
+    const haveBudgetForOffer = Number(teamBudget) >= baseOffer
+    const isUToffer = purchase?.to_team === userTeam
+    const haveSlots = isUToffer || haveFreeRoleSlots
 
     useEffect(() => {
       setOfferValue(baseOffer)
     }, [baseOffer])
 
-    const haveBudgetForOffer = Number(teamBudget) >= baseOffer
 
     const onClick = async () => {
       if (!player) return smartNotification('Something went wrong, no player found, please contact the admin')
@@ -35,11 +37,13 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
       setLoading(false)
     }
 
-    const hfs = purchase?.to_team === userTeam || haveFreeRoleSlots
 
     return (
       <>
-        {hfs ? 
+        {isUToffer && (
+          <div style={{padding: '0 2rem', fontSize: '0.9rem'}}>Autoincrement for this player is set to: <strong>{purchase?.max_price}</strong></div>
+        )}
+        {haveSlots ? 
           haveBudgetForOffer ? (
             <>
               <NumberField
