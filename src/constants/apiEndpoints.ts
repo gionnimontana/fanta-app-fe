@@ -1,5 +1,5 @@
-const pbBaseUrl = import.meta.env.PB_BASE_URL + '/api/collections'
-const apiBaseUrl = import.meta.env.API_BASE_URL
+const pbBaseUrl = import.meta.env.VITE_PB_BASE_URL + '/api/collections'
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
 
 export const apiEndpoints = {
     Players: `${pbBaseUrl}/players_stats/records`,
