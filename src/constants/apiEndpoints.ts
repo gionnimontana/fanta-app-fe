@@ -1,11 +1,13 @@
-const baseUrl = import.meta.env.VITE_BASE_URL + '/api/collections'
+const pbBaseUrl = import.meta.env.PB_BASE_URL + '/api/collections'
+const apiBaseUrl = import.meta.env.API_BASE_URL
 
 export const apiEndpoints = {
-    Players: `${baseUrl}/players_stats/records`,
-    Calendar: `${baseUrl}/calendar/records`,
-    Teams: `${baseUrl}/teams/records`,
-    Articles: `${baseUrl}/articles/records`,
-    Purchases: `${baseUrl}/purchases/records`,
-    Schedules: `${baseUrl}/schedules/records`,
-    TeamPlayers: `${baseUrl}/team_players/records`,
+    Players: `${pbBaseUrl}/players_stats/records`,
+    Calendar: `${pbBaseUrl}/calendar/records`,
+    Teams: `${pbBaseUrl}/teams/records`,
+    Articles: `${pbBaseUrl}/articles/records`,
+    Purchases: `${pbBaseUrl}/purchases/records`,
+    Schedules: `${pbBaseUrl}/schedules/records`,
+    TeamPlayers: `${pbBaseUrl}/team_players/records`,
+    EditFormation: `${apiBaseUrl}/update_match_formation`,
 };

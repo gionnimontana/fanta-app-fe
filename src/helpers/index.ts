@@ -123,8 +123,8 @@ export const getTeamFormation = (match: Match, players: PlayerMap, teamId: strin
 export const removeFormationLeavingPlayers = (formation: PreMatchFormation, players: PlayerMap): PreMatchFormation => {
     const newFormation = {
         ...formation,
-        s: formation.s.filter(p => !players[p.id].leaving),
-        b: formation.b.filter(p => !players[p.id].leaving)
+        s: formation.s.filter(p => !players[p.id]?.leaving),
+        b: formation.b.filter(p => !players[p.id]?.leaving)
     }
     return newFormation
 }
@@ -270,25 +270,24 @@ export const updateModeMatchTeamFormation = async (match: Match, team: Team, for
         return true
     }
     if (!isValidFormation(formation, module)) return false
-    const success = await updateMatchTeamFormation(team.id, match, formation, module, matchDayBegun)
+    const success = await updateMatchTeamFormation(match, formation, module, matchDayBegun)
     if (success) {
         return true
     } 
     return false
 }
 
-export const updateMatchTeamFormation = async (teamID: string, match: Match, formation: PreMatchFormation, module: string, matchDayBegun: boolean): Promise<boolean> => {
+export const updateMatchTeamFormation = async (match: Match, formation: PreMatchFormation, module: string, matchDayBegun: boolean): Promise<boolean> => {
     if (matchDayBegun) {
         smartNotification('You cannot change the formation after the match day has begun')
         return false
     } 
-    const isHome = match.match.split('-')[0] === teamID
     const newFormation: DPreMatchFormation = {
         b: formation.b.map(p => p.id),
         s: formation.s.map(p => p.id),
         m: module.replaceAll('-', '')
     }
-    const success = await updateMatchFormation(match.id, isHome, newFormation)
+    const success = await updateMatchFormation(match.day, newFormation)
     if (success.ok) smartNotification('Formations saved successfully')
     else smartNotification('Error while saving formations')
     return success.ok
