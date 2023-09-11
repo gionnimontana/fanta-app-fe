@@ -510,7 +510,7 @@ export const getTeamPlayers = (teamId: string | undefined, players: PlayerMap): 
 }
 
 export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | undefined, player: Player, price: number): Promise<boolean> => {
-    const isFreePlayer = !Boolean(purchase?.from_team)
+    const isFreePlayer = !Boolean(player?.fanta_team)
     if (isFreePlayer && userTeam === purchase?.to_team) {
         await updatePurchaseOffer(purchase.id, {price: purchase.price, max_price: price})
         smartNotification(`Autoincrement for this player has been updated to ${price}`)
