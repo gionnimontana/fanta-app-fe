@@ -38,7 +38,7 @@ export const AcceptOffer = ({ purchase, playerCanBeReleased }: Props) => {
     }
 
     const showButton = !purchase?.validated && playerCanBeReleased
-    const showDeclineButton = !purchase?.from_team
+    const showDeclineButton = purchase?.from_team
 
     return (
       <>

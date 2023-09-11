@@ -12,4 +12,5 @@ export const apiEndpoints = {
     EditFormation: `${apiBaseUrl}/update_match_formation`,
     EditAutoFormation: `${apiBaseUrl}/update_team_autoformation`,
     PurchaseOffer: `${apiBaseUrl}/purchase_offer`,
+    DeletePurchaseOffer: `${apiBaseUrl}/delete_purchase_offer`
 };

@@ -27,8 +27,3 @@ export const sendPatchRequest = async (url: string, payload: any) => {
   const response = await sendServerRequest('PATCH', url, payload)
   return response
 }
-
-export const sendDeleteRequest = async (url: string, payload: any) => {
-  const response = await sendServerRequest('DELETE', url, payload)
-  return response
-}

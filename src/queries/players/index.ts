@@ -3,7 +3,7 @@ import { Player, PlayerMap, Purchase } from "types/players";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 import { useEffect } from "react";
-import { pb, pbDelete, pbUpdate } from "../../helpers/pb";
+import { pb, pbUpdate } from "../../helpers/pb";
 import { TeamPlayer } from "../../types/teams";
 import { sendPostRequest } from "../../helpers/editApi";
 
@@ -55,8 +55,8 @@ export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: a
     return pbUpdate('purchases', purchaseId, payload)
 }
 
-export function deletePurchaseOffer(purchaseId: string) {
-    return pbDelete('purchases', purchaseId)
+export async function deletePurchaseOffer(purchaseId: string) {
+    return sendPostRequest(apiEndpoints.DeletePurchaseOffer, { purchase_id: purchaseId })
 }
 
 export const usePurchasesSubscription = () => {
