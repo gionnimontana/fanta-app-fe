@@ -31,7 +31,6 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
 
     const onClick = async () => {
       if (!player) return smartNotification('Something went wrong, no player found, please contact the admin')
-      if (!userTeam) return smartNotification('Something went wrong, no team found, please contact the admin')
       setLoading(true)
       await makePurchaseOffer(userTeam, purchase, player, offerValue)
       setLoading(false)
@@ -40,7 +39,7 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
 
     return (
       <>
-        {isUToffer && (
+        {freePlayer && isUToffer && (
           <div style={{padding: '0 2rem', fontSize: '0.9rem'}}>Autoincrement for this player is set to: <strong>{purchase?.max_price}</strong></div>
         )}
         {haveSlots ? 
@@ -56,8 +55,14 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
                 {purchase?.to_team === userTeam ? 'Update offer': 'Make offer'}
               </LoadingButton>
               <div style={{padding: '2rem'}}>
-                Pressing this button you are going to make an offer of {currentOffer} credits for {player?.name}, the offer cannot be revoked.
-                {currentOffer < offerValue && `if another player makes an offer for this player, your offer will be automatically increased by 1 credit until it reaches ${offerValue} credits`}
+                {freePlayer && isUToffer ? (
+                  <>Pressing this button you are going to update autoincrement to {offerValue}</>
+                ) : (
+                  <>
+                    Pressing this button you are going to make an offer of {currentOffer} credits for {player?.name}, the offer cannot be revoked.
+                    {currentOffer < offerValue && `if another player makes an offer for this player, your offer will be automatically increased by 1 credit until it reaches ${offerValue} credits`}
+                  </>
+                )}
               </div>
             </>
           ): (

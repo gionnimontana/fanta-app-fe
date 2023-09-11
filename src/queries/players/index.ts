@@ -5,7 +5,7 @@ import { queryCacheTime } from "../../constants/settings";
 import { useEffect } from "react";
 import { pb, pbUpdate } from "../../helpers/pb";
 import { TeamPlayer } from "../../types/teams";
-import { sendPostRequest } from "../../helpers/editApi";
+import { sendPatchRequest, sendPostRequest } from "../../helpers/editApi";
 
 export function usePlayers() {
     return useQuery(`players`, async () => {
@@ -51,8 +51,8 @@ export async function createPurchaseOffer(playerId: string, price: number, max_p
     return sendPostRequest(apiEndpoints.PurchaseOffer, data)
 }
 
-export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: any}) {
-    return pbUpdate('purchases', purchaseId, payload)
+export function updatePurchaseOffer(purchase_id: string, payload: {[k: string]: any}) {
+    return sendPatchRequest(apiEndpoints.PurchaseOffer, { purchase_id, ...payload})
 }
 
 export async function deletePurchaseOffer(purchaseId: string) {

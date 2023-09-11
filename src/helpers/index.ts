@@ -510,11 +510,16 @@ export const getTeamPlayers = (teamId: string | undefined, players: PlayerMap): 
 }
 
 export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | undefined, player: Player, price: number): Promise<boolean> => {
+    const isFreePlayer = !Boolean(purchase?.from_team)
+    if (isFreePlayer && userTeam === purchase?.to_team) {
+        await updatePurchaseOffer(purchase.id, {price: purchase.price, max_price: price})
+        smartNotification(`Autoincrement for this player has been updated to ${price}`)
+        return false
+    }
     let purchaseChange = false
     let canHandleOffer = true
-    const freePlayer = player.fanta_team === ""
-    let minimalOffer = freePlayer ? player.fvm : price
-    if (purchase) {
+    let minimalOffer = isFreePlayer ? player.fvm : price
+    if (purchase && isFreePlayer) {
         minimalOffer = purchase.price + 1
         if (price < purchase.max_price) {
             canHandleOffer = false
@@ -526,7 +531,7 @@ export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | u
     if (canHandleOffer) {
         let res: APIresponse = {ok : false}
         if (purchase) {
-            res = await updatePurchaseOffer(purchase.id, {to_team: userTeam, price: minimalOffer, max_price: price})
+            res = await updatePurchaseOffer(purchase.id, {price: minimalOffer, max_price: price})
         } else {
             res = await createPurchaseOffer(player.id, minimalOffer, price)
         }
