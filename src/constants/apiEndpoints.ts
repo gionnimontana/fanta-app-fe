@@ -10,4 +10,5 @@ export const apiEndpoints = {
     Schedules: `${pbBaseUrl}/schedules/records`,
     TeamPlayers: `${pbBaseUrl}/team_players/records`,
     EditFormation: `${apiBaseUrl}/update_match_formation`,
+    EditAutoFormation: `${apiBaseUrl}/update_team_autoformation`,
 };
