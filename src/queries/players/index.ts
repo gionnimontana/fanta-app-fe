@@ -3,7 +3,7 @@ import { Player, PlayerMap, Purchase } from "types/players";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 import { useEffect } from "react";
-import { pb, pbUpdate } from "../../helpers/pb";
+import { pb } from "../../helpers/pb";
 import { TeamPlayer } from "../../types/teams";
 import { sendPatchRequest, sendPostRequest } from "../../helpers/editApi";
 
@@ -51,8 +51,12 @@ export async function createPurchaseOffer(playerId: string, price: number, max_p
     return sendPostRequest(apiEndpoints.PurchaseOffer, data)
 }
 
-export function updatePurchaseOffer(purchase_id: string, payload: {[k: string]: any}) {
-    return sendPatchRequest(apiEndpoints.PurchaseOffer, { purchase_id, ...payload})
+export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: any}) {
+    return sendPatchRequest(apiEndpoints.PurchaseOffer, { purchase_id: purchaseId, ...payload})
+}
+
+export async function acceptPurchaseOffer(purchaseId: string) {
+    return sendPostRequest(apiEndpoints.AcceptPurchaseOffer, { purchase_id: purchaseId })
 }
 
 export async function deletePurchaseOffer(purchaseId: string) {

@@ -1,7 +1,7 @@
 import { Purchase } from "../../../../types/players";
 import { LoadingButton } from "../../../../components/generalUI/loadingButton/LoadingButton"
 import { useState } from "react";
-import { updatePurchaseOffer, deletePurchaseOffer } from "../../../../queries/players";
+import { updatePurchaseOffer, deletePurchaseOffer, acceptPurchaseOffer } from "../../../../queries/players";
 import { useQueryClient } from "react-query"
 import { smartNotification } from "../../../../components/generalUI/notifications/notifications"
 import s from './style.module.css'
@@ -18,10 +18,10 @@ export const AcceptOffer = ({ purchase, playerCanBeReleased }: Props) => {
     const handleAccept = async () => {
       if (!purchase) return smartNotification('Something went wrong, no purchase found, please contact the admin')
       setLoading(true)
-      const res = await updatePurchaseOffer(purchase.id, {validated: true})
+      const res = await acceptPurchaseOffer(purchase.id)
       if (res.ok) {
         queryClient.invalidateQueries('purchase-players')
-        smartNotification('Offer created')
+        smartNotification('Offer accepted')
       } else smartNotification('Something went wrong, could be a bug, please contact the admin')
       setLoading(false)
     }
@@ -38,7 +38,7 @@ export const AcceptOffer = ({ purchase, playerCanBeReleased }: Props) => {
     }
 
     const showButton = !purchase?.validated && playerCanBeReleased
-    const showDeclineButton = purchase?.from_team
+    const showDeclineButton = purchase?.from_team && !purchase?.validated
 
     return (
       <>
