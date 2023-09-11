@@ -11,4 +11,5 @@ export const apiEndpoints = {
     TeamPlayers: `${pbBaseUrl}/team_players/records`,
     EditFormation: `${apiBaseUrl}/update_match_formation`,
     EditAutoFormation: `${apiBaseUrl}/update_team_autoformation`,
+    PurchaseOffer: `${apiBaseUrl}/purchase_offer`,
 };

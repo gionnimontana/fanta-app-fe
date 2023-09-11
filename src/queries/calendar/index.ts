@@ -4,7 +4,7 @@ import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 import { MatchDayTS } from "types/utils";
 import { APIresponse } from "../../helpers/pb";
-import { sendEditRequest } from "../../helpers/editApi";
+import { sendPatchRequest } from "../../helpers/editApi";
 
 export function useMatchDayTS() {
     return useQuery(`schedules`, async () => {
@@ -36,6 +36,6 @@ export function useMatch(id: string) {
 
 export async function updateMatchFormation(day: number, formation: DPreMatchFormation): Promise<APIresponse> {
     const payload = {day, formation}
-    return await sendEditRequest(apiEndpoints.EditFormation, payload)
+    return await sendPatchRequest(apiEndpoints.EditFormation, payload)
 }
   

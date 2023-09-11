@@ -3,7 +3,7 @@ import { Team } from "../../types/teams";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 import { APIresponse } from "../../helpers/pb";
-import { sendEditRequest } from "../../helpers/editApi";
+import { sendPatchRequest } from "../../helpers/editApi";
 
 export function useTeams() {
     return useQuery(`teams`, async () => {
@@ -23,9 +23,9 @@ export function useTeam(id: string) {
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 
-export const editTeamBotMode = async (id: string, botMode: boolean): Promise<APIresponse> => {
+export const editTeamBotMode = async (botMode: boolean): Promise<APIresponse> => {
     const payload = {auto_formation: botMode}
-    return await sendEditRequest(apiEndpoints.EditAutoFormation, payload)
+    return await sendPatchRequest(apiEndpoints.EditAutoFormation, payload)
 }
 
   

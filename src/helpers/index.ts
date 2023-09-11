@@ -254,7 +254,7 @@ export const isValidModule = (module: string): boolean => {
 export const updateModeMatchTeamFormation = async (match: Match, team: Team, formation: PreMatchFormation, module: string, botMode: boolean, matchDayBegun: boolean): Promise<boolean> => {
     const botModeChanged = team.auto_formation !== botMode
     if (botModeChanged) {
-        const success = await editTeamBotMode(team.id, botMode)
+        const success = await editTeamBotMode(botMode)
         if (success.ok) {
             if (botMode) { 
                 smartNotification('🤖 Bot mode enabled, the formation will be managed by the bot each day at 12:00 and at the beginning of the first match 🤖')
@@ -528,7 +528,7 @@ export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | u
         if (purchase) {
             res = await updatePurchaseOffer(purchase.id, {to_team: userTeam, price: minimalOffer, max_price: price})
         } else {
-            res = await createPurchaseOffer(player.id, player.fanta_team, userTeam, minimalOffer, price)
+            res = await createPurchaseOffer(player.id, minimalOffer, price)
         }
         if (res.ok) {
             smartNotification('Offer created')

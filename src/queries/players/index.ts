@@ -3,8 +3,9 @@ import { Player, PlayerMap, Purchase } from "types/players";
 import { apiEndpoints } from "../../constants/apiEndpoints";
 import { queryCacheTime } from "../../constants/settings";
 import { useEffect } from "react";
-import { pb, pbCreate, pbDelete, pbUpdate } from "../../helpers/pb";
+import { pb, pbDelete, pbUpdate } from "../../helpers/pb";
 import { TeamPlayer } from "../../types/teams";
+import { sendPostRequest } from "../../helpers/editApi";
 
 export function usePlayers() {
     return useQuery(`players`, async () => {
@@ -41,18 +42,13 @@ export function useOpenPurchasePlayers(){
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 
-export async function createPurchaseOffer(playerId: string, from_team: string | undefined, to_team: string | null, price: number, max_price: number): Promise<{ ok: boolean }> {
+export async function createPurchaseOffer(playerId: string, price: number, max_price: number): Promise<{ ok: boolean }> {
     const data = {
         "player": playerId,
-        "to_team": to_team,
-        "from_team": from_team,
         "price": price,
-        "closed": false,
-        "validated": from_team && to_team ? false : true,
         "max_price": max_price,
-        "league": "ernyanuus7tdszx"
     }
-    return pbCreate('purchases', data)
+    return sendPostRequest(apiEndpoints.PurchaseOffer, data)
 }
 
 export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: any}) {
