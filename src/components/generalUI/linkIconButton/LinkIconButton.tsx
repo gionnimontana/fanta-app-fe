@@ -4,7 +4,7 @@ import { pb } from "../../../helpers/pb"
 import { useParams } from "react-router-dom"
 import s from './LinkIconButton.module.css'
 
-export type LinkType = 'calendar' | 'teams' | 'login' | 'edit' | 'market' | 'logout'
+export type LinkType = 'calendar' | 'teams' | 'login' | 'edit' | 'market' | 'logout' | 'quitLeague'
 
 interface Props {
     links: LinkType[]
@@ -21,7 +21,8 @@ export const LinkIconButton = ({links, onClick}: Props) => {
         market: routes.Market.replace(':league', league || ''),
         login: '#',
         edit: '#',
-        logout: '#'
+        logout: '#',
+        quitLeague: routes.Home
     }
     const clickMap = {
         calendar: undefined,
@@ -29,6 +30,9 @@ export const LinkIconButton = ({links, onClick}: Props) => {
         market: undefined,
         login: onClick,
         edit: onClick,
+        quitLeague: () => {
+            localStorage.removeItem('fba_current_league')
+        },
         logout: () => { 
             pb.authStore.clear()
             navigate(0)
@@ -49,6 +53,7 @@ export const LinkIconButton = ({links, onClick}: Props) => {
                             {link === 'edit' ? (<>🖊</>) : null}
                             {link === 'market' ? (<>🛒</>) : null}
                             {link === 'logout' ? (<>🚪</>) : null}
+                            {link === 'quitLeague' ? (<>🚪</>) : null}
                         </button>
                     </Link>
                 </div>

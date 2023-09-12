@@ -16,7 +16,7 @@ export const CalendarWrapper = () => {
         <div style={{width: '100vw', height: '100vh'}}>
             {isLoading ? <FullPageLoader/> : <Calendar currentDay={currentDay} />}
             {isError ? <p>An error occourred while fetching schedules</p> : null}
-            <LinkIconButton links={["market", "teams"]}/>
+            <LinkIconButton links={["quitLeague", "market", "teams"]}/>
         </div>
     )
 }
