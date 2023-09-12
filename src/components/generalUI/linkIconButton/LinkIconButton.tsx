@@ -1,6 +1,7 @@
 import { routes } from "../../../constants/routes"
 import { Link, useNavigate } from "react-router-dom"
 import { pb } from "../../../helpers/pb"
+import { useParams } from "react-router-dom"
 import s from './LinkIconButton.module.css'
 
 export type LinkType = 'calendar' | 'teams' | 'login' | 'edit' | 'market' | 'logout'
@@ -11,12 +12,13 @@ interface Props {
 }
 
 export const LinkIconButton = ({links, onClick}: Props) => {
+    const { league } = useParams();
     const navigate = useNavigate()
     
     const destinationMap = {
-        calendar: routes.Home.replace(':id', ''),
-        teams: routes.Teams,
-        market: routes.Market,
+        calendar: routes.Calendar.replace(':id', '').replace(':league', league || ''),
+        teams: routes.Teams.replace(':league', league || ''),
+        market: routes.Market.replace(':league', league || ''),
         login: '#',
         edit: '#',
         logout: '#'

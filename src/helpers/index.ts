@@ -321,7 +321,7 @@ export const userCanEditMatch = (match: Match, teamId: string, matchDayBegun: bo
 }
 
 export const getLocalStoredFilters = (): { [key: string]: string } => {
-    const filters = localStorage.getItem('marketfilters')
+    const filters = localStorage.getItem('fba_marketfilters')
     if (!filters) return {
         role: 'all',
         team: 'all',
@@ -333,7 +333,7 @@ export const setLocalStoredFilters = (filterKey: string, action: Dispatch<React.
     (e: ChangeEvent<HTMLSelectElement>) => {
     const currentFilters = getLocalStoredFilters()
     currentFilters[filterKey] = e.target.value
-    localStorage.setItem('marketfilters', JSON.stringify(currentFilters))
+    localStorage.setItem('fba_marketfilters', JSON.stringify(currentFilters))
     action(currentFilters[filterKey])
 }
 
@@ -376,9 +376,9 @@ export const getPreviousAndNextMatchId = (match: Match | undefined, matches: Mat
     return { previous, next }
 }
 
-export const getPreviousAndNextMatchNavigator = (match: Match | undefined, matches: Match[], nv: (to: string) => void): { previous: () => void, next: () => void } => {
+export const getPreviousAndNextMatchNavigator = (league: string, match: Match | undefined, matches: Match[], nv: (to: string) => void): { previous: () => void, next: () => void } => {
     const { previous, next } = getPreviousAndNextMatchId(match, matches)
-    const previousNavigator = previous ? () => nv(routes.Match.replace(':id', previous)) : () => {}
+    const previousNavigator = previous ? () => nv(routes.Match.replace(':id', previous).replace(':league', league)) : () => {}
     const nextNavigator = next ? () => nv(routes.Match.replace(':id', next)) : () => {}
     return { previous: previousNavigator, next: nextNavigator }
 }
@@ -391,10 +391,10 @@ export const getPreviousAndNextTeamId = (team: Team | undefined, teams: Team[]):
     return { previous, next }
 }
 
-export const getPreviousAndNextTeamNavigator = (team: Team | undefined, teams: Team[], nv: (to: string) => void): { previous: () => void, next: () => void } => {
+export const getPreviousAndNextTeamNavigator = (league: string, team: Team | undefined, teams: Team[], nv: (to: string) => void): { previous: () => void, next: () => void } => {
     const { previous, next } = getPreviousAndNextTeamId(team, teams)
-    const previousNavigator = previous ? () => nv(routes.Team.replace(':id', previous)) : () => {}
-    const nextNavigator = next ? () => nv(routes.Team.replace(':id', next)) : () => {}
+    const previousNavigator = previous ? () => nv(routes.Team.replace(':id', previous).replace(':league', league)) : () => {}
+    const nextNavigator = next ? () => nv(routes.Team.replace(':id', next).replace(':league', league)) : () => {}
     return { previous: previousNavigator, next: nextNavigator }
 }
 

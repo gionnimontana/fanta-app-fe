@@ -1,5 +1,5 @@
 import { routes } from "../../../constants/routes"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { Match } from "../../../types/matches"
 import { Team } from "../../../types/teams"
 import s from "./MatchCard.module.css"
@@ -13,8 +13,12 @@ interface Props {
 }
 
 export const MatchCard = ({ match, teams, mdTS }: Props) => {
+    const { league } = useParams()
     return (
-        <Link key={match.id} to={routes.Match.replace(':id', match.id)} className={s.link}>
+        <Link 
+            key={match.id} to={routes.Match.replace(':id', match.id).replace(':league', league || '')} 
+            className={s.link}
+        >
             <div className={s.container}>
                 <MatchScore match={match} teams={teams} mdTS={mdTS}/>
             </div>

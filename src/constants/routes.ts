@@ -1,8 +1,9 @@
 export const routes = {
-    Home: "/:id?",
-    Match: "/match/:id",
-    Team: "/team/:id",
-    Teams: "/teams",
-    Market: "/market",
-    Player: "/player/:id",
+    Home: "/",
+    Calendar: "/:league/calendar/:id?",
+    Match: "/:league/match/:id",
+    Team: "/:league/team/:id",
+    Teams: "/:league/teams",
+    Market: "/:league/market",
+    Player: "/:league/player/:id",
 }

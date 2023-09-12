@@ -17,7 +17,7 @@ import s from './PlayerDetail.module.css'
 
 export const PlayerDetail = () => {
     usePurchasesSubscription()
-    const { id } = useParams();
+    const { id, league } = useParams();
     const op = useOpenPurchasePlayers()
     const t = useTeams()
     const targetTeam = t.data?.find(t => t.id === pb.authStore.model?.team)
@@ -65,7 +65,10 @@ export const PlayerDetail = () => {
                 />
             }
             {showLogin ? <Login onClose={() => setShowLogin(false)}/> : null}
-            <BottomButton to={routes.Market} label={'View all players'}/>
+            <BottomButton 
+                to={routes.Market.replace(':league', league || '')} 
+                label={'Vedi tutti i giocatori'}
+            />
         </AppScreen>
     )
 }

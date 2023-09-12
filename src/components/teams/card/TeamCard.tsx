@@ -1,5 +1,5 @@
 import { routes } from "../../../constants/routes"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { Team } from "../../../types/teams"
 import { getRankEmoji } from "../../../helpers"
 import s from "./TeamCard.module.css"
@@ -10,9 +10,10 @@ interface Props {
 }
 
 export const TeamCard = ({ team, rank }: Props) => {
+    const { league } = useParams()
     const cN = `${s.name} creativeFont`
     return (
-        <Link key={team.id} to={routes.Team.replace(':id', team.id)} className={s.link}>
+        <Link key={team.id} to={routes.Team.replace(':id', team.id).replace(':league', league || '')} className={s.link}>
             <div className={s.container}>
                 <div className={s.card}>
                     {rank !== undefined ? 

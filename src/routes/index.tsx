@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { routes } from "../constants/routes";
-import { HomeWrapper as Home } from "./home/HomeWrapper";
+import { Home } from "./home/Home";
+import { CalendarWrapper as Calendar } from "./calendar/CalendarWrapper";
 import { Match } from "./match/Match";
 import { Team } from "./team/Team";
 import { Teams } from "./teams/Teams";
@@ -11,6 +12,10 @@ export const router = createBrowserRouter([
   {
     path: routes.Home,
     element: <Home/>,
+  },
+  {
+    path: routes.Calendar,
+    element: <Calendar/>,
   },
   {
     path: routes.Match,
@@ -31,5 +36,9 @@ export const router = createBrowserRouter([
   {
     path: routes.Player,
     element: <PlayerDetail/>,
+  },
+  {
+    path: '*',
+    element: <Home/>,
   }
 ]);

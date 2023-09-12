@@ -12,7 +12,7 @@ import { ArrowSwiperListener } from "../../components/generalUI/swipeListener/Ar
 import s from './Match.module.css'
 
 export const Match = () => {
-    const { id } = useParams();
+    const { id, league } = useParams();
     const navigate = useNavigate()
     const m = useMatch(id || "")
     const matchDay = m.data?.day || undefined
@@ -22,7 +22,7 @@ export const Match = () => {
     const teams = t.data || []
     const loading = m.isLoading || t.isLoading
     const isData = m.data && mdTS.data
-    const matchNavigator = getPreviousAndNextMatchNavigator(m.data || undefined, c.data || [], navigate)
+    const matchNavigator = getPreviousAndNextMatchNavigator(league || '', m.data || undefined, c.data || [], navigate)
 
     return (
         <AppScreen loading={loading}>
@@ -39,7 +39,10 @@ export const Match = () => {
                     {m.data ? <MatchFormWrapper match={m.data} teams={teams}/> : null}
                 </div>
             </ArrowSwiperListener>
-            <BottomButton label={`View day ${matchDay} matches`} to={routes.Home.replace(':id', `${matchDay}`)}/>
+            <BottomButton 
+                label={`Match giornata ${matchDay}`} 
+                to={routes.Calendar.replace(':id', `${matchDay}`).replace(':league', league || '')}
+            />
             {(m.data && mdTS.data) ? (
                 <EditFormButton match={m.data} matchDayTS={mdTS.data} teams={teams}/>
             ) : null}

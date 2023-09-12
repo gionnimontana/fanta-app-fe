@@ -1,5 +1,5 @@
 import { routes } from "../../../constants/routes"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { getMatchScore, getMatchTeams, isMatchDayIsInProgess, matchDayHasEnded } from "../../../helpers"
 import { Match } from "../../../types/matches"
 import { Team } from "../../../types/teams"
@@ -14,6 +14,7 @@ interface Props {
 }
 
 export const MatchScore = ({ match, teams, linked, mdTS }: Props) => {
+    const { league } = useParams()
     const { home, away } = getMatchTeams(match, teams)
     const matchInProgess = isMatchDayIsInProgess(match.day, mdTS)
     const matchEnded = matchDayHasEnded(match.day, mdTS)
@@ -24,7 +25,9 @@ export const MatchScore = ({ match, teams, linked, mdTS }: Props) => {
     return (
         <div className={s.container}>
             {linked ? (
-                <Link className={s.link} to={routes.Team.replace(':id', home?.id || '')}>
+                <Link 
+                    className={s.link} to={routes.Team.replace(':id', home?.id || '').replace(':league', league || '')}
+                >
                     <p className={cNn}>{home?.name}</p>
                 </Link>
             ) : <p className={cNn}>{home?.name}</p>}
@@ -36,7 +39,9 @@ export const MatchScore = ({ match, teams, linked, mdTS }: Props) => {
                 {away?.emoji}
             </p>
             {linked ?(
-                <Link className={s.link} to={routes.Team.replace(':id', away?.id || '')}>
+                <Link 
+                    className={s.link} to={routes.Team.replace(':id', away?.id || '').replace(':league', league || '')}
+                >
                     <p className={cNn}>{away?.name}</p>
                 </Link>
             ) : <p className={cNn}>{away?.name}</p>}

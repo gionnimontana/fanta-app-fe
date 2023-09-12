@@ -7,15 +7,16 @@ import { FullPageLoader } from "../../../components/generalUI/fullPageLoader/Ful
 import { PageController } from "../../../components/generalUI/pageController/PageController"
 import { SwipeListener } from "../../../components/generalUI/swipeListener/SwipeListener"
 import { MatchArticle } from "../../../components/match/article/MatchArticle"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { routes } from "../../../constants/routes"
-import s from "./Home.module.css"
+import s from "./Calendar.module.css"
 
 interface Props {
     currentDay: number
 }
 
-export const Home = ({currentDay}: Props) => {
+export const Calendar = ({currentDay}: Props) => {
+    const { league } = useParams()
     const navigate = useNavigate()
     const c = useCalendar(currentDay)
     const a = useArticle('results', currentDay)
@@ -25,7 +26,7 @@ export const Home = ({currentDay}: Props) => {
     const isError = c.isError || t.isError
     const isData = c.data && mdTs.data
 
-    const setDay = (day: number) => navigate(routes.Home.replace(':id', day.toString()))
+    const setDay = (day: number) => navigate(routes.Calendar.replace(':id', day.toString()).replace(':league', league || ''))
 
     return (
         <>

@@ -3,7 +3,7 @@ import { Player, Purchase } from "../../../types/players";
 import { Team } from "../../../types/teams";
 import s from "./PlayerTable.module.css";
 import { getRoleEmoji, getTeamEmoji } from "../../../helpers";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { routes } from "../../../constants/routes";
 
 interface Props {
@@ -13,6 +13,7 @@ interface Props {
 }
 
 export const PlayerTable = ({ players, teams, activePurchases }: Props) => {
+  const { league } = useParams()
   const activePurchaseIds = activePurchases.map((p) => p.player);
 
   const isPurchase = (player: Player) => {
@@ -52,7 +53,7 @@ export const PlayerTable = ({ players, teams, activePurchases }: Props) => {
         </div>
         <div className={s.players}>
             {players.map((player, i) => {
-                const targetRoute = routes.Player.replace(':id', player.id)
+                const targetRoute = routes.Player.replace(':id', player.id).replace(':league', league || '')
                 const [name, offer] = getPurchaseAndName(player)
                 return (
                     <Link className={pCn(player)} key={i} to={targetRoute}>
