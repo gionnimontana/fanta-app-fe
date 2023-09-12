@@ -232,16 +232,16 @@ export const getNewModuleOnChange = (formation: PreMatchFormation): string => {
 export const isValidFormation = (formation: PreMatchFormation, module: string): boolean => {
     const validModule = isValidModule(module)
     if (!validModule) {
-        smartNotification('Invalid formation, you must use one of the following modules: ' + validModules.join(', ')) 
+        smartNotification('Modulo invalido, deve essere uno tra questi: ' + validModules.join(', ')) 
         return false
     }
     const haveOneGoalkeeper = formation.s.filter(p => p.role === 'p').length === 1
     if (!haveOneGoalkeeper) {
-        smartNotification('Invalid formation, there must be only one goalkeeper (P)') 
+        smartNotification('Formazione invalida, ci può essere solo un portiere titolare 🧤') 
         return false
     }
     if (formation.b.length > 12) {
-        smartNotification('There cannot be over 12 players on the bench 👀')
+        smartNotification('Errore, Non ci possono essere più di 12 giocatori in panchina 👀')
         return false
     }
     return true
@@ -257,16 +257,16 @@ export const updateModeMatchTeamFormation = async (match: Match, team: Team, for
         const success = await editTeamBotMode(botMode)
         if (success.ok) {
             if (botMode) { 
-                smartNotification('🤖 Bot mode enabled, the formation will be managed by the bot each day at 12:00 and at the beginning of the first match 🤖')
+                smartNotification('🤖 BotMode attiva, la formazione verrà gestita dal bot ogni giorno alle 12:00 🤖')
                 return true
             }
-            else smartNotification('Bot mode disabled, the formation in use will be the one you set on this screen')
+            else smartNotification('BotMode disattivata, la formazione non verrà più gestita dal bot')
         } else {
-            smartNotification('Error while updating bot mode')
+            smartNotification('Errore durante il salvataggio della formazione')
         }
     }
     if (botMode) {
-        smartNotification('Bot mode is on, the formation will be managed by the bot each day at 12:00 and at the beginning of the first match')
+        smartNotification('🤖 BotMode attiva, la formazione verrà gestita dal bot ogni giorno alle 12:00 🤖')
         return true
     }
     if (!isValidFormation(formation, module)) return false
@@ -279,7 +279,7 @@ export const updateModeMatchTeamFormation = async (match: Match, team: Team, for
 
 export const updateMatchTeamFormation = async (match: Match, formation: PreMatchFormation, module: string, matchDayBegun: boolean): Promise<boolean> => {
     if (matchDayBegun) {
-        smartNotification('You cannot change the formation after the match day has begun')
+        smartNotification('Non puoi salvare la formazione dopo che i match sono iniziati')
         return false
     } 
     const newFormation: DPreMatchFormation = {
@@ -288,8 +288,8 @@ export const updateMatchTeamFormation = async (match: Match, formation: PreMatch
         m: module.replaceAll('-', '')
     }
     const success = await updateMatchFormation(match.day, newFormation)
-    if (success.ok) smartNotification('Formations saved successfully')
-    else smartNotification('Error while saving formations')
+    if (success.ok) smartNotification('Formazione salvata con successo')
+    else smartNotification('Errore durante il salvataggio della formazione')
     return success.ok
 }
 
@@ -513,7 +513,7 @@ export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | u
     const isFreePlayer = !Boolean(player?.fanta_team)
     if (isFreePlayer && userTeam === purchase?.to_team) {
         await updatePurchaseOffer(purchase.id, {price: purchase.price, max_price: price})
-        smartNotification(`Autoincrement for this player has been updated to ${price}`)
+        smartNotification(`Il rilancio automatico per questo giocatore è stato settato a ${price}`)
         return false
     }
     let purchaseChange = false
@@ -525,7 +525,7 @@ export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | u
             canHandleOffer = false
             await updatePurchaseOffer(purchase.id, {price: price})
             purchaseChange = true
-            smartNotification(`You offer has been rejected since current team leader has set a max price higher than your offer. Your offer has been updated to ${price}`)
+            smartNotification(`La tua offerta è stata rifiutata perché l'utente ha settato una soglia di rilancio automatico superiore alla tua. L'offerta è stata aggiornata a ${price}`)
         }
     }
     if (canHandleOffer) {
@@ -536,9 +536,9 @@ export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | u
             res = await createPurchaseOffer(player.id, minimalOffer, price)
         }
         if (res.ok) {
-            smartNotification('Offer created')
+            smartNotification('Offerta creata con successo')
             purchaseChange = true
-        } else smartNotification('Something went wrong, could be a bug, please contact the admin')
+        } else smartNotification('Qualcosa è andato storto, nessun acquisto trovato, contatta l\'amministratore')
     }
 
     return purchaseChange

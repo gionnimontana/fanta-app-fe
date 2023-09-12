@@ -39,7 +39,7 @@ export const OpenPlayerPurchase = ({ player, teams, activePurchases }: Props) =>
                         </div>
                     </div>
                 </div> 
-                : <div>Player have no active offers</div>
+                : <div>Il giocatore non ha offerte attive</div>
             }
         </div>
     )

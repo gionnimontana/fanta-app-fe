@@ -30,7 +30,7 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
 
 
     const onClick = async () => {
-      if (!player) return smartNotification('Something went wrong, no player found, please contact the admin')
+      if (!player) return smartNotification('Qualcosa è andato storto, nessun acquisto trovato, contatta l\'amministratore')
       setLoading(true)
       await makePurchaseOffer(userTeam, purchase, player, offerValue)
       setLoading(false)
@@ -40,7 +40,7 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
     return (
       <>
         {freePlayer && isUToffer && (
-          <div style={{padding: '0 2rem', fontSize: '0.9rem'}}>Autoincrement for this player is set to: <strong>{purchase?.max_price}</strong></div>
+          <div style={{padding: '0 2rem', fontSize: '0.9rem'}}>Rilancio automatico per questo giocatore settato a: <strong>{purchase?.max_price}</strong></div>
         )}
         {haveSlots ? 
           haveBudgetForOffer ? (
@@ -56,23 +56,23 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
               </LoadingButton>
               <div style={{padding: '2rem'}}>
                 {freePlayer && isUToffer ? (
-                  <>Pressing this button you are going to update autoincrement to {offerValue}</>
+                  <>Premendo questo bottone stai configurando il rilancio automatico a: {offerValue}</>
                 ) : (
                   <>
-                    Pressing this button you are going to make an offer of {currentOffer} credits for {player?.name}, the offer cannot be revoked.
-                    {currentOffer < offerValue && `if another player makes an offer for this player, your offer will be automatically increased by 1 credit until it reaches ${offerValue} credits`}
+                    Premendo questo bottone farai un offerta di {currentOffer} crediti per {player?.name}, l'offerta non puo' essere ritirata.
+                    {currentOffer < offerValue && `Se un altro utente fa un offerta per questo giocatore, la tua offerta verrà automaticamente incrementata di 1 fino a raggiungere ${offerValue} crediti`}
                   </>
                 )}
               </div>
             </>
           ): (
             <div style={{padding: '2rem'}}>
-              You don't have enough budget to make an offer for this player (you need at least {baseOffer} credits while you have {teamBudget || 0} spendable credits)
+              Non hai abbastanya buget per fare un offerta per questo giocatore, per fare credito potresti svincolare un tuo giocatore (avresti bisogno di {baseOffer} crediti ma ne hai {teamBudget || 0})
             </div>
           )
         : (
           <div style={{padding: '2rem'}}>
-            You don't have enough free role slots to make an offer for this player
+            Non hai abbastanza slot liberi per fare un offerta per questo giocatore, per fare spazio potresti svincolare un tuo giocatore dello stesso ruolo
           </div>
         )}
       </>

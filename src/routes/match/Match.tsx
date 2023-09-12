@@ -31,7 +31,7 @@ export const Match = () => {
                 onSwipeRight={matchNavigator.previous}
                 className={s.swipeContainer}
             >
-                <div className={s.day}>Day {m.data?.day || '?'}</div>
+                <div className={s.day}>Giornata {m.data?.day || '?'}</div>
                 <div className={s.scoreContainer}>
                     {isData ? <MatchScore match={m.data} teams={teams} linked={true} mdTS={mdTS.data}/> : null}
                 </div>

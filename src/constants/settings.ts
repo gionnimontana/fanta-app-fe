@@ -24,7 +24,7 @@ export const playerByRoleBound = {
 }
 
 export const roleEmojiMap = {
-    p: "🖐",
+    p: "🧤",
     d: "🛡️",
     c: "🏹",
     a: "⚔️"

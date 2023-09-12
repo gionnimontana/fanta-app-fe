@@ -1,7 +1,7 @@
 import { Purchase } from "../../../../types/players";
 import { LoadingButton } from "../../../../components/generalUI/loadingButton/LoadingButton"
 import { useState } from "react";
-import { updatePurchaseOffer, deletePurchaseOffer, acceptPurchaseOffer } from "../../../../queries/players";
+import { deletePurchaseOffer, acceptPurchaseOffer } from "../../../../queries/players";
 import { useQueryClient } from "react-query"
 import { smartNotification } from "../../../../components/generalUI/notifications/notifications"
 import s from './style.module.css'
@@ -11,29 +11,30 @@ interface Props {
   playerCanBeReleased?: boolean;
 }
 
+
 export const AcceptOffer = ({ purchase, playerCanBeReleased }: Props) => {
     const queryClient = useQueryClient()
     const [loading, setLoading] = useState<boolean>(false)
 
     const handleAccept = async () => {
-      if (!purchase) return smartNotification('Something went wrong, no purchase found, please contact the admin')
+      if (!purchase) return smartNotification('Qualcosa è andato storto, nessun acquisto trovato, contatta l\'amministratore')
       setLoading(true)
       const res = await acceptPurchaseOffer(purchase.id)
       if (res.ok) {
         queryClient.invalidateQueries('purchase-players')
         smartNotification('Offer accepted')
-      } else smartNotification('Something went wrong, could be a bug, please contact the admin')
+      } else smartNotification('Qualcosa è andato storto, potrebbe essere un bug, contatta l\'amministratore')
       setLoading(false)
     }
 
     const handleDecline = async () => {
-      if (!purchase) return smartNotification('Something went wrong, no purchase found, please contact the admin')
+      if (!purchase) return smartNotification('Qualcosa è andato storto, nessun acquisto trovato, contatta l\'amministratore')
       setLoading(true)
       const res = await deletePurchaseOffer(purchase.id)
       if (res.ok) {
         queryClient.invalidateQueries('purchase-players')
-        smartNotification('Offer declined')
-      } else smartNotification('Something went wrong, could be a bug, please contact the admin')
+        smartNotification('Offerta rifiutata')
+      } else smartNotification('Qualcosa è andato storto, potrebbe essere un bug, contatta l\'amministratore')
       setLoading(false)
     }
 
@@ -44,20 +45,20 @@ export const AcceptOffer = ({ purchase, playerCanBeReleased }: Props) => {
       <>
         {showButton && (
           <LoadingButton loading={loading} onClick={handleAccept} className={s.offerButton}>
-              Accept Offer
+              Accetta l'offerta
           </LoadingButton>
         )}
         {showDeclineButton && (
           <LoadingButton loading={loading} onClick={handleDecline} className={s.offerButton}>
-            Decline Offer
+            Rifiuta l'offerta
           </LoadingButton>
         )}
         <div style={{padding: '2rem'}}>
           {purchase?.validated 
-            ? 'You have validated this offer, other teams can rise offers for this player. It will be tranfered within the next 48 hours from last update, you will earn the last offer credits' 
+            ? 'Hai convalidato questa offerta, altre squadre possono presentare offerte per questo giocatore. Sarà trasferito entro le prossime 48 ore dall\'ultimo aggiornamento, guadagnerai i crediti dell\'ultima offerta.' 
             : playerCanBeReleased
-              ? 'Pressing "Accept Offer" button you are going to offer this player on the market, the offer will be valid for 48 hours from last update, if no other team make an offer you will get the current FVM value minus 1 credit for the transfer market fee'
-              : 'You cannot accept this offer because you have reached the minimum number of players for this role'
+              ? 'Premendo il pulsante "Accetta Offerta" offrirai questo giocatore sul mercato, l\'offerta sarà valida per 48 ore dall\'ultimo aggiornamento; se nessuna altra squadra presenta un\'offerta, otterrai il valore corrente di FVM meno 1 credito per la tariffa di mercato del trasferimento.'
+              : 'Non puoi accettare questa offerta perché hai raggiunto il numero minimo di giocatori per questo ruolo.'
           }
         </div>
       </>
