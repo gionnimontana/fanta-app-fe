@@ -4,12 +4,14 @@ import { useOpenPurchasePlayers, usePlayers, usePurchasesSubscription } from "..
 import { useTeams } from "../../queries/teams"
 import { PlayerTableWrapper } from "../../components/players/PlayerTable/PlayerTableWrapper"
 import s from './Market.module.css'
+import { useParams } from "react-router-dom"
 
 export const Market = () => {
+  const { league } = useParams()
   usePurchasesSubscription()
-  const ap = usePlayers()
-  const t = useTeams()
-  const op = useOpenPurchasePlayers()
+  const ap = usePlayers(league)
+  const t = useTeams(league)
+  const op = useOpenPurchasePlayers(league)
   const isLoading = ap.isLoading || t.isLoading || op.isLoading
   return (
     <AppScreen loading={isLoading}>

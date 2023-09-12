@@ -16,8 +16,8 @@ export const Match = () => {
     const navigate = useNavigate()
     const m = useMatch(id || "")
     const matchDay = m.data?.day || undefined
-    const c = useCalendar(matchDay)
-    const t = useTeams()
+    const c = useCalendar(league, matchDay)
+    const t = useTeams(league)
     const mdTS = useMatchDayTS()
     const teams = t.data || []
     const loading = m.isLoading || t.isLoading

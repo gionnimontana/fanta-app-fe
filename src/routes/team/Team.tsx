@@ -12,10 +12,10 @@ import { TeamTable } from '../../components/teams/teamTable/TeamTable';
 export const Team = () => {
     const { id, league } = useParams();
     const navigate = useNavigate()
-    const teams = useTeams()
+    const teams = useTeams(league)
     const team = teams.data?.find(t => t.id === id)
-    const p = usePlayers()
-    const pc = useOpenPurchasePlayers()
+    const p = usePlayers(league)
+    const pc = useOpenPurchasePlayers(league)
     const tp = getTeamPlayers(id, p.data || {})
     const richPlayers = addLeavingPlayers(tp, pc.data)
     const loading = teams.isLoading || p.isLoading

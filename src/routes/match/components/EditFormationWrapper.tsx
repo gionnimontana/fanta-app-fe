@@ -1,12 +1,12 @@
 import { pb } from "../../../helpers/pb"
 import { Modal } from "../../../components/generalUI/modal/Modal"
-import { useTeam } from "../../../queries/teams"
 import { useOpenPurchasePlayers } from "../../../queries/players"
 import { EditFormation } from "../../../components/match/editFormation/EditFormation"
 import { Match } from "../../../types/matches"
 import { usePlayers } from "../../../queries/players"
 import { addLeavingPlayers, getTeamPlayers } from "../../../helpers"
 import { Team } from "../../../types/teams"
+import { useParams } from "react-router-dom"
 
 interface Props {
     onClose: () => void
@@ -16,9 +16,10 @@ interface Props {
 }
 
 export const EditFormationWrapper = ({onClose, match, matchDayHasStarted, team}: Props) => {
+    const { league } = useParams()
     const teamId = pb.authStore.model?.team
     const p = usePlayers()
-    const pc = useOpenPurchasePlayers()
+    const pc = useOpenPurchasePlayers(league)
     const tp = getTeamPlayers(teamId, p.data || {})
     const richPlayers = addLeavingPlayers(tp, pc.data)
     const loading = p.isLoading || pc.isLoading

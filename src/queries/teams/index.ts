@@ -5,9 +5,10 @@ import { queryCacheTime } from "../../constants/settings";
 import { APIresponse } from "../../helpers/pb";
 import { sendPatchRequest } from "../../helpers/editApi";
 
-export function useTeams() {
+export function useTeams(leagueId: string | undefined) {
     return useQuery(`teams`, async () => {
-        const response = await fetch(apiEndpoints.Teams)
+        const url = apiEndpoints.Teams + `?filter=(league='${leagueId}')`
+        const response = await fetch(url)
         const data = await response.json()
         const teams = data.items as Team[]
         return teams

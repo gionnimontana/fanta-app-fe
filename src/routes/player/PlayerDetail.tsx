@@ -18,10 +18,10 @@ import s from './PlayerDetail.module.css'
 export const PlayerDetail = () => {
     usePurchasesSubscription()
     const { id, league } = useParams();
-    const op = useOpenPurchasePlayers()
-    const t = useTeams()
+    const op = useOpenPurchasePlayers(league)
+    const t = useTeams(league)
     const targetTeam = t.data?.find(t => t.id === pb.authStore.model?.team)
-    const ap = usePlayers()
+    const ap = usePlayers(league)
     const tp = getTeamPlayers(targetTeam?.id, ap.data || {})
     const p = (ap.data && id) ? ap.data[id] : undefined
     const loading = op.isLoading || t.isLoading || ap.isLoading

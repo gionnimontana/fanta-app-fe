@@ -5,9 +5,11 @@ import s from "./Teams.module.css"
 import { TeamCard } from "../../components/teams/card/TeamCard"
 import { TeamHeaderCard } from "../../components/teams/headerCard/TeamHeaderCard"
 import { LinkIconButton } from "../../components/generalUI/linkIconButton/LinkIconButton"
+import { useParams } from "react-router-dom"
 
 export const Teams = () => {
-    const t = useTeams()
+    const { league } = useParams()
+    const t = useTeams(league)
     const teamsByRank = sortTeamByScore(t.data || [])
     const loading = t.isLoading
 

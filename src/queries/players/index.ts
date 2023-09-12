@@ -7,9 +7,9 @@ import { pb } from "../../helpers/pb";
 import { TeamPlayer } from "../../types/teams";
 import { sendPatchRequest, sendPostRequest } from "../../helpers/editApi";
 
-export function usePlayers() {
-    return useQuery(`players`, async () => {
-        const leagueID = 'ernyanuus7tdszx'
+export function usePlayers(leagueID?: string) {
+    return useQuery(`players-${leagueID}`, async () => {
+        if (!leagueID) return {}
         const page1Req = await fetch(apiEndpoints.Players + '?perPage=500&page=1')
         const page2Req = await fetch(apiEndpoints.Players + '?perPage=500&page=2')
         const teamPlayerReq = await fetch(apiEndpoints.TeamPlayers + `?perPage=500&filter=(league='${leagueID}')`)
@@ -32,11 +32,12 @@ export function usePlayers() {
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime });
 }
 
-export function useOpenPurchasePlayers(){
+export function useOpenPurchasePlayers(leagueId?: string){
     return useQuery('purchase-players', async () => {
-        const urlParams = `?&perPage=500&filter=(closed=false)`
-        const response = await fetch(apiEndpoints.Purchases + urlParams)
-        const data = await response.json()
+        const response = pb.collection('purchases').getList(1, 40, {
+            filter: `(closed=false && league='${leagueId}')`
+        });
+        const data = await response as any
         const openPurchasePlayers = data.items as Purchase[]
         return openPurchasePlayers
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });

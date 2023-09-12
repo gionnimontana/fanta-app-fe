@@ -2,6 +2,7 @@ import { MatchFormations } from "../../../components/match/formations/MatchForma
 import { Team } from "../../../types/teams";
 import { Match } from "../../../types/matches";
 import { usePlayers } from "../../../queries/players";
+import { useParams } from "react-router-dom";
 
 interface Props {
     match: Match
@@ -9,7 +10,8 @@ interface Props {
 }
 
 export const MatchFormWrapper = ({match, teams}: Props) => {
-    const p = usePlayers()
+    const { league } = useParams()
+    const p = usePlayers(league)
 
     if (!p.data) return null
 

@@ -18,9 +18,9 @@ interface Props {
 export const Calendar = ({currentDay}: Props) => {
     const { league } = useParams()
     const navigate = useNavigate()
-    const c = useCalendar(currentDay)
-    const a = useArticle('results', currentDay)
-    const t = useTeams()
+    const c = useCalendar(league, currentDay)
+    const a = useArticle(league, 'results', currentDay)
+    const t = useTeams(league)
     const mdTs = useMatchDayTS()
     const isLoading = c.isLoading || t.isLoading || mdTs.isLoading
     const isError = c.isError || t.isError
