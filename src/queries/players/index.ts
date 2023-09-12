@@ -42,13 +42,8 @@ export function useOpenPurchasePlayers(){
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 
-export async function createPurchaseOffer(playerId: string, price: number, max_price: number): Promise<{ ok: boolean }> {
-    const data = {
-        "player": playerId,
-        "price": price,
-        "max_price": max_price,
-    }
-    return sendPostRequest(apiEndpoints.PurchaseOffer, data)
+export async function createPurchaseOffer(player: string, price: number, max_price: number): Promise<{ ok: boolean }> {
+    return sendPostRequest(apiEndpoints.PurchaseOffer, { player, price, max_price})
 }
 
 export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: any}) {

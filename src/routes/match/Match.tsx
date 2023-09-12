@@ -40,7 +40,9 @@ export const Match = () => {
                 </div>
             </ArrowSwiperListener>
             <BottomButton label={`View day ${matchDay} matches`} to={routes.Home.replace(':id', `${matchDay}`)}/>
-            {(m.data && mdTS.data) ? <EditFormButton match={m.data} matchDayTS={mdTS.data} /> : null}
+            {(m.data && mdTS.data) ? (
+                <EditFormButton match={m.data} matchDayTS={mdTS.data} teams={teams}/>
+            ) : null}
         </AppScreen>
     );
 }

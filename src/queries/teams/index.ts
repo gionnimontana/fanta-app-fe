@@ -14,15 +14,6 @@ export function useTeams() {
     }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
 }
 
-export function useTeam(id: string) {
-    return useQuery(`team-${id}`, async () => {
-        const response = await fetch(`${apiEndpoints.Teams}/${id}`)
-        const data = await response.json()
-        const team = data as Team
-        return team
-    }, { cacheTime: queryCacheTime, staleTime: queryCacheTime  });
-}
-
 export const editTeamBotMode = async (botMode: boolean): Promise<APIresponse> => {
     const payload = {auto_formation: botMode}
     return await sendPatchRequest(apiEndpoints.EditAutoFormation, payload)
