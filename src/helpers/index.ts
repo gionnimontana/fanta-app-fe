@@ -519,9 +519,9 @@ export const getTeamPlayers = (teamId: string | undefined, players: PlayerMap): 
     return teamplayers
 }
 
-export const makePurchaseOffer = async (userTeam: string, purchase: Purchase | undefined, player: Player, price: number): Promise<boolean> => {
+export const makePurchaseOffer = async (userTeam: string | undefined, purchase: Purchase | undefined, player: Player, price: number): Promise<boolean> => {
     const isFreePlayer = !Boolean(player?.fanta_team)
-    if (isFreePlayer && userTeam === purchase?.to_team) {
+    if (purchase && isFreePlayer && userTeam === purchase?.to_team) {
         await updatePurchaseOffer(purchase.id, {price: purchase.price, max_price: price})
         smartNotification(`Il rilancio automatico per questo giocatore è stato settato a ${price}`)
         return false
