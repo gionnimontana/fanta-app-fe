@@ -3,6 +3,7 @@ import { Select } from "../../components/generalUI/Select/Select"
 import { Navigate } from "react-router-dom"
 import s from "./Home.module.css"
 import { useEffect, useState } from "react"
+import { roleEmojiMap } from "../../constants/settings"
 
 export const Home = () => {
     const [league, setLeague] = useState<string>('ernyanuus7tdszx')
@@ -29,22 +30,26 @@ export const Home = () => {
             : (
                 <div className={s.container}>
                     <div className={s.center}>
-                        <div className={s.header}>🤖 FantaBot 🤖</div>
-                        <div className={s.text}>Seleziona una lega</div>
-                        <Select
-                            value={league}
-                            onChange={(e) => setLeague(e.target.value)}
-                            options={[
-                                { value: 'ernyanuus7tdszx', name: 'Master' },
-                                { value: '1bn2o4kzza0ufc1', name: 'Develop'}
-                            ]}
-                            className={s.select}
-                        />
+                        <div className={s.header}>FantaBot </div>
+                        <div className={s.robotIcon}>🤖</div>
+                        <div className={s.iconBox}>{Object.values(roleEmojiMap).map(el => el)}</div>
+                        <div className={s.selectBox}>
+                            <div className={s.text}>Seleziona una lega</div>
+                            <Select
+                                value={league}
+                                onChange={(e) => setLeague(e.target.value)}
+                                options={[
+                                    { value: 'ernyanuus7tdszx', name: 'Master' },
+                                    { value: '1bn2o4kzza0ufc1', name: 'Develop'}
+                                ]}
+                                className={s.select}
+                            />
+                        </div>
+                        <button className={s.askButton} onClick={() => setFlag(f => !f)}>
+                            Non chiedermelo più {flag ? '✔️' : '❌'}
+                        </button>
                         <button className={s.goButton} onClick={() => setCurrentLeague(league)}>
                             Vai
-                        </button>
-                        <button onClick={() => setFlag(f => !f)}>
-                            Non chiedermelo più {flag ? '✔️' : '❌'}
                         </button>
                     </div>
                 </div>

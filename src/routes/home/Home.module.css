@@ -5,25 +5,48 @@
   height: 100vh;
 }
 
+.robotIcon{
+  font-size: 3rem;
+}
+
 .header {
   font-size: 2rem;
   font-weight: bold;
+  font-family: 'Short Stack', cursive;
+}
+
+.iconBox {
+  font-size: 2rem;
 }
 
 .text {
-  margin-top: 1.5rem;
-  font-size: 1.2rem;
+  text-align: center;
+}
+
+.askButton {
+  margin-bottom: 2rem;
 }
 
 .goButton {
-  margin-bottom: 1rem;
   width: 13.7rem;
+}
+
+.selectBox {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.5em;
+  font-weight: 500;
+  background-color: var(--backgroundDark);
+  margin: 1.5rem 0 0.5rem 0;
+  width: 12.7rem;
 }
 
 .select {
   width: 10rem;
   margin-top: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  margin-left: 1.1rem;
+  font-size: 1.1rem;
 }
 
 .center {
