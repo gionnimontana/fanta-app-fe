@@ -19,7 +19,7 @@ export const PlayerActions = ({ player, purchases, teamBudget, teamplayers, allP
     const { league } = useParams()
     const targetPurchase = purchases.find(p => p.player === player?.id)
     const possibleActions = getPossiblePurchaseActions(league, player, targetPurchase)
-    const haveFreeRoleSlots = canMakeOffer(player?.role, allPlayers, purchases)
+    const haveFreeRoleSlots = canMakeOffer(league, player?.role, allPlayers, purchases)
     const playerCanBeReleased = canReleasePlayer(player?.role, teamplayers, purchases)
 
     return (

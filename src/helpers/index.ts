@@ -442,8 +442,8 @@ export const getMinPurchaseByRole = (role: string, currentHouse: number) => {
     return extremes?.min ? extremes.min - currentHouse : 0
 }
 
-export const canMakeOffer = (role: string | undefined, players: PlayerMap, purchases: Purchase[]): boolean => {
-    const teamId = pb.authStore.model?.team
+export const canMakeOffer = (league: string | undefined, role: string | undefined, players: PlayerMap, purchases: Purchase[]): boolean => {
+    const teamId = getAuthUserTeamId(league)
     if (!role || !teamId) return false
     const inPurchase = purchases.filter(p => p.to_team === teamId)
     const outPurchase = purchases.filter(p => p.from_team === teamId && p.validated)
