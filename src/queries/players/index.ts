@@ -63,7 +63,7 @@ export const usePurchasesSubscription = () => {
     const queryClient = useQueryClient()
     useEffect(() => {
         pb.collection('purchases').subscribe('*', function (e) {
-            queryClient.invalidateQueries(`purchase-players`)
+            queryClient.invalidateQueries(`purchase-players-${e.record.league}`)
         });
         return () => {
             pb.collection('purchases').unsubscribe();

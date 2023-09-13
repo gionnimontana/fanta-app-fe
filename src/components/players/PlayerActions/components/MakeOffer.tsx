@@ -54,7 +54,7 @@ export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: P
                 onChange={setOfferValue}
               />
               <LoadingButton loading={loading} onClick={onClick} width={'12rem'}>
-                {purchase?.to_team === userTeam ? 'Update offer': 'Make offer'}
+                {purchase?.to_team === userTeam ? 'Aggiorna offerta': 'Conferma offerta'}
               </LoadingButton>
               <div style={{padding: '2rem'}}>
                 {freePlayer && isUToffer ? (
