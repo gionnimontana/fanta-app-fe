@@ -19,8 +19,8 @@ export const EditFormButton = ({ match, matchDayTS, teams }: Props) => {
   const { league } = useParams()
   const [showLogin, setShowLogin] = useState<boolean>(false)
   const [edit, setEdit] = useState<boolean>(false)
-  const isAuthenticated = pb.authStore.isValid
   const userTeamId = getAuthUserTeamId(league)
+  const isAuthenticated = userTeamId
   const userTeam = (teams || []).find(team => team.id === userTeamId)
   const matchDayHasStarted = matchDayHasBegun(match.day, matchDayTS)
   const canEdit = userCanEditMatch(match, userTeamId, matchDayHasStarted)

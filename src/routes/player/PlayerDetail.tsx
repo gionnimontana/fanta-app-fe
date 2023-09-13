@@ -26,7 +26,7 @@ export const PlayerDetail = () => {
     const tp = getTeamPlayers(targetTeam?.id, ap.data || {})
     const p = (ap.data && id) ? ap.data[id] : undefined
     const loading = op.isLoading || t.isLoading || ap.isLoading
-    const isAuthenticated = pb.authStore.isValid
+    const isAuthenticated = authTeam
     const teamBudget = getTeamBudget(op.data || [], targetTeam)
     
     const [showLogin, setShowLogin] = useState<boolean>(false)
