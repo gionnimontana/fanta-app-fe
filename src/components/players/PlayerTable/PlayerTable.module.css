@@ -45,7 +45,13 @@
 
 .value {
   width: 4rem;
+  text-align: right;
+}
+
+.valueHeader {
+  width: 4rem;
   text-align: center;
+  font-weight: bold;
 }
 
 .players {

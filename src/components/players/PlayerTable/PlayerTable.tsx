@@ -47,9 +47,9 @@ export const PlayerTable = ({ players, teams, activePurchases }: Props) => {
           <p className={`${s.team} ${s.bold}`}></p>
           <p className={`${s.name} ${s.bold}`}>NAME</p>
           <p className={`${s.from} ${s.bold}`}>FROM</p>
-          <p className={`${s.value} ${s.bold}`}>🔥</p>
-          <p className={`${s.value} ${s.bold}`}>FVM</p>
-          <p className={`${s.value} ${s.bold}`}>SI</p>
+          <p className={`${s.valueHeader} ${s.bold}`}>🔥</p>
+          <p className={`${s.valueHeader} ${s.bold}`}>FVM</p>
+          <p className={`${s.valueHeader} ${s.bold}`}>SI</p>
         </div>
         <div className={s.players}>
             {players.map((player, i) => {
