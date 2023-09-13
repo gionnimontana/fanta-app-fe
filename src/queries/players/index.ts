@@ -34,7 +34,7 @@ export function usePlayers(leagueID?: string) {
 
 export function useOpenPurchasePlayers(leagueId?: string){
     return useQuery(`purchase-players-${leagueId}`, async () => {
-        const response = pb.collection('purchases').getList(1, 40, {
+        const response = pb.collection('purchases').getList(1, 500, {
             filter: `(closed=false && league='${leagueId}')`
         });
         const data = await response as any
