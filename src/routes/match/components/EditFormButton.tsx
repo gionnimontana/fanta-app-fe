@@ -4,9 +4,10 @@ import { LinkIconButton } from "../../../components/generalUI/linkIconButton/Lin
 import { useState } from "react"
 import { Login } from "../../../components/login/Login"
 import { EditFormationWrapper } from "./EditFormationWrapper"
-import { matchDayHasBegun, userCanEditMatch } from "../../../helpers"
+import { getAuthUserTeamId, matchDayHasBegun, userCanEditMatch } from "../../../helpers"
 import { MatchDayTS } from "types/utils"
 import { Team } from "../../../types/teams"
+import { useParams } from "react-router-dom"
 
 interface Props {
   match: Match
@@ -15,10 +16,11 @@ interface Props {
 }
 
 export const EditFormButton = ({ match, matchDayTS, teams }: Props) => {
+  const { league } = useParams()
   const [showLogin, setShowLogin] = useState<boolean>(false)
   const [edit, setEdit] = useState<boolean>(false)
   const isAuthenticated = pb.authStore.isValid
-  const userTeamId = pb.authStore.model?.team
+  const userTeamId = getAuthUserTeamId(league)
   const userTeam = (teams || []).find(team => team.id === userTeamId)
   const matchDayHasStarted = matchDayHasBegun(match.day, matchDayTS)
   const canEdit = userCanEditMatch(match, userTeamId, matchDayHasStarted)

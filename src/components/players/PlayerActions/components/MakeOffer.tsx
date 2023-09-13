@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { pb } from "../../../../helpers/pb";
 import { smartNotification } from "../../../../components/generalUI/notifications/notifications"
 import { NumberField } from "../../../../components/generalUI/numberField/NumberField";
-import { makePurchaseOffer } from "../../../../helpers";
+import { getAuthUserTeamId, makePurchaseOffer } from "../../../../helpers";
+import { useParams } from "react-router-dom";
 
 interface Props {
   purchase?: Purchase;
@@ -14,7 +15,8 @@ interface Props {
 }
 
 export const MakeOffer = ({ purchase, player, teamBudget, haveFreeRoleSlots }: Props) => {
-    const userTeam = pb.authStore.model?.team;
+    const { league } = useParams()
+    const userTeam = getAuthUserTeamId(league)
     const baseOffer = purchase ? purchase.price + 1 : player?.fvm || 1
     const [loading, setLoading] = useState<boolean>(false)
     const [offerValue, setOfferValue] = useState<number>(baseOffer)

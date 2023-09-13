@@ -11,7 +11,7 @@ import { pb } from '../../helpers/pb';
 import { useTeams } from '../../queries/teams';
 import { OpenPlayerPurchase } from '../../components/players/OpenPlayerPurchase/OpenPlayerPurchase';
 import { PlayerActions } from '../../components/players/PlayerActions/PlayerAction';
-import { getTeamBudget, getTeamPlayers } from '../../helpers';
+import { getAuthUserTeamId, getTeamBudget, getTeamPlayers } from '../../helpers';
 import { TeamMarketHeader } from '../../components/teams/teamMarketHeader/TeamMarketHeader';
 import s from './PlayerDetail.module.css'
 
@@ -20,7 +20,8 @@ export const PlayerDetail = () => {
     const { id, league } = useParams();
     const op = useOpenPurchasePlayers(league)
     const t = useTeams(league)
-    const targetTeam = t.data?.find(t => t.id === pb.authStore.model?.team)
+    const authTeam = getAuthUserTeamId(league)
+    const targetTeam = t.data?.find(t => t.id === authTeam)
     const ap = usePlayers(league)
     const tp = getTeamPlayers(targetTeam?.id, ap.data || {})
     const p = (ap.data && id) ? ap.data[id] : undefined

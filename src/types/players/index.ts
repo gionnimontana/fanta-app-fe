@@ -24,4 +24,5 @@ export interface Purchase {
     validated: boolean
     updated: string
     max_price: number
+    league: string
 }

@@ -1,4 +1,4 @@
-import { addLeavingPlayers, getPreviousAndNextTeamNavigator, getTeamPlayers } from '../../helpers';
+import { addLeavingPlayers, getAuthUserTeamId, getPreviousAndNextTeamNavigator, getTeamPlayers } from '../../helpers';
 import { useOpenPurchasePlayers, usePlayers } from '../../queries/players';
 import { useTeams } from '../../queries/teams';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -20,7 +20,7 @@ export const Team = () => {
     const richPlayers = addLeavingPlayers(tp, pc.data)
     const loading = teams.isLoading || p.isLoading
     const teamNavigator = getPreviousAndNextTeamNavigator(league || '', team, teams.data || [], navigate)
-    const userTeam = pb.authStore.model?.team
+    const userTeam = getAuthUserTeamId(league)
     const links: LinkType[] = team?.id === userTeam ? ["logout", "market", "calendar"] : ["market", "calendar"]
 
     return (

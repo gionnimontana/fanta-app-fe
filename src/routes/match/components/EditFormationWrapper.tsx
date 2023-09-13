@@ -4,7 +4,7 @@ import { useOpenPurchasePlayers } from "../../../queries/players"
 import { EditFormation } from "../../../components/match/editFormation/EditFormation"
 import { Match } from "../../../types/matches"
 import { usePlayers } from "../../../queries/players"
-import { addLeavingPlayers, getTeamPlayers } from "../../../helpers"
+import { addLeavingPlayers, getAuthUserTeamId, getTeamPlayers } from "../../../helpers"
 import { Team } from "../../../types/teams"
 import { useParams } from "react-router-dom"
 
@@ -17,7 +17,7 @@ interface Props {
 
 export const EditFormationWrapper = ({onClose, match, matchDayHasStarted, team}: Props) => {
     const { league } = useParams()
-    const teamId = pb.authStore.model?.team
+    const teamId = getAuthUserTeamId(league)
     const p = usePlayers()
     const pc = useOpenPurchasePlayers(league)
     const tp = getTeamPlayers(teamId, p.data || {})

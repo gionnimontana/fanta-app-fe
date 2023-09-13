@@ -5,6 +5,7 @@ import { ReleasePlayer } from "./components/ReleasePlayer";
 import { AcceptOffer } from "./components/AcceptOffer";
 import { MakeOffer } from "./components/MakeOffer";
 import s from "./PlayerActions.module.css";
+import { useParams } from "react-router-dom";
 
 interface Props {
     player?: Player;
@@ -15,8 +16,9 @@ interface Props {
 }
 
 export const PlayerActions = ({ player, purchases, teamBudget, teamplayers, allPlayers }: Props) => {
+    const { league } = useParams()
     const targetPurchase = purchases.find(p => p.player === player?.id)
-    const possibleActions = getPossiblePurchaseActions(player, targetPurchase)
+    const possibleActions = getPossiblePurchaseActions(league, player, targetPurchase)
     const haveFreeRoleSlots = canMakeOffer(player?.role, allPlayers, purchases)
     const playerCanBeReleased = canReleasePlayer(player?.role, teamplayers, purchases)
 

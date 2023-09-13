@@ -315,7 +315,8 @@ export const isMatchDayIsInProgess = (matchDay: number, matchDayTimestamps: Matc
     return hasBegun && !hasEnded
 }
 
-export const userCanEditMatch = (match: Match, teamId: string, matchDayBegun: boolean): boolean => {
+export const userCanEditMatch = (match: Match, teamId: string | undefined, matchDayBegun: boolean): boolean => {
+    if (!teamId) return false
     const userInMatch = match.match.includes(teamId)
     return userInMatch && !matchDayBegun
 }
@@ -337,11 +338,20 @@ export const setLocalStoredFilters = (filterKey: string, action: Dispatch<React.
     action(currentFilters[filterKey])
 }
 
+export const getAuthUserTeamId = (currentLeague: string | undefined): string | undefined => {
+    const userTeam = pb.authStore.model?.team
+    if (!userTeam) return undefined
+    const leagueId = pb.authStore.model?.league
+    if (!leagueId) return undefined
+    if (leagueId !== currentLeague) return undefined
+    return userTeam
+}
+
 export type PurchaseAction = 'makeOffer' | 'acceptOffer' | 'releasePlayer' | 'marketClosed'
-export const getPossiblePurchaseActions = (player?: Player, purchase?: Purchase): PurchaseAction[] => {
+export const getPossiblePurchaseActions = (league?: string, player?: Player, purchase?: Purchase): PurchaseAction[] => {
     if (!marketWindowIsOpen()) return ['marketClosed']
     if (!player) return []
-    const userTeam = pb.authStore.model?.team;
+    const userTeam = getAuthUserTeamId(league)
     if (!userTeam) return []
     const playerIsInUserTeam = player.fanta_team === userTeam
     if (playerIsInUserTeam) {
@@ -379,7 +389,7 @@ export const getPreviousAndNextMatchId = (match: Match | undefined, matches: Mat
 export const getPreviousAndNextMatchNavigator = (league: string, match: Match | undefined, matches: Match[], nv: (to: string) => void): { previous: () => void, next: () => void } => {
     const { previous, next } = getPreviousAndNextMatchId(match, matches)
     const previousNavigator = previous ? () => nv(routes.Match.replace(':id', previous).replace(':league', league)) : () => {}
-    const nextNavigator = next ? () => nv(routes.Match.replace(':id', next)) : () => {}
+    const nextNavigator = next ? () => nv(routes.Match.replace(':id', next).replace(':league', league)) : () => {}
     return { previous: previousNavigator, next: nextNavigator }
 }
 
