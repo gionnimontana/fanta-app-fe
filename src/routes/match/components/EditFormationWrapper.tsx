@@ -18,7 +18,7 @@ interface Props {
 export const EditFormationWrapper = ({onClose, match, matchDayHasStarted, team}: Props) => {
     const { league } = useParams()
     const teamId = getAuthUserTeamId(league)
-    const p = usePlayers()
+    const p = usePlayers(league)
     const pc = useOpenPurchasePlayers(league)
     const tp = getTeamPlayers(teamId, p.data || {})
     const richPlayers = addLeavingPlayers(tp, pc.data)
