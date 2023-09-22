@@ -1,9 +1,10 @@
 import { routes } from "../../constants/routes"
 import { Select } from "../../components/generalUI/Select/Select"
 import { Navigate } from "react-router-dom"
-import s from "./Home.module.css"
 import { useEffect, useState } from "react"
 import { roleEmojiMap } from "../../constants/settings"
+import { HomeScreenPlayer } from "../../components/homeScreenPlayer/homeScreenPlayer"
+import s from "./Home.module.css"
 
 export const Home = () => {
     const [league, setLeague] = useState<string>('ernyanuus7tdszx')
@@ -28,7 +29,7 @@ export const Home = () => {
         redirect 
             ? <Navigate to={routes.Calendar.replace(':id', '').replace(':league', league)}/>
             : (
-                <div className={s.container}>
+                <HomeScreenPlayer>
                     <div className={s.center}>
                         <div className={s.header}>FantaBot </div>
                         <div className={s.robotIcon}>🤖</div>
@@ -52,7 +53,7 @@ export const Home = () => {
                             Vai
                         </button>
                     </div>
-                </div>
+                </HomeScreenPlayer>
             )
     )
 }
