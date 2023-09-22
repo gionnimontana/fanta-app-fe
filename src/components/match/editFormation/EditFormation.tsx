@@ -9,6 +9,7 @@ import { useQueryClient } from "react-query"
 import { EditFromationTable } from "./components/EditFromationTable/EditFromationTable"
 import { EditFormationHeader } from "./components/EditFormationHeader/EditFormationHeader"
 import { SortBenchOrder } from "./components/SortBenchOrder/SortBenchOrder"
+import { useParams } from "react-router-dom"
 
 interface Props {
     team: Team
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export const EditFormation = ({team, players, match, matchDayHasStarted, onClose}: Props) => {
+    const { league } = useParams()
     const queryClient = useQueryClient()
     const initFormation = getTeamFormation(match, players, team.id)
     const roster = getRoster(team, players)
@@ -42,7 +44,7 @@ export const EditFormation = ({team, players, match, matchDayHasStarted, onClose
         }
         const success = await updateModeMatchTeamFormation(match, team, formation, module, botMode, matchDayHasStarted)
         if (success) {
-            queryClient.invalidateQueries(`team-${team.id}`)
+            queryClient.invalidateQueries(`team-${league}`)
             queryClient.invalidateQueries(`match-${match.id}`)
             onClose();
         }
