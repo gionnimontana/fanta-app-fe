@@ -47,6 +47,10 @@ export async function createPurchaseOffer(player: string, price: number, max_pri
     return sendPostRequest(apiEndpoints.PurchaseOffer, { player, price, max_price})
 }
 
+export async function releasePlayer(player: string): Promise<{ ok: boolean }> {
+    return sendPostRequest(apiEndpoints.ReleasePlayer, { player })
+}
+
 export function updatePurchaseOffer(purchaseId: string, payload: {[k: string]: any}) {
     return sendPatchRequest(apiEndpoints.PurchaseOffer, { purchase_id: purchaseId, ...payload})
 }

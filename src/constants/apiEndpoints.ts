@@ -14,4 +14,5 @@ export const apiEndpoints = {
     PurchaseOffer: `${apiBaseUrl}/purchase_offer`,
     DeletePurchaseOffer: `${apiBaseUrl}/delete_purchase_offer`,
     AcceptPurchaseOffer: `${apiBaseUrl}/accept_purchase_offer`,
+    ReleasePlayer: `${apiBaseUrl}/release_player`
 };

@@ -1,7 +1,7 @@
 import { Player } from "../../../../types/players";
 import { LoadingButton } from "../../../../components/generalUI/loadingButton/LoadingButton";
 import { useState } from "react";
-import { createPurchaseOffer } from "../../../../queries/players";
+import { releasePlayer } from "../../../../queries/players";
 import { smartNotification } from "../../../../components/generalUI/notifications/notifications"
 import { useQueryClient } from "react-query";
 
@@ -17,7 +17,7 @@ export const ReleasePlayer = ({ player, playerCanBeReleased }: Props) => {
     const onClick = async () => {
       if (!player || !player.fanta_team) return smartNotification('Qualcosa è andato storto, nessun acquisto trovato, contatta l\'amministratore')
       setLoading(true)
-      const res = await createPurchaseOffer(player.id, player.fvm - 1, player.fvm - 1)
+      const res = await releasePlayer(player.id)
       if (res.ok) {
         queryClient.invalidateQueries('purchase-players')
         smartNotification('Giocatore offerto sul mercato correttamente')
