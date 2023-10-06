@@ -44,7 +44,7 @@ export const EditFormation = ({team, players, match, matchDayHasStarted, onClose
         }
         const success = await updateModeMatchTeamFormation(match, team, formation, module, botMode, matchDayHasStarted)
         if (success) {
-            queryClient.invalidateQueries(`team-${league}`)
+            queryClient.invalidateQueries(`teams-${league}`)
             queryClient.invalidateQueries(`match-${match.id}`)
             onClose();
         }
