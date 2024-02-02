@@ -12,8 +12,8 @@ export const validModules = [
 ]
 
 export const marketWindow = {
-    start: '2023-09-04T00:00:00',
-    end: '2023-10-04T23:59:59'
+    start: '2024-02-02T00:00:00',
+    end: '2024-02-22T23:59:59'
 }
 
 export const playerByRoleBound = {
